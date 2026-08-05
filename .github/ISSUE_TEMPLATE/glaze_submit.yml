@@ -1,0 +1,77 @@
+name: 提交新的釉方
+
+description: 分享你的陶瓷釉方实验记录
+
+title: "[新增釉方] "
+
+labels:
+  - 待审核
+
+body:
+
+  - type: input
+    id: name
+    attributes:
+      label: 釉方名称
+      description: 例如：梅子青、油滴釉
+      placeholder: 输入釉方名称
+    validations:
+      required: true
+
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: 分类
+      options:
+        - 青釉
+        - 黑釉
+        - 白釉
+        - 天目釉
+        - 灰釉
+        - 特殊釉
+        - 其他
+    validations:
+      required: true
+
+
+  - type: input
+    id: temperature
+    attributes:
+      label: 烧成温度
+      placeholder: 例如：1280℃
+
+
+  - type: input
+    id: atmosphere
+    attributes:
+      label: 烧成气氛
+      placeholder: 例如：还原焰
+
+
+  - type: textarea
+    id: ingredients
+    attributes:
+      label: 配方比例
+      description: 请填写原料和比例
+
+
+  - type: textarea
+    id: process
+    attributes:
+      label: 制作流程
+      description: 分享你的制作经验
+
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: 注意事项
+      description: 烧制过程中需要注意的问题
+
+
+  - type: input
+    id: author
+    attributes:
+      label: 分享者
+      placeholder: 可填写昵称
