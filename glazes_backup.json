@@ -1,0 +1,152 @@
+[
+  {
+    "id": 1,
+    "name": "龙泉青釉",
+    "alias": [
+      "龙泉窑青瓷釉"
+    ],
+    "image": "",
+    "category": "青釉",
+    "color": "青绿色",
+    "surface": "温润玉质感",
+    "temperature": "1180-1250℃",
+    "atmosphere": "还原焰",
+
+    "usage": [
+      "茶器",
+      "花器",
+      "摆件"
+    ],
+
+    "difficulty": "中等",
+
+    "stability": "较稳定",
+
+    "ingredients": [
+      {
+        "material": "钾长石",
+        "ratio": "45%"
+      },
+      {
+        "material": "石英",
+        "ratio": "20%"
+      },
+      {
+        "material": "石灰石",
+        "ratio": "15%"
+      }
+    ],
+
+    "process": "施釉后高温还原烧成，控制铁元素呈色",
+
+    "clay": "瓷土、高白泥",
+
+    "notes": "釉层厚度和还原程度影响颜色",
+
+    "source": "传统青瓷资料整理"
+  },
+
+
+  {
+    "id": 2,
+    "name": "油滴釉",
+
+    "alias": [
+      "油滴天目"
+    ],
+
+    "image": "",
+
+    "category": "天目釉",
+
+    "color": "黑底银斑",
+
+    "surface": "金属析晶效果",
+
+    "temperature": "1250-1300℃",
+
+    "atmosphere": "还原焰",
+
+
+    "usage": [
+      "茶盏",
+      "收藏器"
+    ],
+
+    "difficulty": "困难",
+
+    "stability": "较低",
+
+
+    "ingredients": [
+      {
+        "material": "铁矿物",
+        "ratio": "主要呈色"
+      },
+      {
+        "material": "长石",
+        "ratio": "基础"
+      }
+    ],
+
+    "process": "高温烧制形成铁析晶斑纹",
+
+    "clay": "含铁胎土",
+
+    "notes": "烧成窗口较窄，需要控制温度曲线",
+
+    "source": "天目釉资料整理"
+  },
+
+
+  {
+    "id": 3,
+    "name": "木灰釉",
+
+    "alias": [
+      "自然灰釉"
+    ],
+
+    "image": "",
+
+    "category": "灰釉",
+
+    "color": "青灰色",
+
+    "surface": "自然流动效果",
+
+    "temperature": "1200-1300℃",
+
+    "atmosphere": "氧化或还原",
+
+
+    "usage": [
+      "器皿",
+      "柴烧作品"
+    ],
+
+    "difficulty": "简单",
+
+    "stability": "稳定",
+
+
+    "ingredients": [
+      {
+        "material": "木灰",
+        "ratio": "主要成分"
+      },
+      {
+        "material": "长石",
+        "ratio": "辅助"
+      }
+    ],
+
+    "process": "灰分矿物参与形成玻璃相",
+
+    "clay": "陶土",
+
+    "notes": "不同木材灰分效果差异明显",
+
+    "source": "传统灰釉资料整理"
+  }
+]
