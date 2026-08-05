@@ -2,42 +2,91 @@
 <html lang="zh-CN">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>守艺人 · 釉方库</title>
+<meta charset="UTF-8">
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: 40px auto;
-            padding: 20px;
-            background: #f7f5f0;
-        }
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        h1 {
-            text-align: center;
-            color: #5c4033;
-        }
+<title>守艺人 · 釉方库</title>
 
-        .card {
-            background: white;
-            padding: 20px;
-            margin-top: 20px;
-            border-radius: 10px;
-        }
 
-        .title {
-            font-size: 22px;
-            font-weight: bold;
-        }
+<style>
 
-        .info {
-            margin-top: 10px;
-            line-height: 1.8;
-        }
-    </style>
+body {
+
+    font-family:
+    Arial,
+    sans-serif;
+
+    max-width:800px;
+
+    margin:auto;
+
+    padding:20px;
+
+    background:#f5f2eb;
+
+}
+
+
+h1 {
+
+    text-align:center;
+
+    color:#5c4033;
+
+}
+
+
+.search {
+
+    width:100%;
+
+    padding:12px;
+
+    font-size:16px;
+
+    border-radius:8px;
+
+    border:1px solid #ccc;
+
+}
+
+
+
+.card {
+
+    background:white;
+
+    margin-top:20px;
+
+    padding:20px;
+
+    border-radius:12px;
+
+}
+
+
+.name {
+
+    font-size:22px;
+
+    font-weight:bold;
+
+}
+
+
+.info {
+
+    line-height:1.8;
+
+    margin-top:10px;
+
+}
+
+
+</style>
+
 
 </head>
 
@@ -50,26 +99,126 @@
 </h1>
 
 
-<div class="card">
+<input
+class="search"
+id="search"
+placeholder="搜索釉名，例如：青釉"
+>
 
-<div class="title">
-传统青釉
-</div>
+
+<div id="list"></div>
 
 
-<div class="info">
 
-分类：青釉<br>
+<script>
 
-烧成温度：1280℃<br>
 
-烧成气氛：还原焰<br>
+let glazes=[];
 
-主要原料：长石、石英、高岭土
 
-</div>
 
-</div>
+fetch("glazes.json")
+
+.then(response=>response.json())
+
+.then(data=>{
+
+    glazes=data;
+
+    showGlazes(glazes);
+
+});
+
+
+
+
+function showGlazes(data){
+
+
+    let html="";
+
+
+    data.forEach(item=>{
+
+
+        html += `
+
+        <div class="card">
+
+
+        <div class="name">
+        ${item.name}
+        </div>
+
+
+        <div class="info">
+
+
+        分类：
+        ${item.category}
+        <br>
+
+
+        温度：
+        ${item.temperature}
+        <br>
+
+
+        气氛：
+        ${item.atmosphere}
+
+
+        </div>
+
+
+        </div>
+
+
+        `;
+
+
+    });
+
+
+
+    document.getElementById("list").innerHTML=html;
+
+
+}
+
+
+
+
+document
+.getElementById("search")
+.addEventListener(
+"input",
+function(){
+
+
+    let keyword=this.value;
+
+
+    let result=
+    glazes.filter(item=>
+
+        item.name.includes(keyword)
+
+        ||
+
+        item.category.includes(keyword)
+
+    );
+
+
+    showGlazes(result);
+
+
+});
+
+
+</script>
+
 
 
 </body>
