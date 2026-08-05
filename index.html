@@ -7,7 +7,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>守艺人 · 釉方库</title>
+<title>守艺人 · 釉库</title>
 
 
 <style>
@@ -16,7 +16,7 @@ body{
 
 font-family:Arial,sans-serif;
 
-max-width:800px;
+max-width:900px;
 
 margin:auto;
 
@@ -27,40 +27,9 @@ background:#f5f2eb;
 }
 
 
-
 h1{
 
-text-align:center;
-
 color:#5c4033;
-
-}
-
-
-
-.top{
-
-text-align:center;
-
-margin-bottom:20px;
-
-}
-
-
-
-.submit{
-
-display:inline-block;
-
-background:#8b6f47;
-
-color:white;
-
-padding:10px 20px;
-
-border-radius:20px;
-
-text-decoration:none;
 
 }
 
@@ -72,11 +41,11 @@ width:100%;
 
 padding:12px;
 
-font-size:16px;
-
 border-radius:8px;
 
-border:1px solid #ccc;
+border:1px solid #ddd;
+
+font-size:16px;
 
 box-sizing:border-box;
 
@@ -84,19 +53,37 @@ box-sizing:border-box;
 
 
 
+.filters{
+
+margin:20px 0;
+
+}
+
+
+
 button{
+
+background:#8b6f47;
+
+color:white;
+
+border:none;
 
 padding:8px 15px;
 
 margin:5px;
 
-border:none;
-
 border-radius:20px;
 
-background:#8b6f47;
+cursor:pointer;
 
-color:white;
+}
+
+
+
+button:hover{
+
+opacity:0.8;
 
 }
 
@@ -106,9 +93,9 @@ color:white;
 
 background:white;
 
-margin-top:20px;
-
 padding:20px;
+
+margin:15px 0;
 
 border-radius:12px;
 
@@ -116,21 +103,9 @@ border-radius:12px;
 
 
 
-.name{
-
-font-size:22px;
-
-font-weight:bold;
-
-}
-
-
-
-.name a{
+.card h2{
 
 color:#5c4033;
-
-text-decoration:none;
 
 }
 
@@ -139,8 +114,6 @@ text-decoration:none;
 .info{
 
 line-height:1.8;
-
-margin-top:10px;
 
 }
 
@@ -161,6 +134,35 @@ margin:3px;
 }
 
 
+
+a{
+
+text-decoration:none;
+
+color:#5c4033;
+
+}
+
+
+
+.detail{
+
+display:inline-block;
+
+margin-top:10px;
+
+background:#8b6f47;
+
+color:white;
+
+padding:8px 15px;
+
+border-radius:8px;
+
+}
+
+
+
 </style>
 
 
@@ -171,39 +173,64 @@ margin:3px;
 <body>
 
 
-
 <h1>
-
-守艺人 · 釉方库
-
+守艺人 · 釉库
 </h1>
-
-
-
-<div class="top">
-
-<a class="submit" href="submit.html">
-＋ 提交釉方
-</a>
-
-</div>
-
 
 
 
 <input
 
-class="search"
-
 id="search"
 
-placeholder="搜索釉名、分类、用途"
+class="search"
+
+placeholder="搜索釉名、分类、颜色..."
 
 >
 
 
 
-<div id="categories"></div>
+<div class="filters">
+
+
+<button onclick="filterCategory('全部')">
+
+全部
+
+</button>
+
+
+<button onclick="filterCategory('青釉')">
+
+青釉
+
+</button>
+
+
+<button onclick="filterCategory('黑釉')">
+
+黑釉
+
+</button>
+
+
+<button onclick="filterCategory('灰釉')">
+
+灰釉
+
+</button>
+
+
+<button onclick="filterCategory('白釉')">
+
+白釉
+
+</button>
+
+
+</div>
+
 
 
 <div id="list"></div>
@@ -216,6 +243,8 @@ placeholder="搜索釉名、分类、用途"
 
 let glazes=[];
 
+let currentCategory="全部";
+
 
 
 fetch("glazes.json")
@@ -227,67 +256,10 @@ fetch("glazes.json")
 
 glazes=data;
 
-
-showCategories();
-
-
-showGlazes(glazes);
+render();
 
 
 });
-
-
-
-
-
-function showCategories(){
-
-
-let categories=[
-
-"全部",
-
-...new Set(
-
-glazes.map(
-
-item=>item.category
-
-)
-
-)
-
-];
-
-
-
-let html="";
-
-
-
-categories.forEach(c=>{
-
-
-html+=`
-
-<button onclick="filterCategory('${c}')">
-
-${c}
-
-</button>
-
-`;
-
-
-
-});
-
-
-
-document.getElementById("categories").innerHTML=html;
-
-
-}
 
 
 
@@ -296,87 +268,114 @@ document.getElementById("categories").innerHTML=html;
 function filterCategory(category){
 
 
-if(category==="全部"){
+currentCategory=category;
 
-showGlazes(glazes);
+render();
 
-return;
 
 }
 
 
 
-showGlazes(
 
-glazes.filter(
 
-item=>item.category===category
 
-)
+
+document
+
+.getElementById("search")
+
+.addEventListener(
+
+"input",
+
+render
 
 );
 
 
-}
 
 
 
+function render(){
+
+
+let keyword=
+
+document
+
+.getElementById("search")
+
+.value
+
+.toLowerCase();
 
 
 
-function showGlazes(data){
 
 
 let html="";
 
 
 
-data.forEach(item=>{
+
+
+glazes
+
+.filter(item=>{
+
+
+let matchCategory=
+
+currentCategory==="全部"
+
+||
+
+item.category===currentCategory;
 
 
 
-let usage="";
+let text=
+
+(
+
+item.name+
+
+(item.category||"")+
+
+(item.color||"")
+
+)
+
+.toLowerCase();
 
 
 
-if(item.usage){
+let matchSearch=
+
+text.includes(keyword);
 
 
-item.usage.forEach(u=>{
+
+return matchCategory && matchSearch;
 
 
-usage+=`
+})
 
-<span class="tag">
-
-${u}
-
-</span>
-
-`;
-
-
-});
-
-
-}
-
+.forEach(item=>{
 
 
 html+=`
 
+
 <div class="card">
 
 
-<div class="name">
-
-<a href="detail.html?id=${item.id}">
+<h2>
 
 ${item.name}
 
-</a>
-
-</div>
+</h2>
 
 
 
@@ -385,7 +384,7 @@ ${item.name}
 
 分类：
 
-${item.category}
+${item.category || "暂无"}
 
 <br>
 
@@ -415,15 +414,23 @@ ${item.difficulty || "暂无"}
 
 ${item.stability || "暂无"}
 
-<br>
-
-
-用途：
-
-${usage}
-
 
 </div>
+
+
+
+<a
+
+class="detail"
+
+href="detail.html?id=${item.id}"
+
+>
+
+查看详情
+
+</a>
+
 
 
 </div>
@@ -432,69 +439,35 @@ ${usage}
 `;
 
 
+
 });
 
 
 
-document.getElementById("list").innerHTML=html;
+
+
+if(html===""){
+
+
+html="<p>暂无相关釉方</p>";
 
 
 }
 
 
 
-
-
 document
 
-.getElementById("search")
+.getElementById("list")
 
-.addEventListener(
-
-"input",
-
-function(){
+.innerHTML=html;
 
 
-let keyword=this.value;
+}
 
-
-
-let result=
-
-glazes.filter(item=>{
-
-
-return (
-
-item.name.includes(keyword)
-
-||
-
-item.category.includes(keyword)
-
-||
-
-(item.usage &&
-
-item.usage.join("").includes(keyword))
-
-);
-
-
-});
-
-
-
-showGlazes(result);
-
-
-
-});
 
 
 </script>
-
 
 
 </body>
