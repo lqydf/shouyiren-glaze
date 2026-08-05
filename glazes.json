@@ -55,5 +55,149 @@
     "recipe_status": "工艺复原参考",
     "verification": "B",
     "source": "龙泉青瓷工艺资料整理"
+  },
+  {
+    "id": 1,
+    "name": "龙泉青釉",
+    "category": "青釉",
+    "alias": [
+      "龙泉窑青瓷釉"
+    ],
+    "image": "images/qingyou.jpg",
+    "color": "青绿色",
+    "surface": "温润玉质感",
+    "temperature": "1180-1250℃",
+    "atmosphere": "还原焰",
+    "usage": [
+      "茶器",
+      "花器",
+      "摆件"
+    ],
+    "difficulty": "中等",
+    "stability": "较稳定",
+    "recipe_type": "基础釉",
+    "base_ratio_total": "100%",
+    "ingredients": [
+      {
+        "material": "钾长石",
+        "ratio": "45%"
+      },
+      {
+        "material": "石英",
+        "ratio": "20%"
+      },
+      {
+        "material": "石灰石",
+        "ratio": "15%"
+      },
+      {
+        "material": "高岭土",
+        "ratio": "15%"
+      },
+      {
+        "material": "滑石",
+        "ratio": "5%"
+      }
+    ],
+    "additives": [],
+    "process": "施釉后高温还原烧成，控制铁元素呈色。",
+    "clay": "瓷土、高白泥",
+    "notes": "釉层厚度和还原程度影响颜色。",
+    "recipe_status": "工艺参考",
+    "verification": "B",
+    "source": "传统青瓷资料整理"
+  },
+  {
+    "id": 2,
+    "name": "油滴釉",
+    "category": "天目釉",
+    "alias": [
+      "油滴天目"
+    ],
+    "image": "",
+    "color": "黑底银斑",
+    "surface": "金属析晶效果",
+    "temperature": "1250-1300℃",
+    "atmosphere": "还原焰",
+    "usage": [
+      "茶盏",
+      "收藏器"
+    ],
+    "difficulty": "困难",
+    "stability": "较低",
+    "recipe_type": "实验参考",
+    "base_ratio_total": "100%",
+    "ingredients": [
+      {
+        "material": "钾长石",
+        "ratio": "45%"
+      },
+      {
+        "material": "石英",
+        "ratio": "20%"
+      },
+      {
+        "material": "石灰石",
+        "ratio": "15%"
+      },
+      {
+        "material": "高岭土",
+        "ratio": "20%"
+      }
+    ],
+    "additives": [
+      {
+        "material": "氧化铁",
+        "ratio": "8%"
+      }
+    ],
+    "process": "高温烧制形成铁析晶斑纹。",
+    "clay": "含铁胎土",
+    "notes": "烧成窗口较窄，需要控制温度曲线。",
+    "recipe_status": "实验参考",
+    "verification": "B",
+    "source": "天目釉资料整理"
+  },
+  {
+    "id": 3,
+    "name": "木灰釉",
+    "category": "灰釉",
+    "alias": [
+      "自然灰釉"
+    ],
+    "image": "",
+    "color": "青灰色",
+    "surface": "自然流动效果",
+    "temperature": "1200-1300℃",
+    "atmosphere": "氧化或还原",
+    "usage": [
+      "器皿",
+      "柴烧作品"
+    ],
+    "difficulty": "简单",
+    "stability": "稳定",
+    "recipe_type": "实验参考",
+    "base_ratio_total": "100%",
+    "ingredients": [
+      {
+        "material": "木灰",
+        "ratio": "60%"
+      },
+      {
+        "material": "钾长石",
+        "ratio": "25%"
+      },
+      {
+        "material": "石英",
+        "ratio": "15%"
+      }
+    ],
+    "additives": [],
+    "process": "灰分矿物参与形成玻璃相。",
+    "clay": "陶土",
+    "notes": "不同木材灰分效果差异明显。",
+    "recipe_status": "实验参考",
+    "verification": "C",
+    "source": "传统灰釉资料整理"
   }
 ]
