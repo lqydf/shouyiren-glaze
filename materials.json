@@ -4,6 +4,7 @@
     "name": "钾长石",
     "formula": "KAlSi3O8",
     "category": "长石类",
+    "molecular_weight": 278.33,
     "oxides": {
       "K2O": 16.9,
       "Na2O": 0,
@@ -19,6 +20,7 @@
     "name": "钠长石",
     "formula": "NaAlSi3O8",
     "category": "长石类",
+    "molecular_weight": 262.22,
     "oxides": {
       "K2O": 0,
       "Na2O": 11.8,
@@ -34,6 +36,7 @@
     "name": "石英",
     "formula": "SiO2",
     "category": "硅质原料",
+    "molecular_weight": 60.08,
     "oxides": {
       "K2O": 0,
       "Na2O": 0,
@@ -49,6 +52,7 @@
     "name": "方解石",
     "formula": "CaCO3",
     "category": "钙质原料",
+    "molecular_weight": 100.09,
     "oxides": {
       "K2O": 0,
       "Na2O": 0,
@@ -64,6 +68,7 @@
     "name": "石灰石",
     "formula": "CaCO3",
     "category": "钙质原料",
+    "molecular_weight": 100.09,
     "oxides": {
       "K2O": 0,
       "Na2O": 0,
@@ -79,6 +84,7 @@
     "name": "高岭土",
     "formula": "Al2Si2O5(OH)4",
     "category": "黏土类",
+    "molecular_weight": 258.16,
     "oxides": {
       "K2O": 0,
       "Na2O": 0,
@@ -94,6 +100,7 @@
     "name": "滑石",
     "formula": "Mg3Si4O10(OH)2",
     "category": "镁质原料",
+    "molecular_weight": 379.27,
     "oxides": {
       "K2O": 0,
       "Na2O": 0,
@@ -109,6 +116,7 @@
     "name": "白云石",
     "formula": "CaMg(CO3)2",
     "category": "钙镁原料",
+    "molecular_weight": 184.40,
     "oxides": {
       "K2O": 0,
       "Na2O": 0,
@@ -124,12 +132,13 @@
     "name": "氧化锌",
     "formula": "ZnO",
     "category": "辅助熔剂",
+    "molecular_weight": 81.38,
     "oxides": {
+      "ZnO": 100,
       "K2O": 0,
       "Na2O": 0,
       "CaO": 0,
       "MgO": 0,
-      "ZnO": 100,
       "Al2O3": 0,
       "SiO2": 0
     },
@@ -140,12 +149,13 @@
     "name": "碳酸钡",
     "formula": "BaCO3",
     "category": "钡质原料",
+    "molecular_weight": 197.34,
     "oxides": {
+      "BaO": 77.7,
       "K2O": 0,
       "Na2O": 0,
       "CaO": 0,
       "MgO": 0,
-      "BaO": 77.7,
       "Al2O3": 0,
       "SiO2": 0
     },
