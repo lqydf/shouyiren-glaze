@@ -9,145 +9,78 @@
 
 <title>守艺人 · 釉方档案</title>
 
-
 <style>
 
-
 body{
-
 font-family:Arial,sans-serif;
-
 max-width:800px;
-
 margin:auto;
-
 padding:20px;
-
 background:#f5f2eb;
-
 }
-
-
 
 .back{
-
 margin-bottom:20px;
-
 }
-
 
 .back a{
-
 color:#5c4033;
-
 text-decoration:none;
-
 }
-
-
 
 .card{
-
 background:white;
-
 padding:25px;
-
 border-radius:12px;
-
 }
-
-
 
 h1{
-
 color:#5c4033;
-
 }
-
-
 
 .image{
-
 width:100%;
-
 border-radius:12px;
-
 margin-bottom:20px;
-
 }
-
-
 
 .section{
-
 margin-top:25px;
-
 }
-
-
 
 .section h3{
-
 border-bottom:1px solid #ddd;
-
 padding-bottom:6px;
-
 }
-
-
 
 .info{
-
 line-height:1.9;
-
 }
-
-
 
 .tag{
-
 display:inline-block;
-
 background:#8b6f47;
-
 color:white;
-
 padding:5px 12px;
-
 border-radius:20px;
-
 margin:4px;
-
 }
-
-
 
 .ingredient{
-
 display:flex;
-
 justify-content:space-between;
-
 background:#f5f2eb;
-
 padding:8px;
-
 margin:5px 0;
-
 border-radius:6px;
-
 }
 
-
 </style>
-
 
 </head>
 
 
-
 <body>
-
 
 
 <div class="back">
@@ -161,27 +94,17 @@ border-radius:6px;
 </div>
 
 
-
-
 <div id="content"></div>
-
-
 
 
 
 <script>
 
 
-
 let id =
-
 new URLSearchParams(
-
 window.location.search
-
 ).get("id");
-
-
 
 
 
@@ -192,63 +115,66 @@ fetch("glazes.json")
 .then(data=>{
 
 
-
-let glaze = data.find(
-
+let glaze=data.find(
 item=>item.id==id
-
 );
-
-
 
 
 
 if(!glaze){
 
-
 document.getElementById("content").innerHTML=
-
 "未找到该釉方";
-
 
 return;
 
-
 }
-
-
 
 
 
 let ingredients="";
 
 
+if(glaze.ingredients){
 
 glaze.ingredients.forEach(item=>{
 
-
 ingredients += `
-
 
 <div class="ingredient">
 
+<span>${item.material}</span>
 
-<span>
-
-${item.material}
-
-</span>
-
-
-<span>
-
-${item.ratio}
-
-</span>
-
+<span>${item.ratio}</span>
 
 </div>
 
+`;
+
+});
+
+}
+
+
+
+let additives="";
+
+
+if(glaze.additives && glaze.additives.length){
+
+
+glaze.additives.forEach(item=>{
+
+
+additives += `
+
+<div class="ingredient">
+
+<span>${item.material}</span>
+
+<span>${item.ratio}</span>
+
+</div>
 
 `;
 
@@ -256,21 +182,19 @@ ${item.ratio}
 });
 
 
+}
 
 
 
 let usage="";
 
 
-
 if(glaze.usage){
-
 
 glaze.usage.forEach(item=>{
 
 
 usage += `
-
 
 <span class="tag">
 
@@ -278,7 +202,6 @@ ${item}
 
 </span>
 
-
 `;
 
 
@@ -289,11 +212,7 @@ ${item}
 
 
 
-
-
-
 let alias="";
-
 
 
 if(glaze.alias){
@@ -304,13 +223,11 @@ glaze.alias.forEach(item=>{
 
 alias += `
 
-
 <span class="tag">
 
 ${item}
 
 </span>
-
 
 `;
 
@@ -322,10 +239,7 @@ ${item}
 
 
 
-
-
 let image="";
-
 
 
 if(glaze.image){
@@ -343,18 +257,13 @@ src="${glaze.image}"
 
 >
 
-
 `;
 
 }
 
 
-document
 
-.getElementById("content")
-
-.innerHTML=
-
+document.getElementById("content").innerHTML=
 
 
 `
@@ -373,7 +282,6 @@ ${glaze.name}
 </h1>
 
 
-
 <div>
 
 ${alias}
@@ -382,14 +290,12 @@ ${alias}
 
 
 
-
-
 <div class="section info">
 
 
 分类：
 
-${glaze.category}
+${glaze.category || "暂无"}
 
 <br>
 
@@ -421,7 +327,6 @@ ${glaze.atmosphere || "暂无"}
 
 
 </div>
-
 
 
 
@@ -478,8 +383,6 @@ ${glaze.stability || "暂无"}
 
 
 
-
-
 <div class="section">
 
 
@@ -503,8 +406,6 @@ ${glaze.clay || "暂无"}
 
 
 
-
-
 <div class="section">
 
 
@@ -515,12 +416,77 @@ ${glaze.clay || "暂无"}
 </h3>
 
 
-${ingredients}
+${ingredients || "暂无"}
+
+
+${glaze.base_ratio_total ? `
+
+<p>
+
+基础配方比例：
+
+${glaze.base_ratio_total}
+
+</p>
+
+` : ""}
 
 
 </div>
 
 
+
+
+
+<div class="section">
+
+
+<h3>
+
+添加剂
+
+</h3>
+
+
+${additives || "暂无"}
+
+
+</div>
+
+
+
+
+
+<div class="section info">
+
+
+<h3>
+
+配方信息
+
+</h3>
+
+
+配方类型：
+
+${glaze.recipe_type || "暂无"}
+
+<br>
+
+
+配方状态：
+
+${glaze.recipe_status || "暂无"}
+
+<br>
+
+
+可信等级：
+
+${glaze.verification || "暂无"}
+
+
+</div>
 
 
 
@@ -549,7 +515,6 @@ ${glaze.process || "暂无"}
 
 
 
-
 <div class="section">
 
 
@@ -568,7 +533,6 @@ ${glaze.notes || "暂无"}
 
 
 </div>
-
 
 
 
@@ -595,17 +559,12 @@ ${glaze.source || "暂无"}
 
 
 
-
-
 </div>
 
 
 `;
 
-
-
 });
-
 
 
 </script>
