@@ -7,134 +7,181 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>守艺人 · 釉方详情</title>
+<title>守艺人 · 釉方档案</title>
 
 
 <style>
 
-body {
 
-    font-family: Arial, sans-serif;
-    max-width:800px;
-    margin:auto;
-    padding:20px;
-    background:#f5f2eb;
+body{
 
-}
+font-family:Arial,sans-serif;
 
+max-width:800px;
 
-.back {
+margin:auto;
 
-    margin-bottom:20px;
+padding:20px;
+
+background:#f5f2eb;
 
 }
 
 
-.back a {
 
-    color:#5c4033;
-    text-decoration:none;
+.back{
 
-}
-
-
-.card {
-
-    background:white;
-    padding:25px;
-    border-radius:12px;
+margin-bottom:20px;
 
 }
 
 
-h1 {
+.back a{
 
-    color:#5c4033;
+color:#5c4033;
 
-}
-
-
-.glaze-image {
-
-    width:100%;
-    border-radius:12px;
-    margin-top:15px;
+text-decoration:none;
 
 }
 
 
-.section {
 
-    margin-top:25px;
+.card{
 
-}
+background:white;
 
+padding:25px;
 
-.section h3 {
-
-    border-bottom:1px solid #ddd;
-    padding-bottom:5px;
+border-radius:12px;
 
 }
 
 
-.info {
 
-    line-height:1.9;
+h1{
 
-}
-
-
-.ingredient {
-
-    display:flex;
-    justify-content:space-between;
-    background:#f7f5f0;
-    padding:8px;
-    margin:5px 0;
-    border-radius:5px;
+color:#5c4033;
 
 }
 
 
-.tag {
 
-    display:inline-block;
-    background:#8b6f47;
-    color:white;
-    padding:5px 12px;
-    border-radius:15px;
-    margin:5px;
+.image{
+
+width:100%;
+
+border-radius:12px;
+
+margin-bottom:20px;
 
 }
+
+
+
+.section{
+
+margin-top:25px;
+
+}
+
+
+
+.section h3{
+
+border-bottom:1px solid #ddd;
+
+padding-bottom:6px;
+
+}
+
+
+
+.info{
+
+line-height:1.9;
+
+}
+
+
+
+.tag{
+
+display:inline-block;
+
+background:#8b6f47;
+
+color:white;
+
+padding:5px 12px;
+
+border-radius:20px;
+
+margin:4px;
+
+}
+
+
+
+.ingredient{
+
+display:flex;
+
+justify-content:space-between;
+
+background:#f5f2eb;
+
+padding:8px;
+
+margin:5px 0;
+
+border-radius:6px;
+
+}
+
 
 </style>
 
+
 </head>
+
 
 
 <body>
 
 
+
 <div class="back">
 
 <a href="index.html">
+
 ← 返回釉库
+
 </a>
 
 </div>
+
+
 
 
 <div id="content"></div>
 
 
 
+
+
 <script>
 
 
-let id = new URLSearchParams(
+
+let id =
+
+new URLSearchParams(
+
 window.location.search
+
 ).get("id");
+
+
 
 
 
@@ -145,24 +192,36 @@ fetch("glazes.json")
 .then(data=>{
 
 
+
 let glaze = data.find(
+
 item=>item.id==id
+
 );
+
+
 
 
 
 if(!glaze){
 
-document.getElementById("content").innerHTML =
-"没有找到该釉方";
+
+document.getElementById("content").innerHTML=
+
+"未找到该釉方";
+
 
 return;
+
 
 }
 
 
 
+
+
 let ingredients="";
+
 
 
 glaze.ingredients.forEach(item=>{
@@ -170,29 +229,48 @@ glaze.ingredients.forEach(item=>{
 
 ingredients += `
 
+
 <div class="ingredient">
 
-<span>${item.material}</span>
 
-<span>${item.ratio}</span>
+<span>
+
+${item.material}
+
+</span>
+
+
+<span>
+
+${item.ratio}
+
+</span>
+
 
 </div>
 
+
 `;
+
 
 });
 
 
 
-let aliases="";
 
 
-if(glaze.alias){
-
-glaze.alias.forEach(item=>{
+let usage="";
 
 
-aliases += `
+
+if(glaze.usage){
+
+
+glaze.usage.forEach(item=>{
+
+
+usage += `
+
 
 <span class="tag">
 
@@ -200,44 +278,92 @@ ${item}
 
 </span>
 
+
 `;
+
 
 });
 
+
 }
+
+
+
+
+
+
+let alias="";
+
+
+
+if(glaze.alias){
+
+
+glaze.alias.forEach(item=>{
+
+
+alias += `
+
+
+<span class="tag">
+
+${item}
+
+</span>
+
+
+`;
+
+
+});
+
+
+}
+
+
 
 
 
 let image="";
 
 
+
 if(glaze.image){
 
-image = `
+
+image=
+
+`
 
 <img
 
-class="glaze-image"
+class="image"
 
 src="${glaze.image}"
 
-alt="${glaze.name}"
-
 >
+
 
 `;
 
 }
 
 
+document
 
-document.getElementById("content").innerHTML = `
+.getElementById("content")
 
+.innerHTML=
+
+
+
+`
 
 <div class="card">
 
 
 ${image}
+
 
 
 <h1>
@@ -247,57 +373,133 @@ ${glaze.name}
 </h1>
 
 
+
 <div>
 
-${aliases}
+${alias}
 
 </div>
+
+
 
 
 
 <div class="section info">
 
+
 分类：
+
 ${glaze.category}
 
 <br>
 
+
 颜色：
-${glaze.color || "暂无记录"}
+
+${glaze.color || "暂无"}
 
 <br>
+
 
 釉面：
-${glaze.surface || "暂无记录"}
+
+${glaze.surface || "暂无"}
 
 <br>
+
 
 烧成温度：
-${glaze.temperature}
+
+${glaze.temperature || "暂无"}
 
 <br>
 
-烧成气氛：
-${glaze.atmosphere}
+
+气氛：
+
+${glaze.atmosphere || "暂无"}
+
 
 </div>
 
 
 
 
+
+
 <div class="section">
 
+
 <h3>
-适用泥料
+
+应用场景
+
 </h3>
+
+
+<div>
+
+${usage || "暂无"}
+
+</div>
+
+
+</div>
+
+
+
+
+
+<div class="section info">
+
+
+<h3>
+
+烧制评价
+
+</h3>
+
+
+难度：
+
+${glaze.difficulty || "暂无"}
+
+<br>
+
+
+稳定性：
+
+${glaze.stability || "暂无"}
+
+
+</div>
+
+
+
+
+
+
+
+<div class="section">
+
+
+<h3>
+
+适用泥料
+
+</h3>
+
 
 <div class="info">
 
-${glaze.clay}
+${glaze.clay || "暂无"}
 
 </div>
 
+
 </div>
+
+
 
 
 
@@ -305,13 +507,20 @@ ${glaze.clay}
 
 <div class="section">
 
+
 <h3>
+
 配方
+
 </h3>
+
 
 ${ingredients}
 
+
 </div>
+
+
 
 
 
@@ -319,17 +528,23 @@ ${ingredients}
 
 <div class="section">
 
+
 <h3>
+
 制作流程
+
 </h3>
+
 
 <div class="info">
 
-${glaze.process}
+${glaze.process || "暂无"}
 
 </div>
 
+
 </div>
+
 
 
 
@@ -337,17 +552,23 @@ ${glaze.process}
 
 <div class="section">
 
+
 <h3>
+
 注意事项
+
 </h3>
+
 
 <div class="info">
 
-${glaze.notes}
+${glaze.notes || "暂无"}
 
 </div>
 
+
 </div>
+
 
 
 
@@ -355,17 +576,25 @@ ${glaze.notes}
 
 <div class="section">
 
+
 <h3>
+
 资料来源
+
 </h3>
+
 
 <div class="info">
 
-${glaze.source}
+${glaze.source || "暂无"}
 
 </div>
 
+
 </div>
+
+
+
 
 
 </div>
@@ -374,7 +603,9 @@ ${glaze.source}
 `;
 
 
+
 });
+
 
 
 </script>
