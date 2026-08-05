@@ -16,7 +16,7 @@ body{
 
 font-family:Arial,sans-serif;
 
-max-width:800px;
+max-width:850px;
 
 margin:auto;
 
@@ -27,7 +27,7 @@ background:#f5f2eb;
 }
 
 
-h1{
+h1,h2,h3{
 
 color:#5c4033;
 
@@ -47,40 +47,19 @@ margin-top:20px;
 }
 
 
-select,input{
+select{
 
 width:100%;
 
 padding:12px;
 
-margin:10px 0;
+font-size:16px;
 
 border-radius:8px;
 
 border:1px solid #ddd;
 
-font-size:16px;
-
 }
-
-
-
-button{
-
-background:#8b6f47;
-
-color:white;
-
-border:none;
-
-padding:10px 20px;
-
-border-radius:20px;
-
-cursor:pointer;
-
-}
-
 
 
 .item{
@@ -93,9 +72,22 @@ background:#f5f2eb;
 
 padding:8px;
 
-margin:6px 0;
+margin:5px 0;
 
 border-radius:6px;
+
+}
+
+
+.result{
+
+background:#faf7f0;
+
+padding:15px;
+
+border-radius:8px;
+
+margin-top:15px;
 
 }
 
@@ -114,14 +106,7 @@ color:red;
 }
 
 
-.back{
-
-margin-bottom:20px;
-
-}
-
-
-a{
+.back a{
 
 color:#5c4033;
 
@@ -148,9 +133,8 @@ text-decoration:none;
 </div>
 
 
-
 <h1>
-守艺人 · 釉式计算
+守艺人 · Seger釉式计算
 </h1>
 
 
@@ -175,42 +159,43 @@ text-decoration:none;
 
 
 
-
 <script>
 
 
 let glazes=[];
 
-
-let select=
-
-document.getElementById("glazeSelect");
-
-
-let result=
-
-document.getElementById("result");
+let materials=[];
 
 
 
-fetch("glazes.json")
+Promise.all([
 
-.then(res=>res.json())
+fetch("glazes.json").then(r=>r.json()),
+
+fetch("materials.json").then(r=>r.json())
+
+])
 
 .then(data=>{
 
 
-glazes=data;
+glazes=data[0];
+
+materials=data[1];
 
 
-data.forEach(item=>{
+
+let select=document.getElementById("glazeSelect");
+
+
+
+glazes.forEach(item=>{
 
 
 let option=document.createElement("option");
 
 
 option.value=item.id;
-
 
 option.textContent=item.name;
 
@@ -227,34 +212,108 @@ select.appendChild(option);
 
 
 
-select.addEventListener(
+document
+
+.getElementById("glazeSelect")
+
+.addEventListener(
 
 "change",
 
 function(){
 
 
-let glaze=
+calculate(this.value);
 
-glazes.find(
 
-item=>item.id==this.value
+});
+
+
+
+
+
+function calculate(id){
+
+
+let glaze=glazes.find(
+
+g=>g.id==id
 
 );
 
 
 
-if(!glaze){
+if(!glaze)return;
 
-result.innerHTML="";
 
-return;
+
+
+let oxide={};
+
+
+let total=0;
+
+
+
+
+glaze.ingredients.forEach(item=>{
+
+
+let ratio=parseFloat(item.ratio);
+
+
+if(!isNaN(ratio)){
+
+total+=ratio;
 
 }
 
 
 
-let total=0;
+let material=
+
+materials.find(
+
+m=>m.name===item.material
+
+);
+
+
+
+if(!material)return;
+
+
+
+for(let key in material.oxides){
+
+
+
+let value=
+
+material.oxides[key]
+
+*
+
+ratio
+
+/
+
+100;
+
+
+
+oxide[key]=
+
+(oxide[key]||0)+value;
+
+
+}
+
+
+});
+
+
+
 
 
 let html=`
@@ -264,6 +323,7 @@ let html=`
 ${glaze.name}
 
 </h2>
+
 
 
 <h3>
@@ -278,31 +338,13 @@ ${glaze.name}
 glaze.ingredients.forEach(item=>{
 
 
-let value=
-
-parseFloat(item.ratio);
-
-
-
-if(!isNaN(value)){
-
-total+=value;
-
-}
-
-
-
 html+=`
 
 <div class="item">
 
-<span>
-${item.material}
-</span>
+<span>${item.material}</span>
 
-<span>
-${item.ratio}
-</span>
+<span>${item.ratio}</span>
 
 </div>
 
@@ -313,33 +355,30 @@ ${item.ratio}
 
 
 
-let status="";
 
 
 if(total==100){
 
-status=
 
-`
+html+=`
 
 <p class="ok">
 
-✔ 配方比例合计：${total}%
+✔ 配方比例：${total}%
 
 </p>
 
 `;
 
+
 }else{
 
 
-status=
-
-`
+html+=`
 
 <p class="error">
 
-✘ 配方比例合计：${total}%，需要校正
+✘ 配方比例：${total}%
 
 </p>
 
@@ -349,40 +388,164 @@ status=
 
 
 
-html+=status;
+
+
+let flux=0;
+
+
+
+["K2O","Na2O","CaO","MgO","ZnO","BaO"]
+
+.forEach(x=>{
+
+
+flux+=oxide[x]||0;
+
+
+});
+
+
 
 
 
 html+=`
 
-<hr>
+<div class="result">
+
 
 <h3>
-Seger 摩尔计算
+Seger Formula
 </h3>
 
 
-<p>
 
-下一版本接入 materials.json 自动计算：
-
-</p>
-
-
-<p>
-
-RO / R2O3 / RO2
-
-</p>
+<h4>
+RO（助熔剂）
+</h4>
 
 `;
 
 
 
-result.innerHTML=html;
+
+let ro={};
+
+
+["K2O","Na2O","CaO","MgO","ZnO","BaO"]
+
+.forEach(x=>{
+
+
+ro[x]=
+
+(oxide[x]||0)
+
+/
+
+flux;
+
+
+html+=`
+
+<div class="item">
+
+<span>${x}</span>
+
+<span>${ro[x].toFixed(3)}</span>
+
+</div>
+
+`;
 
 
 });
+
+
+
+
+html+=`
+
+<h4>
+R2O3（中间体）
+</h4>
+
+`;
+
+
+
+if(oxide.Al2O3){
+
+
+html+=`
+
+<div class="item">
+
+<span>Al2O3</span>
+
+<span>
+
+${(oxide.Al2O3/flux).toFixed(3)}
+
+</span>
+
+</div>
+
+`;
+
+}
+
+
+
+html+=`
+
+<h4>
+RO2（玻璃形成剂）
+</h4>
+
+`;
+
+
+
+if(oxide.SiO2){
+
+
+html+=`
+
+<div class="item">
+
+<span>SiO2</span>
+
+<span>
+
+${(oxide.SiO2/flux).toFixed(3)}
+
+</span>
+
+</div>
+
+`;
+
+}
+
+
+
+html+=`
+
+</div>
+
+`;
+
+
+
+document
+
+.getElementById("result")
+
+.innerHTML=html;
+
+
+}
+
 
 
 </script>
