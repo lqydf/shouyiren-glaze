@@ -11,6 +11,17 @@
     "surface": "温润玉质感",
     "temperature": "1180-1250℃",
     "atmosphere": "还原焰",
+
+    "usage": [
+      "茶器",
+      "花器",
+      "摆件"
+    ],
+
+    "difficulty": "中等",
+
+    "stability": "较稳定",
+
     "ingredients": [
       {
         "material": "钾长石",
@@ -23,164 +34,102 @@
       {
         "material": "石灰石",
         "ratio": "15%"
-      },
-      {
-        "material": "高岭土",
-        "ratio": "10%"
       }
     ],
+
     "process": "施釉后高温还原烧成，控制铁元素呈色",
+
     "clay": "瓷土、高白泥",
-    "notes": "釉层厚度和还原程度影响青色表现",
+
+    "notes": "釉层厚度和还原程度影响颜色",
+
     "source": "传统青瓷资料整理"
   },
+
+
   {
     "id": 2,
-    "name": "梅子青釉",
-    "alias": [
-      "梅青釉"
-    ],
-    "image": "",
-    "category": "青釉",
-    "color": "深青绿色",
-    "surface": "肥厚莹润",
-    "temperature": "1250℃左右",
-    "atmosphere": "强还原焰",
-    "ingredients": [
-      {
-        "material": "长石",
-        "ratio": "50%"
-      },
-      {
-        "material": "石灰石",
-        "ratio": "20%"
-      },
-      {
-        "material": "石英",
-        "ratio": "20%"
-      }
-    ],
-    "process": "厚釉施釉，高温还原烧成",
-    "clay": "瓷胎",
-    "notes": "需要较厚釉层形成深沉青色",
-    "source": "传统青瓷资料整理"
-  },
-  {
-    "id": 3,
-    "name": "粉青釉",
-    "alias": [
-      "粉青"
-    ],
-    "image": "",
-    "category": "青釉",
-    "color": "浅青蓝色",
-    "surface": "柔和乳润",
-    "temperature": "1200-1250℃",
-    "atmosphere": "还原焰",
-    "ingredients": [
-      {
-        "material": "长石",
-        "ratio": "45%"
-      },
-      {
-        "material": "石英",
-        "ratio": "25%"
-      },
-      {
-        "material": "石灰石",
-        "ratio": "20%"
-      }
-    ],
-    "process": "中厚釉层烧制",
-    "clay": "瓷土",
-    "notes": "釉中微气泡产生柔润效果",
-    "source": "传统陶瓷资料整理"
-  },
-  {
-    "id": 4,
-    "name": "建盏黑釉",
-    "alias": [
-      "乌金釉"
-    ],
-    "image": "",
-    "category": "黑釉",
-    "color": "黑色",
-    "surface": "深色玻璃质感",
-    "temperature": "1250-1300℃",
-    "atmosphere": "还原焰",
-    "ingredients": [
-      {
-        "material": "草木灰",
-        "ratio": "部分"
-      },
-      {
-        "material": "铁矿物",
-        "ratio": "主要呈色"
-      }
-    ],
-    "process": "高铁釉高温烧制",
-    "clay": "含铁胎土",
-    "notes": "铁含量影响黑釉效果",
-    "source": "建盏工艺资料整理"
-  },
-  {
-    "id": 5,
     "name": "油滴釉",
+
     "alias": [
       "油滴天目"
     ],
+
     "image": "",
+
     "category": "天目釉",
+
     "color": "黑底银斑",
-    "surface": "金属光泽斑纹",
-    "temperature": "1280℃左右",
-    "atmosphere": "还原焰",
-    "ingredients": [
-      {
-        "material": "铁氧化物",
-        "ratio": "呈色来源"
-      }
-    ],
-    "process": "高温析晶形成斑点",
-    "clay": "含铁胎土",
-    "notes": "烧成稳定性要求较高",
-    "source": "天目釉资料整理"
-  },
-  {
-    "id": 6,
-    "name": "兔毫釉",
-    "alias": [
-      "兔毫天目"
-    ],
-    "image": "",
-    "category": "天目釉",
-    "color": "黑褐色带银线",
-    "surface": "丝状纹理",
+
+    "surface": "金属析晶效果",
+
     "temperature": "1250-1300℃",
+
     "atmosphere": "还原焰",
+
+
+    "usage": [
+      "茶盏",
+      "收藏器"
+    ],
+
+    "difficulty": "困难",
+
+    "stability": "较低",
+
+
     "ingredients": [
       {
-        "material": "铁元素矿物",
-        "ratio": "呈色来源"
+        "material": "铁矿物",
+        "ratio": "主要呈色"
+      },
+      {
+        "material": "长石",
+        "ratio": "基础"
       }
     ],
-    "process": "高温析晶形成条纹",
-    "clay": "铁胎",
-    "notes": "纹理随机性较强",
+
+    "process": "高温烧制形成铁析晶斑纹",
+
+    "clay": "含铁胎土",
+
+    "notes": "烧成窗口较窄，需要控制温度曲线",
+
     "source": "天目釉资料整理"
   },
+
+
   {
-    "id": 7,
+    "id": 3,
     "name": "木灰釉",
+
     "alias": [
-      "灰釉"
+      "自然灰釉"
     ],
+
     "image": "",
+
     "category": "灰釉",
-    "color": "灰绿或青灰",
-    "surface": "自然流动感",
+
+    "color": "青灰色",
+
+    "surface": "自然流动效果",
+
     "temperature": "1200-1300℃",
+
     "atmosphere": "氧化或还原",
+
+
+    "usage": [
+      "器皿",
+      "柴烧作品"
+    ],
+
+    "difficulty": "简单",
+
+    "stability": "稳定",
+
+
     "ingredients": [
       {
         "material": "木灰",
@@ -191,82 +140,13 @@
         "ratio": "辅助"
       }
     ],
-    "process": "灰分中的矿物质参与成釉",
+
+    "process": "灰分矿物参与形成玻璃相",
+
     "clay": "陶土",
-    "notes": "不同树种灰分差异明显",
+
+    "notes": "不同木材灰分效果差异明显",
+
     "source": "传统灰釉资料整理"
-  },
-  {
-    "id": 8,
-    "name": "裂纹釉",
-    "alias": [
-      "开片釉"
-    ],
-    "image": "",
-    "category": "特殊釉",
-    "color": "透明或青白",
-    "surface": "开片纹理",
-    "temperature": "1200℃以上",
-    "atmosphere": "根据釉方调整",
-    "ingredients": [
-      {
-        "material": "长石",
-        "ratio": "基础"
-      }
-    ],
-    "process": "利用胎釉膨胀系数差形成裂纹",
-    "clay": "瓷土",
-    "notes": "裂纹大小受冷却速度影响",
-    "source": "陶瓷工艺资料整理"
-  },
-  {
-    "id": 9,
-    "name": "乳浊白釉",
-    "alias": [
-      "白釉"
-    ],
-    "image": "",
-    "category": "白釉",
-    "color": "乳白色",
-    "surface": "柔和不透明",
-    "temperature": "1250℃左右",
-    "atmosphere": "氧化焰",
-    "ingredients": [
-      {
-        "material": "长石",
-        "ratio": "基础"
-      },
-      {
-        "material": "氧化锡",
-        "ratio": "乳浊效果"
-      }
-    ],
-    "process": "控制乳浊剂形成不透明效果",
-    "clay": "白瓷泥",
-    "notes": "乳浊程度取决于配方比例",
-    "source": "白釉资料整理"
-  },
-  {
-    "id": 10,
-    "name": "结晶釉",
-    "alias": [
-      "析晶釉"
-    ],
-    "image": "",
-    "category": "特殊釉",
-    "color": "多色变化",
-    "surface": "晶花效果",
-    "temperature": "1250-1300℃",
-    "atmosphere": "氧化焰",
-    "ingredients": [
-      {
-        "material": "氧化锌",
-        "ratio": "析晶成分"
-      }
-    ],
-    "process": "高温熔融后控制冷却析晶",
-    "clay": "陶瓷胎体",
-    "notes": "需要控制降温曲线",
-    "source": "结晶釉资料整理"
   }
 ]
