@@ -13,7 +13,12 @@
       "Al2O3": 18.4,
       "SiO2": 64.7
     },
-    "source": "理论矿物组成"
+    "properties": {
+      "melting_range": "1200-1280℃",
+      "gloss_tendency": "亮光倾向",
+      "flow_tendency": "中等",
+      "role": "主要熔剂与玻璃形成来源"
+    }
   },
   {
     "id": 2,
@@ -29,7 +34,12 @@
       "Al2O3": 19.4,
       "SiO2": 68.8
     },
-    "source": "理论矿物组成"
+    "properties": {
+      "melting_range": "1180-1250℃",
+      "gloss_tendency": "亮光倾向",
+      "flow_tendency": "较强",
+      "role": "降低熔融温度"
+    }
   },
   {
     "id": 3,
@@ -45,7 +55,12 @@
       "Al2O3": 0,
       "SiO2": 100
     },
-    "source": "理论矿物组成"
+    "properties": {
+      "melting_range": "1250℃以上",
+      "gloss_tendency": "增加透明度",
+      "flow_tendency": "降低流动",
+      "role": "玻璃形成剂"
+    }
   },
   {
     "id": 4,
@@ -61,7 +76,12 @@
       "Al2O3": 0,
       "SiO2": 0
     },
-    "source": "理论矿物组成"
+    "properties": {
+      "melting_range": "1150-1250℃",
+      "gloss_tendency": "亮光倾向",
+      "flow_tendency": "增强熔融",
+      "role": "钙熔剂"
+    }
   },
   {
     "id": 5,
@@ -77,7 +97,12 @@
       "Al2O3": 0,
       "SiO2": 0
     },
-    "source": "理论矿物组成"
+    "properties": {
+      "melting_range": "1150-1250℃",
+      "gloss_tendency": "亮光倾向",
+      "flow_tendency": "增强流动",
+      "role": "提供CaO"
+    }
   },
   {
     "id": 6,
@@ -93,7 +118,12 @@
       "Al2O3": 39.5,
       "SiO2": 46.5
     },
-    "source": "理论矿物组成"
+    "properties": {
+      "melting_range": "1250℃以上",
+      "gloss_tendency": "降低光泽",
+      "flow_tendency": "降低流动",
+      "role": "提供Al2O3与稳定性"
+    }
   },
   {
     "id": 7,
@@ -109,7 +139,12 @@
       "Al2O3": 0,
       "SiO2": 63.4
     },
-    "source": "理论矿物组成"
+    "properties": {
+      "melting_range": "1200-1280℃",
+      "gloss_tendency": "半哑光倾向",
+      "flow_tendency": "中等",
+      "role": "提供MgO"
+    }
   },
   {
     "id": 8,
@@ -125,7 +160,12 @@
       "Al2O3": 0,
       "SiO2": 0
     },
-    "source": "理论矿物组成"
+    "properties": {
+      "melting_range": "1200-1300℃",
+      "gloss_tendency": "亚光倾向",
+      "flow_tendency": "中等",
+      "role": "CaO与MgO来源"
+    }
   },
   {
     "id": 9,
@@ -142,7 +182,12 @@
       "Al2O3": 0,
       "SiO2": 0
     },
-    "source": "工业原料"
+    "properties": {
+      "melting_range": "1100-1250℃",
+      "gloss_tendency": "提高光泽",
+      "flow_tendency": "改善熔融",
+      "role": "特殊效果氧化物"
+    }
   },
   {
     "id": 10,
@@ -159,6 +204,11 @@
       "Al2O3": 0,
       "SiO2": 0
     },
-    "source": "工业原料"
+    "properties": {
+      "melting_range": "1200-1300℃",
+      "gloss_tendency": "提高光泽或乳浊",
+      "flow_tendency": "中等",
+      "role": "钡系特殊釉效果"
+    }
   }
 ]
