@@ -1,0 +1,154 @@
+[
+  {
+    "id": 1,
+    "name": "钾长石",
+    "formula": "KAlSi3O8",
+    "category": "长石类",
+    "oxides": {
+      "K2O": 16.9,
+      "Na2O": 0,
+      "CaO": 0,
+      "MgO": 0,
+      "Al2O3": 18.4,
+      "SiO2": 64.7
+    },
+    "source": "理论矿物组成"
+  },
+  {
+    "id": 2,
+    "name": "钠长石",
+    "formula": "NaAlSi3O8",
+    "category": "长石类",
+    "oxides": {
+      "K2O": 0,
+      "Na2O": 11.8,
+      "CaO": 0,
+      "MgO": 0,
+      "Al2O3": 19.4,
+      "SiO2": 68.8
+    },
+    "source": "理论矿物组成"
+  },
+  {
+    "id": 3,
+    "name": "石英",
+    "formula": "SiO2",
+    "category": "硅质原料",
+    "oxides": {
+      "K2O": 0,
+      "Na2O": 0,
+      "CaO": 0,
+      "MgO": 0,
+      "Al2O3": 0,
+      "SiO2": 100
+    },
+    "source": "理论矿物组成"
+  },
+  {
+    "id": 4,
+    "name": "方解石",
+    "formula": "CaCO3",
+    "category": "钙质原料",
+    "oxides": {
+      "K2O": 0,
+      "Na2O": 0,
+      "CaO": 56,
+      "MgO": 0,
+      "Al2O3": 0,
+      "SiO2": 0
+    },
+    "source": "理论矿物组成"
+  },
+  {
+    "id": 5,
+    "name": "石灰石",
+    "formula": "CaCO3",
+    "category": "钙质原料",
+    "oxides": {
+      "K2O": 0,
+      "Na2O": 0,
+      "CaO": 56,
+      "MgO": 0,
+      "Al2O3": 0,
+      "SiO2": 0
+    },
+    "source": "理论矿物组成"
+  },
+  {
+    "id": 6,
+    "name": "高岭土",
+    "formula": "Al2Si2O5(OH)4",
+    "category": "黏土类",
+    "oxides": {
+      "K2O": 0,
+      "Na2O": 0,
+      "CaO": 0,
+      "MgO": 0,
+      "Al2O3": 39.5,
+      "SiO2": 46.5
+    },
+    "source": "理论矿物组成"
+  },
+  {
+    "id": 7,
+    "name": "滑石",
+    "formula": "Mg3Si4O10(OH)2",
+    "category": "镁质原料",
+    "oxides": {
+      "K2O": 0,
+      "Na2O": 0,
+      "CaO": 0,
+      "MgO": 31.9,
+      "Al2O3": 0,
+      "SiO2": 63.4
+    },
+    "source": "理论矿物组成"
+  },
+  {
+    "id": 8,
+    "name": "白云石",
+    "formula": "CaMg(CO3)2",
+    "category": "钙镁原料",
+    "oxides": {
+      "K2O": 0,
+      "Na2O": 0,
+      "CaO": 30.4,
+      "MgO": 21.9,
+      "Al2O3": 0,
+      "SiO2": 0
+    },
+    "source": "理论矿物组成"
+  },
+  {
+    "id": 9,
+    "name": "氧化锌",
+    "formula": "ZnO",
+    "category": "辅助熔剂",
+    "oxides": {
+      "K2O": 0,
+      "Na2O": 0,
+      "CaO": 0,
+      "MgO": 0,
+      "ZnO": 100,
+      "Al2O3": 0,
+      "SiO2": 0
+    },
+    "source": "工业原料"
+  },
+  {
+    "id": 10,
+    "name": "碳酸钡",
+    "formula": "BaCO3",
+    "category": "钡质原料",
+    "oxides": {
+      "K2O": 0,
+      "Na2O": 0,
+      "CaO": 0,
+      "MgO": 0,
+      "BaO": 77.7,
+      "Al2O3": 0,
+      "SiO2": 0
+    },
+    "source": "工业原料"
+  }
+]
