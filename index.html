@@ -14,41 +14,69 @@
 
 body {
 
-    font-family:
-    Arial,
-    sans-serif;
+    font-family: Arial, sans-serif;
 
-    max-width:800px;
+    max-width: 800px;
 
-    margin:auto;
+    margin: auto;
 
-    padding:20px;
+    padding: 20px;
 
-    background:#f5f2eb;
+    background: #f5f2eb;
 
 }
 
 
 h1 {
 
-    text-align:center;
+    text-align: center;
 
-    color:#5c4033;
+    color: #5c4033;
 
 }
 
 
 .search {
 
-    width:100%;
+    width: 100%;
 
-    padding:12px;
+    padding: 12px;
 
-    font-size:16px;
+    font-size: 16px;
 
-    border-radius:8px;
+    border-radius: 8px;
 
-    border:1px solid #ccc;
+    border: 1px solid #ccc;
+
+    box-sizing: border-box;
+
+}
+
+
+
+#categories {
+
+    margin-top:20px;
+
+}
+
+
+
+button {
+
+    padding:8px 15px;
+
+    margin:5px;
+
+    border:none;
+
+    border-radius:20px;
+
+    background:#8b6f47;
+
+    color:white;
+
+    cursor:pointer;
 
 }
 
@@ -67,6 +95,7 @@ h1 {
 }
 
 
+
 .name {
 
     font-size:22px;
@@ -76,19 +105,32 @@ h1 {
 }
 
 
-.info {
 
-    line-height:1.8;
+.name a {
+
+    color:#5c4033;
+
+    text-decoration:none;
+
+}
+
+
+
+.info {
 
     margin-top:10px;
 
+    line-height:1.8;
+
 }
+
 
 
 </style>
 
 
 </head>
+
 
 
 <body>
@@ -99,11 +141,21 @@ h1 {
 </h1>
 
 
+
 <input
+
 class="search"
+
 id="search"
+
 placeholder="搜索釉名，例如：青釉"
->
+
+/>
+
+
+
+<div id="categories"></div>
+
 
 
 <div id="list"></div>
@@ -117,20 +169,124 @@ let glazes=[];
 
 
 
+// 加载釉方数据
+
 fetch("glazes.json")
 
 .then(response=>response.json())
 
 .then(data=>{
 
+
     glazes=data;
 
+
+    showCategories();
+
+
     showGlazes(glazes);
+
 
 });
 
 
 
+
+
+// 显示分类按钮
+
+function showCategories(){
+
+
+    let categories=[
+
+        "全部",
+
+        ...new Set(
+
+            glazes.map(
+
+                item=>item.category
+
+            )
+
+        )
+
+    ];
+
+
+
+    let html="";
+
+
+
+    categories.forEach(category=>{
+
+
+        html += `
+
+        <button onclick="filterCategory('${category}')">
+
+        ${category}
+
+        </button>
+
+        `;
+
+
+    });
+
+
+
+    document
+
+    .getElementById("categories")
+
+    .innerHTML=html;
+
+
+}
+
+
+
+
+// 分类筛选
+
+function filterCategory(category){
+
+
+
+    if(category==="全部"){
+
+
+        showGlazes(glazes);
+
+
+        return;
+
+
+    }
+
+
+
+    let result = glazes.filter(
+
+        item=>item.category===category
+
+    );
+
+
+
+    showGlazes(result);
+
+
+
+}
+
+
+
+
+// 显示釉方列表
 
 function showGlazes(data){
 
@@ -138,37 +294,50 @@ function showGlazes(data){
     let html="";
 
 
+
     data.forEach(item=>{
 
 
         html += `
+
 
         <div class="card">
 
 
         <div class="name">
 
-<a href="detail.html?id=${item.id}">
-${item.name}
-</a>
 
-</div>
+        <a href="detail.html?id=${item.id}">
+
+        ${item.name}
+
+        </a>
+
+
+        </div>
+
 
 
         <div class="info">
 
 
         分类：
+
         ${item.category}
+
         <br>
 
 
         温度：
+
         ${item.temperature}
+
+
         <br>
 
 
         气氛：
+
         ${item.atmosphere}
 
 
@@ -185,7 +354,12 @@ ${item.name}
 
 
 
-    document.getElementById("list").innerHTML=html;
+    document
+
+    .getElementById("list")
+
+    .innerHTML=html;
+
 
 
 }
@@ -193,18 +367,27 @@ ${item.name}
 
 
 
+// 搜索
+
+
 document
+
 .getElementById("search")
+
 .addEventListener(
+
 "input",
+
 function(){
+
 
 
     let keyword=this.value;
 
 
-    let result=
-    glazes.filter(item=>
+
+    let result=glazes.filter(item=>
+
 
         item.name.includes(keyword)
 
@@ -212,19 +395,29 @@ function(){
 
         item.category.includes(keyword)
 
+        ||
+
+        item.atmosphere.includes(keyword)
+
+
     );
+
 
 
     showGlazes(result);
 
 
-});
+
+}
+
+);
+
 
 
 </script>
 
 
-
 </body>
+
 
 </html>
