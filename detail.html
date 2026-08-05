@@ -7,61 +7,127 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>釉方详情</title>
+<title>守艺人 · 釉方详情</title>
 
 
 <style>
 
-body{
+body {
 
-font-family:Arial,sans-serif;
+    font-family: Arial, sans-serif;
 
-max-width:800px;
+    max-width:800px;
 
-margin:auto;
+    margin:auto;
 
-padding:20px;
+    padding:20px;
 
-background:#f5f2eb;
-
-}
-
-
-.card{
-
-background:white;
-
-padding:25px;
-
-border-radius:12px;
+    background:#f5f2eb;
 
 }
 
 
-h1{
+.back {
 
-color:#5c4033;
-
-}
-
-
-.item{
-
-margin-top:15px;
-
-line-height:1.8;
+    margin-bottom:20px;
 
 }
 
 
-.back{
+.back a {
 
-margin-bottom:20px;
+    color:#5c4033;
+
+    text-decoration:none;
 
 }
+
+
+
+.card {
+
+    background:white;
+
+    padding:25px;
+
+    border-radius:12px;
+
+}
+
+
+
+h1 {
+
+    color:#5c4033;
+
+}
+
+
+
+.section {
+
+    margin-top:25px;
+
+}
+
+
+
+.section h3 {
+
+    border-bottom:1px solid #ddd;
+
+    padding-bottom:5px;
+
+}
+
+
+
+.info {
+
+    line-height:1.9;
+
+}
+
+
+
+.ingredient {
+
+    display:flex;
+
+    justify-content:space-between;
+
+    background:#f7f5f0;
+
+    padding:8px;
+
+    margin:5px 0;
+
+    border-radius:5px;
+
+}
+
+
+
+.tag {
+
+    display:inline-block;
+
+    background:#8b6f47;
+
+    color:white;
+
+    padding:5px 12px;
+
+    border-radius:15px;
+
+    margin-right:5px;
+
+}
+
 
 
 </style>
+
 
 </head>
 
@@ -78,7 +144,9 @@ margin-bottom:20px;
 </div>
 
 
+
 <div id="content"></div>
+
 
 
 
@@ -86,9 +154,13 @@ margin-bottom:20px;
 
 
 let id =
+
 new URLSearchParams(
+
 window.location.search
+
 ).get("id");
+
 
 
 
@@ -100,119 +172,45 @@ fetch("glazes.json")
 
 
 let glaze =
+
 data.find(
+
 item=>item.id==id
+
 );
 
 
 
-let ingredient="";
+if(!glaze){
 
+document.getElementById("content").innerHTML=
 
-glaze.ingredients.forEach(i=>{
+"没有找到该釉方";
 
+return;
 
-ingredient +=
-
-`
-${i.material}
-：
-${i.ratio}
-<br>
-`
-
-});
+}
 
 
 
-document
-.getElementById("content")
-.innerHTML=
-
-`
-
-<div class="card">
-
-
-<h1>
-${glaze.name}
-</h1>
-
-
-<div class="item">
-
-分类：
-${glaze.category}
-
-</div>
-
-
-<div class="item">
-
-烧成温度：
-${glaze.temperature}
-
-</div>
-
-
-<div class="item">
-
-烧成气氛：
-${glaze.atmosphere}
-
-</div>
+let ingredients="";
 
 
 
-<h3>
-配方
-</h3>
-
-<div class="item">
-
-${ingredient}
-
-</div>
+glaze.ingredients.forEach(item=>{
 
 
+ingredients += `
 
-<h3>
-制作流程
-</h3>
+<div class="ingredient">
 
+<span>
+${item.material}
+</span>
 
-<div class="item">
-
-${glaze.process}
-
-</div>
-
-
-
-<h3>
-备注
-</h3>
-
-
-<div class="item">
-
-${glaze.notes}
-
-</div>
-
-
-
-<h3>
-来源
-</h3>
-
-
-<div class="item">
-
-${glaze.source}
-
-</div>
-
+<span>
+${item.ratio}
+</span>
 
 </div>
 
@@ -222,7 +220,236 @@ ${glaze.source}
 });
 
 
+
+
+let aliases="";
+
+
+
+if(glaze.alias){
+
+
+glaze.alias.forEach(item=>{
+
+
+aliases +=
+
+`
+
+<span class="tag">
+
+${item}
+
+</span>
+
+`;
+
+
+});
+
+
+}
+
+
+
+
+document
+
+.getElementById("content")
+
+.innerHTML=
+
+`
+
+
+<div class="card">
+
+
+<h1>
+
+${glaze.name}
+
+</h1>
+
+
+
+<div>
+
+${aliases}
+
+</div>
+
+
+
+
+<div class="section info">
+
+
+分类：
+
+${glaze.category}
+
+<br>
+
+
+颜色：
+
+${glaze.color}
+
+<br>
+
+
+釉面：
+
+${glaze.surface}
+
+<br>
+
+
+烧成温度：
+
+${glaze.temperature}
+
+<br>
+
+
+烧成气氛：
+
+${glaze.atmosphere}
+
+
+</div>
+
+
+
+
+
+<div class="section">
+
+
+<h3>
+
+适用泥料
+
+</h3>
+
+
+<div class="info">
+
+${glaze.clay}
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+<div class="section">
+
+
+<h3>
+
+配方
+
+</h3>
+
+
+${ingredients}
+
+
+</div>
+
+
+
+
+
+
+<div class="section">
+
+
+<h3>
+
+制作流程
+
+</h3>
+
+
+<div class="info">
+
+${glaze.process}
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+<div class="section">
+
+
+<h3>
+
+注意事项
+
+</h3>
+
+
+<div class="info">
+
+${glaze.notes}
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+<div class="section">
+
+
+<h3>
+
+资料来源
+
+</h3>
+
+
+<div class="info">
+
+${glaze.source}
+
+</div>
+
+
+</div>
+
+
+
+</div>
+
+
+`;
+
+
+
+});
+
+
+
 </script>
+
 
 
 </body>
