@@ -12,100 +12,157 @@
 
 <style>
 
-body {
+body{
 
-    font-family: Arial, sans-serif;
-    max-width:800px;
-    margin:auto;
-    padding:20px;
-    background:#f5f2eb;
+font-family:Arial,sans-serif;
 
-}
+max-width:800px;
 
+margin:auto;
 
-h1 {
+padding:20px;
 
-    text-align:center;
-    color:#5c4033;
-
-}
-
-
-.search {
-
-    width:100%;
-    padding:12px;
-    font-size:16px;
-    border-radius:8px;
-    border:1px solid #ccc;
-    box-sizing:border-box;
+background:#f5f2eb;
 
 }
 
 
 
-button {
+h1{
 
-    padding:8px 15px;
-    margin:5px;
-    border:none;
-    border-radius:20px;
-    background:#8b6f47;
-    color:white;
-    cursor:pointer;
+text-align:center;
+
+color:#5c4033;
 
 }
 
 
 
-.card {
+.top{
 
-    background:white;
-    margin-top:20px;
-    padding:20px;
-    border-radius:12px;
+text-align:center;
 
-}
-
-
-
-.name {
-
-    font-size:22px;
-    font-weight:bold;
-
-}
-
-
-.name a {
-
-    color:#5c4033;
-    text-decoration:none;
-
-}
-
-
-.info {
-
-    margin-top:10px;
-    line-height:1.8;
+margin-bottom:20px;
 
 }
 
 
 
-.tag {
+.submit{
 
-    display:inline-block;
-    background:#eee;
-    padding:4px 10px;
-    border-radius:15px;
-    margin:3px;
+display:inline-block;
+
+background:#8b6f47;
+
+color:white;
+
+padding:10px 20px;
+
+border-radius:20px;
+
+text-decoration:none;
+
+}
+
+
+
+.search{
+
+width:100%;
+
+padding:12px;
+
+font-size:16px;
+
+border-radius:8px;
+
+border:1px solid #ccc;
+
+box-sizing:border-box;
+
+}
+
+
+
+button{
+
+padding:8px 15px;
+
+margin:5px;
+
+border:none;
+
+border-radius:20px;
+
+background:#8b6f47;
+
+color:white;
+
+}
+
+
+
+.card{
+
+background:white;
+
+margin-top:20px;
+
+padding:20px;
+
+border-radius:12px;
+
+}
+
+
+
+.name{
+
+font-size:22px;
+
+font-weight:bold;
+
+}
+
+
+
+.name a{
+
+color:#5c4033;
+
+text-decoration:none;
+
+}
+
+
+
+.info{
+
+line-height:1.8;
+
+margin-top:10px;
+
+}
+
+
+
+.tag{
+
+display:inline-block;
+
+background:#eee;
+
+padding:4px 10px;
+
+border-radius:15px;
+
+margin:3px;
 
 }
 
 
 </style>
+
 
 </head>
 
@@ -116,8 +173,23 @@ button {
 
 
 <h1>
+
 守艺人 · 釉方库
+
 </h1>
+
+
+
+<div class="top">
+
+<a class="submit" href="submit.html">
+
+＋ 提交釉方
+
+</a>
+
+</div>
+
 
 
 
@@ -140,11 +212,11 @@ placeholder="搜索釉名、分类、用途"
 
 
 
+
 <script>
 
 
 let glazes=[];
-
 
 
 
@@ -165,7 +237,6 @@ showGlazes(glazes);
 
 
 });
-
 
 
 
@@ -210,15 +281,12 @@ ${c}
 `;
 
 
+
 });
 
 
 
-document
-
-.getElementById("categories")
-
-.innerHTML=html;
+document.getElementById("categories").innerHTML=html;
 
 
 }
@@ -232,9 +300,7 @@ function filterCategory(category){
 
 if(category==="全部"){
 
-
 showGlazes(glazes);
-
 
 return;
 
@@ -242,18 +308,15 @@ return;
 
 
 
-let result=
+showGlazes(
 
 glazes.filter(
 
 item=>item.category===category
 
+)
+
 );
-
-
-
-showGlazes(result);
-
 
 
 }
@@ -262,8 +325,8 @@ showGlazes(result);
 
 
 
-function showGlazes(data){
 
+function showGlazes(data){
 
 
 let html="";
@@ -273,7 +336,9 @@ let html="";
 data.forEach(item=>{
 
 
+
 let usage="";
+
 
 
 if(item.usage){
@@ -300,9 +365,7 @@ ${u}
 
 
 
-
 html+=`
-
 
 <div class="card">
 
@@ -331,37 +394,35 @@ ${item.category}
 
 颜色：
 
-${item.color}
+${item.color || "暂无"}
 
 <br>
 
 
 温度：
 
-${item.temperature}
+${item.temperature || "暂无"}
 
 <br>
 
 
 难度：
 
-${item.difficulty || "未知"}
+${item.difficulty || "暂无"}
 
 <br>
 
 
 稳定性：
 
-${item.stability || "未知"}
+${item.stability || "暂无"}
 
 <br>
-
 
 
 用途：
 
 ${usage}
-
 
 
 </div>
@@ -373,20 +434,14 @@ ${usage}
 `;
 
 
-
 });
 
 
 
-document
-
-.getElementById("list")
-
-.innerHTML=html;
+document.getElementById("list").innerHTML=html;
 
 
 }
-
 
 
 
