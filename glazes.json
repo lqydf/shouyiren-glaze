@@ -1,151 +1,70 @@
 [
   {
     "id": 1,
-
     "name": "传统青釉",
-
     "alias": [
       "青瓷釉",
       "石灰釉"
     ],
-
+    "image": "images/qingyou.jpg",
     "category": "青釉",
-
     "color": "青绿色",
-
     "surface": "半透明光泽",
-
     "temperature": "1280℃",
-
     "atmosphere": "还原焰",
-
-
     "ingredients": [
-
       {
         "material": "长石",
         "ratio": "45%"
       },
-
       {
         "material": "石英",
         "ratio": "25%"
       },
-
       {
         "material": "高岭土",
         "ratio": "15%"
       },
-
       {
         "material": "石灰石",
         "ratio": "10%"
       }
-
     ],
-
-
-    "process":
-
-    "原料球磨，过筛，调浆，施釉，高温还原烧成",
-
-
-    "clay":
-
-    "高白泥、瓷土",
-
-
-    "notes":
-
-    "温度和还原气氛影响青色深浅",
-
-
-    "source":
-
-    "公开资料整理"
-
+    "process": "原料球磨，过筛，调浆，施釉，高温还原烧成",
+    "clay": "高白泥、瓷土",
+    "notes": "温度和还原气氛影响青色深浅",
+    "source": "公开资料整理"
   },
-
-
   {
-    "id":2,
-
-    "name":"透明釉",
-
-    "alias":[
+    "id": 2,
+    "name": "透明釉",
+    "alias": [
       "亮釉",
       "玻璃釉"
     ],
-
-
-    "category":
-
-    "透明釉",
-
-
-    "color":
-
-    "透明",
-
-
-    "surface":
-
-    "高光",
-
-
-    "temperature":
-
-    "1250℃",
-
-
-    "atmosphere":
-
-    "氧化焰",
-
-
-    "ingredients":[
-
-
+    "image": "",
+    "category": "透明釉",
+    "color": "透明",
+    "surface": "高光",
+    "temperature": "1250℃",
+    "atmosphere": "氧化焰",
+    "ingredients": [
       {
-        "material":"长石",
-        "ratio":"50%"
+        "material": "长石",
+        "ratio": "50%"
       },
-
-
       {
-        "material":"石英",
-        "ratio":"30%"
+        "material": "石英",
+        "ratio": "30%"
       },
-
-
       {
-        "material":"高岭土",
-        "ratio":"20%"
+        "material": "高岭土",
+        "ratio": "20%"
       }
-
-
     ],
-
-
-    "process":
-
-    "球磨过滤后施釉烧成",
-
-
-    "clay":
-
-    "普通陶土、瓷土",
-
-
-    "notes":
-
-    "常作为颜色釉基础釉",
-
-
-    "source":
-
-    "公开资料整理"
-
+    "process": "球磨过滤后施釉烧成",
+    "clay": "普通陶土、瓷土",
+    "notes": "常作为颜色釉基础釉",
+    "source": "公开资料整理"
   }
-
 ]
