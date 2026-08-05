@@ -1,0 +1,54 @@
+[
+  {
+    "id": 1,
+    "name": "传统青釉",
+    "category": "青釉",
+    "temperature": "1280℃",
+    "atmosphere": "还原焰",
+    "ingredients": [
+      {
+        "material": "长石",
+        "ratio": "45%"
+      },
+      {
+        "material": "石英",
+        "ratio": "25%"
+      },
+      {
+        "material": "高岭土",
+        "ratio": "15%"
+      },
+      {
+        "material": "石灰石",
+        "ratio": "10%"
+      }
+    ],
+    "process": "原料球磨，过筛，调浆，施釉，高温烧成",
+    "notes": "适用于高白泥，可产生青绿色效果",
+    "source": "公开资料整理"
+  },
+  {
+    "id": 2,
+    "name": "透明釉",
+    "category": "透明釉",
+    "temperature": "1250℃",
+    "atmosphere": "氧化焰",
+    "ingredients": [
+      {
+        "material": "长石",
+        "ratio": "50%"
+      },
+      {
+        "material": "石英",
+        "ratio": "30%"
+      },
+      {
+        "material": "高岭土",
+        "ratio": "20%"
+      }
+    ],
+    "process": "球磨后过滤，调整浓度，浸釉",
+    "notes": "基础透明釉，可作为颜色釉底釉",
+    "source": "公开资料整理"
+  }
+]
