@@ -427,12 +427,19 @@ function renderDetail() {
     const style = getGlazeStyle(glaze.category);
     const detailImg = document.getElementById("detailImg");
     detailImg.style.background = style.bg;
+    detailImg.innerHTML = "";
     if (glaze.image && glaze.image.trim() !== "") {
-        detailImg.innerHTML = '<img src="' + glaze.image + '" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;z-index:1;border-radius:inherit;" onerror="this.style.display='none'">' +
-            '<div class="shine" id="detailShine" style="background:' + style.shine + ';position:absolute;inset:0;z-index:2;pointer-events:none;"></div>';
-    } else {
-        detailImg.innerHTML = '<div class="shine" id="detailShine" style="background:' + style.shine + '"></div>';
+        const img = document.createElement("img");
+        img.src = glaze.image;
+        img.style.cssText = "width:100%;height:100%;object-fit:cover;position:absolute;inset:0;z-index:1;border-radius:inherit;";
+        img.onerror = function() { this.style.display = "none"; };
+        detailImg.appendChild(img);
     }
+    const shine = document.createElement("div");
+    shine.className = "shine";
+    shine.id = "detailShine";
+    shine.style.cssText = "background:" + style.shine + ";position:absolute;inset:0;z-index:2;pointer-events:none;";
+    detailImg.appendChild(shine);
 
     let tagsHtml = "";
     tagsHtml += '<span class="tag tag-cat">' + glaze.category + '</span>';
