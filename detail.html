@@ -188,6 +188,11 @@ nav {
     border-left-color: var(--success);
     color: var(--success);
 }
+.note-box.info {
+    background: #e3f2fd;
+    border-left-color: #2196f3;
+    color: #1565c0;
+}
 
 .info-text {
     font-size: 13px; color: var(--text);
@@ -392,6 +397,7 @@ footer p { font-size: 12px; color: #c4b8a8; }
 
 <script>
 let glazes = [];
+let materials = [];
 let id = new URLSearchParams(window.location.search).get("id");
 
 function fetchWithTimeout(url, timeout = 5000) {
@@ -401,22 +407,185 @@ function fetchWithTimeout(url, timeout = 5000) {
     ]);
 }
 
-async function loadGlazes() {
+async function loadData() {
+    // 加载釉方数据
     try {
         const res = await fetchWithTimeout("glazes_glazy_preview.json", 8000);
-        if (res.ok) { glazes = await res.json(); renderDetail(); return; }
-    } catch (e) { console.log("主数据加载失败:", e.message); }
+        if (res.ok) glazes = await res.json();
+    } catch (e) {
+        try {
+            const res = await fetchWithTimeout("glazes.json", 5000);
+            if (res.ok) glazes = await res.json();
+        } catch (e2) {}
+    }
+    
+    // 加载原料数据
     try {
-        const res = await fetchWithTimeout("glazes.json", 5000);
-        if (res.ok) { glazes = await res.json(); renderDetail(); return; }
-    } catch (e) { console.log("备用数据加载失败:", e.message); }
-    document.getElementById("detailName").textContent = "数据加载失败，请检查文件路径或通过本地服务器访问";
+        const res = await fetchWithTimeout("materials.json", 5000);
+        if (res.ok) materials = await res.json();
+    } catch (e) {
+        console.log("原料数据加载失败:", e.message);
+    }
+    
+    renderDetail();
 }
 
-loadGlazes();
+loadData();
+
+// ========== 塞格尔式反推原料配比算法 ==========
+
+const OXIDE_MW = {
+    K2O: 94.20, Na2O: 61.98, Li2O: 29.88, CaO: 56.08, MgO: 40.30,
+    ZnO: 81.38, BaO: 153.33, SrO: 103.62, Al2O3: 101.96, B2O3: 69.62,
+    SiO2: 60.08, TiO2: 79.87, P2O5: 141.94, Fe2O3: 159.69,
+    CoO: 74.93, CuO: 79.55, MnO2: 86.94, Cr2O3: 151.99, NiO: 74.69
+};
+
+// 塞格尔式 → 氧化物重量百分比（烧后）
+function segerToOxideWt(seger) {
+    let oxides = {};
+    let total = 0;
+    for (let ox in seger) {
+        if (OXIDE_MW[ox]) {
+            oxides[ox] = seger[ox] * OXIDE_MW[ox];
+            total += oxides[ox];
+        }
+    }
+    for (let ox in oxides) {
+        oxides[ox] = oxides[ox] / total * 100;
+    }
+    return oxides;
+}
+
+// 非负最小二乘（坐标下降法）
+function nnls(A, b, maxIter, tol) {
+    maxIter = maxIter || 2000;
+    tol = tol || 1e-6;
+    let m = A.length;
+    let n = A[0].length;
+    let x = new Array(n).fill(0);
+    
+    for (let iter = 0; iter < maxIter; iter++) {
+        let maxChange = 0;
+        for (let j = 0; j < n; j++) {
+            let residual = b.slice();
+            for (let i = 0; i < m; i++) {
+                for (let k = 0; k < n; k++) {
+                    if (k !== j) residual[i] -= A[i][k] * x[k];
+                }
+            }
+            let num = 0, den = 0;
+            for (let i = 0; i < m; i++) {
+                num += A[i][j] * residual[i];
+                den += A[i][j] * A[i][j];
+            }
+            let newX = den > 1e-10 ? num / den : 0;
+            if (newX < 0) newX = 0;
+            maxChange = Math.max(maxChange, Math.abs(newX - x[j]));
+            x[j] = newX;
+        }
+        if (maxChange < tol) break;
+    }
+    return x;
+}
+
+// 反推原料配比
+function reverseRecipe(segerFormula) {
+    if (!materials || materials.length === 0) return null;
+    
+    // 1. 目标氧化物重量百分比
+    let target = segerToOxideWt(segerFormula);
+    let oxideNames = Object.keys(target);
+    
+    // 2. 准备原料（烧后基准）
+    let matList = materials.map(function(m) {
+        let loi = m.LOI || 0;
+        let factor = 100 / (100 - loi);
+        let burned = {};
+        for (let ox in m.analysis) {
+            if (target[ox] !== undefined) {
+                burned[ox] = m.analysis[ox] * factor;
+            }
+        }
+        return { name: m.name, burned: burned, loi: loi, raw: m.analysis };
+    });
+    
+    // 3. 构建矩阵 A 和向量 b
+    let A = [];
+    let b = [];
+    for (let oi = 0; oi < oxideNames.length; oi++) {
+        let ox = oxideNames[oi];
+        let row = [];
+        for (let mi = 0; mi < matList.length; mi++) {
+            row.push(matList[mi].burned[ox] || 0);
+        }
+        A.push(row);
+        b.push(target[ox]);
+    }
+    
+    // 4. 求解
+    let solution = nnls(A, b);
+    
+    // 5. 转换回生料百分比
+    let ingredients = [];
+    let totalRaw = 0;
+    for (let idx = 0; idx < solution.length; idx++) {
+        if (solution[idx] > 0.01) {
+            let rawAmt = solution[idx] * (100 - matList[idx].loi) / 100;
+            ingredients.push({
+                material: matList[idx].name,
+                ratio: rawAmt,
+                burnedRatio: solution[idx]
+            });
+            totalRaw += rawAmt;
+        }
+    }
+    
+    // 归一化到 100%
+    for (let i = 0; i < ingredients.length; i++) {
+        ingredients[i].ratio = ingredients[i].ratio / totalRaw * 100;
+    }
+    
+    // 按百分比排序
+    ingredients.sort(function(a, b) { return b.ratio - a.ratio; });
+    
+    // 计算误差
+    let actual = {};
+    for (let ox in target) actual[ox] = 0;
+    for (let i = 0; i < ingredients.length; i++) {
+        let item = ingredients[i];
+        let mat = materials.find(function(m) { return m.name === item.material; });
+        if (!mat) continue;
+        for (let ox in target) {
+            actual[ox] += item.ratio * (mat.analysis[ox] || 0) / 100;
+        }
+    }
+    let actTotal = 0;
+    for (let ox in actual) actTotal += actual[ox];
+    for (let ox in actual) actual[ox] = actual[ox] / actTotal * 100;
+    
+    let sumSq = 0;
+    for (let ox in target) {
+        let diff = actual[ox] - target[ox];
+        sumSq += diff * diff;
+    }
+    let rmse = Math.sqrt(sumSq / Object.keys(target).length);
+    
+    // 找出缺失的氧化物（目标中有但原料库无法提供的）
+    let missingOxides = [];
+    for (let ox in target) {
+        if (actual[ox] < target[ox] * 0.5 && target[ox] > 1) {
+            missingOxides.push(ox);
+        }
+    }
+    
+    return { ingredients: ingredients, rmse: rmse, missingOxides: missingOxides };
+}
+
+// ========== 渲染函数 ==========
 
 function renderDetail() {
-    let glaze = glazes.find(item => item.id == id);
+    let glaze = glazes.find(function(item) { return item.id == id; });
     if (!glaze) {
         document.getElementById("detailName").textContent = "未找到该釉方";
         return;
@@ -424,7 +593,7 @@ function renderDetail() {
 
     document.getElementById("detailName").textContent = glaze.name;
 
-    const style = getGlazeStyle(glaze.category);
+    let style = getGlazeStyle(glaze.category);
     document.getElementById("detailImg").style.background = style.bg;
     document.getElementById("detailShine").style.background = style.shine;
 
@@ -432,12 +601,12 @@ function renderDetail() {
     tagsHtml += '<span class="tag tag-cat">' + glaze.category + '</span>';
     tagsHtml += '<span class="tag tag-atm">' + (glaze.atmosphere || "未知") + '</span>';
     if (glaze.difficulty) {
-        const diffColor = glaze.difficulty === "简单" ? "#4a7c3f" :
-                          glaze.difficulty === "困难" ? "#c62828" : "#8b6f47";
+        let diffColor = glaze.difficulty === "简单" ? "#4a7c3f" :
+                        glaze.difficulty === "困难" ? "#c62828" : "#8b6f47";
         tagsHtml += '<span class="tag" style="background:#f0ebe3;color:' + diffColor + ';">' + glaze.difficulty + '</span>';
     }
     if (glaze.usage && glaze.usage.length > 0) {
-        glaze.usage.forEach(u => {
+        glaze.usage.forEach(function(u) {
             tagsHtml += '<span class="tag-usage">' + u + '</span>';
         });
     }
@@ -452,9 +621,9 @@ function renderDetail() {
         let roGroup = [], r2o3Group = [], ro2Group = [];
         for (let ox in glaze.seger_formula) {
             let val = glaze.seger_formula[ox];
-            if (["K2O","Na2O","Li2O","CaO","MgO","ZnO","BaO","SrO","CoO","CuO","NiO"].includes(ox)) {
+            if (["K2O","Na2O","Li2O","CaO","MgO","ZnO","BaO","SrO","CoO","CuO","NiO"].indexOf(ox) >= 0) {
                 roGroup.push(ox + " " + val.toFixed(3));
-            } else if (["Al2O3","B2O3","Cr2O3"].includes(ox)) {
+            } else if (["Al2O3","B2O3","Cr2O3"].indexOf(ox) >= 0) {
                 r2o3Group.push(ox + " " + val.toFixed(3));
             } else {
                 ro2Group.push(ox + " " + val.toFixed(3));
@@ -466,32 +635,74 @@ function renderDetail() {
             '<div><strong>R₂O₃</strong>　' + (r2o3Group.join(" · ") || "—") + '</div>' +
             '<div><strong>RO₂</strong>　 ' + (ro2Group.join(" · ") || "—") + '</div>';
 
-        const sio2 = glaze.seger_formula.SiO2 || 0;
-        const al2o3 = glaze.seger_formula.Al2O3 || 0;
-        const ratio = al2o3 ? (sio2 / al2o3).toFixed(2) : "";
+        let sio2 = glaze.seger_formula.SiO2 || 0;
+        let al2o3 = glaze.seger_formula.Al2O3 || 0;
+        let ratio = al2o3 ? (sio2 / al2o3).toFixed(2) : "";
         document.getElementById("segerMetrics").innerHTML =
             '<div class="metric-item"><div class="metric-value">' + ratio + '</div><div class="metric-label">SiO₂/Al₂O₃</div></div>' +
             '<div class="metric-item"><div class="metric-value">' + al2o3.toFixed(3) + '</div><div class="metric-label">Al₂O₃/RO</div></div>' +
             '<div class="metric-item"><div class="metric-value">—</div><div class="metric-label">CTE</div></div>';
     }
 
+    // 原料配比显示
     let recipeHtml = "";
     if (glaze.ingredients && glaze.ingredients.length > 0) {
-        glaze.ingredients.forEach(item => {
+        // 有原始原料配比
+        glaze.ingredients.forEach(function(item) {
             recipeHtml += '<div class="ingredient"><span>' + item.material + '</span><span>' + item.ratio + '</span></div>';
         });
         if (glaze.base_ratio_total) {
             recipeHtml += '<div style="margin-top:8px;font-size:12px;color:var(--text-muted);">基础釉合计：' + glaze.base_ratio_total + '</div>';
         }
+    } else if (glaze.seger_formula && materials.length > 0) {
+        // 无原料配比，但有塞格尔式 → AI 反推
+        let result = reverseRecipe(glaze.seger_formula);
+        if (result && result.ingredients.length > 0) {
+            recipeHtml +=
+                '<div class="note-box info">' +
+                    '<strong>🤖 AI 推算配方</strong><br>' +
+                    '此釉方来自 Glazy 数据库，原作者未公开原料配比。以下配方由系统根据塞格尔式自动反推生成，仅供参考。实际配方可能因原料品牌、纯度不同而有差异。' +
+                '</div>';
+            
+            result.ingredients.forEach(function(item) {
+                recipeHtml += '<div class="ingredient"><span>' + item.material + '</span><span>' + item.ratio.toFixed(2) + '%</span></div>';
+            });
+            
+            recipeHtml += '<div style="margin-top:10px;font-size:12px;color:var(--text-muted);">基础釉合计：100.00</div>';
+            
+            // 显示推算精度
+            let accuracyText = result.rmse < 1 ? "很高" : result.rmse < 3 ? "较高" : "一般";
+            let accuracyColor = result.rmse < 1 ? "var(--success)" : result.rmse < 3 ? "var(--warn)" : "#c62828";
+            recipeHtml += '<div style="margin-top:8px;font-size:11px;color:' + accuracyColor + ';">推算精度：' + accuracyText + ' (RMSE: ' + result.rmse.toFixed(2) + ')</div>';
+            
+            // 缺失氧化物提示
+            if (result.missingOxides.length > 0) {
+                recipeHtml += '<div class="note-box" style="margin-top:10px;">' +
+                    '<strong>⚠ 注意</strong><br>' +
+                    '以下氧化物在现有原料库中缺乏对应原料，推算结果可能偏差较大：' + result.missingOxides.join("、") +
+                '</div>';
+            }
+            
+            recipeHtml += '<div style="display:flex;gap:10px;margin-top:12px;">' +
+                '<button class="action-btn secondary" style="width:auto;padding:10px 16px;font-size:13px;" onclick="copySeger()">📋 复制塞格尔式</button>' +
+            '</div>';
+        } else {
+            recipeHtml =
+                '<div class="note-box">' +
+                    '<strong>⚠ 原料配比未公开</strong><br>' +
+                    '此釉方来自 Glazy 公开数据库，原作者仅提供了氧化物分析数据（塞格尔式），未公开具体原料配比。' +
+                '</div>' +
+                '<div style="display:flex;gap:10px;margin-top:12px;">' +
+                    '<a href="calculator.html" class="action-btn primary" style="text-decoration:none;display:inline-block;width:auto;padding:10px 16px;font-size:13px;">🧮 用塞格尔式反推配方</a>' +
+                    '<button class="action-btn secondary" style="width:auto;padding:10px 16px;font-size:13px;" onclick="copySeger()">📋 复制塞格尔式</button>' +
+                '</div>';
+        }
     } else {
+        // 既无原料配比，也无塞格尔式
         recipeHtml =
             '<div class="note-box">' +
                 '<strong>⚠ 原料配比未公开</strong><br>' +
-                '此釉方来自 Glazy 公开数据库，原作者仅提供了氧化物分析数据（塞格尔式），未公开具体原料配比。' +
-            '</div>' +
-            '<div style="display:flex;gap:10px;margin-top:12px;">' +
-                '<a href="calculator.html" class="action-btn primary" style="text-decoration:none;display:inline-block;width:auto;padding:10px 16px;font-size:13px;">🧮 用塞格尔式反推配方</a>' +
-                '<button class="action-btn secondary" style="width:auto;padding:10px 16px;font-size:13px;" onclick="copySeger()">📋 复制塞格尔式</button>' +
+                '此釉方未提供原料配比或塞格尔式数据。' +
             '</div>';
     }
     document.getElementById("recipeContent").innerHTML = recipeHtml;
@@ -515,9 +726,9 @@ function renderDetail() {
 
     if (glaze.seger_formula) {
         document.getElementById("predCard").style.display = "block";
-        const sio2 = glaze.seger_formula.SiO2 || 0;
-        const al2o3 = glaze.seger_formula.Al2O3 || 0;
-        const ratio = al2o3 ? sio2 / al2o3 : 0;
+        let sio2 = glaze.seger_formula.SiO2 || 0;
+        let al2o3 = glaze.seger_formula.Al2O3 || 0;
+        let ratio = al2o3 ? sio2 / al2o3 : 0;
 
         let temp = glaze.temperature || "温度未知";
         let gloss = ratio > 7 ? "透明亮光倾向" : ratio > 4 ? "正常光泽倾向" : "亚光或晶体倾向";
@@ -540,17 +751,17 @@ function renderDetail() {
 
 function renderSimilar(current) {
     if (!glazes.length) return;
-    let similar = glazes.filter(g =>
-        g.id !== current.id && g.category === current.category
-    ).slice(0, 3);
+    let similar = glazes.filter(function(g) {
+        return g.id !== current.id && g.category === current.category;
+    }).slice(0, 3);
 
     if (similar.length === 0) return;
 
     document.getElementById("similarCard").style.display = "block";
-    document.getElementById("similarContent").innerHTML = similar.map(g => {
-        const sio2 = g.seger_formula && g.seger_formula.SiO2 ? g.seger_formula.SiO2 : 0;
-        const al2o3 = g.seger_formula && g.seger_formula.Al2O3 ? g.seger_formula.Al2O3 : 0;
-        const ratio = al2o3 ? (sio2 / al2o3).toFixed(2) : "";
+    document.getElementById("similarContent").innerHTML = similar.map(function(g) {
+        let sio2 = g.seger_formula && g.seger_formula.SiO2 ? g.seger_formula.SiO2 : 0;
+        let al2o3 = g.seger_formula && g.seger_formula.Al2O3 ? g.seger_formula.Al2O3 : 0;
+        let ratio = al2o3 ? (sio2 / al2o3).toFixed(2) : "";
         return '<a href="detail.html?id=' + g.id + '" class="similar-item">' +
             '<div class="similar-name">' + g.name + '</div>' +
             '<div class="similar-meta">' + (g.temperature || "") + (ratio ? " · SiO₂/Al₂O₃ = " + ratio : "") + '</div>' +
@@ -559,19 +770,19 @@ function renderSimilar(current) {
 }
 
 function copySeger() {
-    const glaze = glazes.find(item => item.id == id);
+    let glaze = glazes.find(function(item) { return item.id == id; });
     if (!glaze || !glaze.seger_formula) return;
     let text = "Seger Formula:\n";
     for (let ox in glaze.seger_formula) {
         text += ox + ": " + glaze.seger_formula[ox].toFixed(3) + "\n";
     }
-    navigator.clipboard.writeText(text).then(() => {
+    navigator.clipboard.writeText(text).then(function() {
         alert("塞格尔式已复制到剪贴板");
     });
 }
 
 function getGlazeStyle(category) {
-    const styles = {
+    let styles = {
         "青釉": { bg: "linear-gradient(145deg, #a8c8a0 0%, #7db8a0 40%, #5a9a80 100%)", shine: "radial-gradient(ellipse at 30% 20%, rgba(255,255,255,0.25) 0%, transparent 60%)" },
         "白釉": { bg: "linear-gradient(145deg, #f8f4ee 0%, #ede6d8 50%, #ddd4c4 100%)", shine: "radial-gradient(ellipse at 30% 20%, rgba(255,255,255,0.4) 0%, transparent 50%)" },
         "黑釉": { bg: "linear-gradient(145deg, #3a3a3a 0%, #1a1a1a 50%, #0d0d0d 100%)", shine: "radial-gradient(ellipse at 70% 30%, rgba(255,255,255,0.08) 0%, transparent 50%)" },
