@@ -3,298 +3,652 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>守艺人 · 釉方详情</title>
+<title>釉方详情 · 守艺人</title>
 <style>
+:root {
+    --bg: #faf8f5;
+    --card: #ffffff;
+    --text: #5c4033;
+    --text-light: #8b7e6e;
+    --text-muted: #a89a8a;
+    --primary: #8b6f47;
+    --primary-hover: #7a6240;
+    --border: #e8e0d8;
+    --border-light: #f0ebe3;
+    --success: #2e7d32;
+    --warn: #e65100;
+    --shadow: 0 1px 4px rgba(92,64,51,0.05);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
 body {
-    font-family: Arial, "Noto Sans SC", sans-serif;
-    max-width: 800px;
-    margin: auto;
-    padding: 20px;
-    background: #f5f2eb;
+    font-family: "Noto Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
 }
 
-.back {
-    margin-bottom: 20px;
+nav {
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
-
-.back a {
-    color: #5c4033;
+.nav-inner {
+    max-width: 900px; margin: 0 auto;
+    padding: 0 20px;
+    display: flex; align-items: center; justify-content: space-between;
+}
+.logo {
+    display: flex; align-items: center; gap: 10px;
     text-decoration: none;
 }
+.logo-icon {
+    width: 36px; height: 36px;
+    background: var(--primary); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 18px; font-weight: bold;
+}
+.logo-text {
+    font-size: 20px; font-weight: 700;
+    color: var(--text); letter-spacing: 2px;
+}
+.nav-links {
+    display: flex; gap: 28px;
+}
+.nav-links a {
+    font-size: 14px; color: var(--text-light);
+    text-decoration: none; padding-bottom: 2px;
+    transition: color 0.2s;
+}
+.nav-links a:hover, .nav-links a.active {
+    color: var(--primary);
+    border-bottom: 2px solid var(--primary);
+}
 
+/* 返回按钮 */
+.back-bar {
+    max-width: 900px; margin: 0 auto;
+    padding: 16px 20px;
+}
+.back-bar a {
+    font-size: 13px; color: var(--primary);
+    text-decoration: none;
+}
+.back-bar a:hover { text-decoration: underline; }
+
+/* 主布局 */
+.detail-grid {
+    max-width: 900px; margin: 0 auto;
+    padding: 0 20px 24px;
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 20px;
+}
+@media (max-width: 768px) {
+    .detail-grid { grid-template-columns: 1fr; }
+}
+
+/* 卡片 */
 .card {
-    background: white;
-    padding: 25px;
+    background: var(--card);
+    border-radius: 14px; padding: 24px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    margin-bottom: 16px;
+}
+.card h3 {
+    font-size: 15px; color: var(--text);
+    margin: 0 0 14px;
+}
+
+/* 标题区 */
+.detail-header {
+    display: flex; align-items: flex-start; gap: 16px;
+    margin-bottom: 4px;
+}
+.detail-img {
+    width: 100px; height: 100px;
     border-radius: 12px;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
 }
-
-h1 {
-    color: #5c4033;
+.detail-img .emoji { font-size: 40px; opacity: 0.4; }
+.detail-title {
+    font-size: 22px; font-weight: 700;
+    color: var(--text); margin: 0 0 8px;
 }
-
-.image {
-    width: 100%;
-    border-radius: 12px;
-    margin-bottom: 20px;
+.detail-tags {
+    display: flex; gap: 6px; flex-wrap: wrap;
+    margin-bottom: 8px;
 }
-
-.section {
-    margin-top: 25px;
-}
-
-.section h3 {
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 6px;
-    color: #5c4033;
-}
-
-.info {
-    line-height: 1.9;
-    color: #444;
-}
-
 .tag {
-    display: inline-block;
-    background: #8b6f47;
-    color: white;
-    padding: 5px 12px;
-    border-radius: 20px;
-    margin: 4px;
+    font-size: 11px; padding: 2px 10px;
+    border-radius: 10px; font-weight: 500;
+}
+.tag-cat { background: #e8f0e4; color: #4a7c3f; }
+.tag-atm { background: var(--border-light); color: var(--primary); }
+.tag-usage {
+    background: var(--border-light); color: var(--primary);
+    font-size: 11px; padding: 2px 10px;
+    border-radius: 10px;
+}
+.detail-meta {
+    font-size: 13px; color: var(--text-light);
+    line-height: 1.8;
 }
 
-.ingredient {
-    display: flex;
-    justify-content: space-between;
-    background: #f5f2eb;
-    padding: 8px;
-    margin: 5px 0;
-    border-radius: 6px;
-}
-
+/* 塞格尔式 */
 .seger-box {
-    background: #faf7f0;
-    border-left: 4px solid #8b6f47;
+    background: var(--bg);
+    border-left: 3px solid var(--primary);
+    padding: 14px 18px;
+    border-radius: 0 10px 10px 0;
+    font-family: "Courier New", "Consolas", monospace;
+    font-size: 14px; line-height: 2.2;
+    color: var(--text);
+}
+
+/* 关键比例 */
+.metric-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+}
+.metric-item {
+    background: var(--border-light);
+    padding: 10px; border-radius: 8px;
+    text-align: center;
+}
+.metric-value {
+    font-size: 18px; font-weight: 700;
+    color: var(--text);
+}
+.metric-label {
+    font-size: 11px; color: var(--text-muted);
+    margin-top: 2px;
+}
+
+/* 原料配比 */
+.ingredient {
+    display: flex; justify-content: space-between;
+    background: var(--bg); padding: 8px;
+    margin: 5px 0; border-radius: 6px;
+    font-size: 13px;
+}
+
+/* 提示框 */
+.note-box {
+    background: #fff3e0;
+    border-left: 3px solid #ff9800;
     padding: 12px 16px;
     margin: 10px 0;
     border-radius: 0 8px 8px 0;
-    font-family: "Courier New", monospace;
-    line-height: 2;
+    font-size: 12px; color: var(--warn);
+}
+.note-box.ok {
+    background: #e8f5e9;
+    border-left-color: var(--success);
+    color: var(--success);
 }
 
-.seger-row {
-    display: flex;
-    gap: 15px;
-    flex-wrap: wrap;
+/* 信息文本 */
+.info-text {
+    font-size: 13px; color: var(--text);
+    line-height: 1.9;
 }
-
-.seger-item {
+.info-text strong {
+    color: var(--text);
     display: inline-block;
+    min-width: 60px;
 }
 
-.source-note {
+/* 侧边栏 */
+.sidebar-card {
+    background: var(--card);
+    border-radius: 14px; padding: 20px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    margin-bottom: 16px;
+}
+.sidebar-card h3 {
+    font-size: 14px; color: var(--text);
+    margin: 0 0 12px;
+}
+
+/* 预测标签 */
+.pred-tags {
+    display: flex; flex-direction: column; gap: 6px;
+}
+.pred-tag {
+    padding: 6px 12px;
+    background: var(--primary); color: #fff;
+    border-radius: 12px; font-size: 12px;
+    text-align: center;
+}
+.pred-tag.secondary { background: #a1887f; }
+
+/* 限制公式 */
+.limit-item {
+    display: flex; justify-content: space-between;
+    align-items: center; padding: 6px 0;
+    border-bottom: 1px solid var(--border-light);
     font-size: 12px;
-    color: #999;
-    margin-top: 15px;
-    padding-top: 15px;
-    border-top: 1px solid #eee;
+}
+.limit-item:last-child { border-bottom: none; }
+.limit-pass { color: var(--success); font-weight: 600; }
+.limit-warn { color: var(--warn); font-weight: 600; }
+
+/* 相似釉方 */
+.similar-item {
+    padding: 10px;
+    background: var(--bg); border-radius: 8px;
+    cursor: pointer; border: 1px solid var(--border);
+    margin-bottom: 8px; transition: all 0.2s;
+    text-decoration: none; color: inherit;
+    display: block;
+}
+.similar-item:hover {
+    border-color: var(--primary);
+    background: var(--border-light);
+}
+.similar-name {
+    font-size: 13px; font-weight: 600;
+    color: var(--text);
+}
+.similar-meta {
+    font-size: 11px; color: var(--text-muted);
+    margin-top: 2px;
+}
+
+/* 操作按钮 */
+.action-btn {
+    display: block; width: 100%;
+    padding: 12px; margin-bottom: 8px;
+    border-radius: 10px; font-size: 14px;
+    cursor: pointer; text-align: center;
+    border: none; transition: all 0.2s;
+}
+.action-btn.primary {
+    background: var(--primary); color: #fff;
+}
+.action-btn.primary:hover { background: var(--primary-hover); }
+.action-btn.secondary {
+    background: var(--border-light);
+    border: 1px solid #c4b8a8;
+    color: var(--text);
+}
+.action-btn.secondary:hover { background: #e8ddd0; }
+
+/* 来源标注 */
+.source-note {
+    font-size: 11px; color: var(--text-muted);
+    margin-top: 12px; padding-top: 12px;
+    border-top: 1px solid var(--border-light);
+}
+
+/* 底部 */
+footer {
+    padding: 24px; text-align: center;
+    border-top: 1px solid var(--border);
+    margin-top: 20px;
+}
+footer p { font-size: 12px; color: #c4b8a8; }
+
+@media (max-width: 600px) {
+    .nav-links { gap: 16px; }
+    .nav-links a { font-size: 13px; }
+    .detail-header { flex-direction: column; }
+    .detail-img { width: 80px; height: 80px; }
+    .metric-grid { grid-template-columns: 1fr 1fr; }
 }
 </style>
+<base target="_blank">
 </head>
-
 <body>
 
-<div class="back">
-    <a href="index.html">← 返回釉库</a>
+<nav>
+    <div class="nav-inner">
+        <a href="index.html" class="logo">
+            <div class="logo-icon">守</div>
+            <span class="logo-text">守艺人</span>
+        </a>
+        <div class="nav-links">
+            <a href="index.html">首页</a>
+            <a href="list.html">釉方大全</a>
+            <a href="calculator.html">釉式计算</a>
+            <a href="about.html">关于</a>
+        </div>
+    </div>
+</nav>
+
+<div class="back-bar">
+    <a href="list.html">← 返回釉方大全</a>
 </div>
 
-<div id="content"></div>
+<div class="detail-grid">
+
+    <!-- 左侧：主信息 -->
+    <div>
+        <!-- 标题卡片 -->
+        <div class="card">
+            <div class="detail-header">
+                <div class="detail-img" id="detailImg">
+                    <span class="emoji">🏺</span>
+                </div>
+                <div>
+                    <div class="detail-title" id="detailName">加载中...</div>
+                    <div class="detail-tags" id="detailTags"></div>
+                    <div class="detail-meta" id="detailMeta"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 塞格尔式 -->
+        <div class="card" id="segerCard" style="display:none;">
+            <h3>📐 塞格尔式（Seger Formula）</h3>
+            <div class="seger-box" id="segerBox"></div>
+            <div class="metric-grid" id="segerMetrics" style="margin-top:14px;"></div>
+        </div>
+
+        <!-- 原料配比 -->
+        <div class="card" id="recipeCard">
+            <h3>⚖️ 原料配比</h3>
+            <div id="recipeContent"></div>
+        </div>
+
+        <!-- 烧成信息 -->
+        <div class="card">
+            <h3>🔥 烧成信息</h3>
+            <div class="info-text" id="firingInfo"></div>
+        </div>
+
+        <!-- 工艺与注意事项 -->
+        <div class="card">
+            <h3>📝 工艺与注意事项</h3>
+            <div class="info-text" id="processInfo"></div>
+        </div>
+
+        <!-- 数据来源 -->
+        <div class="card">
+            <h3>📚 数据来源</h3>
+            <div class="info-text" id="sourceInfo"></div>
+            <div class="source-note">
+                本页面釉方数据仅供学习参考。实际烧成效果受胎土、施釉厚度、烧成气氛、冷却速度等多种因素影响。
+            </div>
+        </div>
+    </div>
+
+    <!-- 右侧：侧边栏 -->
+    <div>
+        <!-- 釉性预测 -->
+        <div class="sidebar-card" id="predCard" style="display:none;">
+            <h3>🔮 釉性预测</h3>
+            <div class="pred-tags" id="predTags"></div>
+        </div>
+
+        <!-- 限制公式 -->
+        <div class="sidebar-card" id="limitCard" style="display:none;">
+            <h3>📏 限制公式</h3>
+            <div id="limitContent"></div>
+        </div>
+
+        <!-- 相似釉方 -->
+        <div class="sidebar-card" id="similarCard" style="display:none;">
+            <h3>🔗 相似釉方</h3>
+            <div id="similarContent"></div>
+        </div>
+
+        <!-- 操作按钮 -->
+        <div class="sidebar-card">
+            <button class="action-btn primary">⭐ 收藏此釉方</button>
+            <button class="action-btn secondary">📤 分享</button>
+            <button class="action-btn secondary">🖨️ 打印釉方卡片</button>
+        </div>
+    </div>
+
+</div>
+
+<footer>
+    <p>守艺人 · 数据源自 Glazy 公开数据库 (CC BY-NC-SA 4.0)</p>
+</footer>
 
 <script>
-
+let glazes = [];
 let id = new URLSearchParams(window.location.search).get("id");
 
 fetch("glazes_glazy_preview.json")
     .then(res => res.json())
     .then(data => {
-        let glaze = data.find(item => item.id == id);
-
-        if (!glaze) {
-            document.getElementById("content").innerHTML = "<p>未找到该釉方</p>";
-            return;
-        }
-
-        // 原料配比
-        let ingredients = "";
-        if (glaze.ingredients && glaze.ingredients.length > 0) {
-            glaze.ingredients.forEach(item => {
-                ingredients += `
-                <div class="ingredient">
-                    <span>${item.material}</span>
-                    <span>${item.ratio}</span>
-                </div>
-                `;
-            });
-        }
-
-        // 添加剂
-        let additives = "";
-        if (glaze.additives && glaze.additives.length > 0) {
-            glaze.additives.forEach(item => {
-                additives += `
-                <div class="ingredient">
-                    <span>${item.material}</span>
-                    <span>${item.ratio}</span>
-                </div>
-                `;
-            });
-        }
-
-        // 用途标签
-        let usage = "";
-        if (glaze.usage) {
-            glaze.usage.forEach(item => {
-                usage += `<span class="tag">${item}</span>`;
-            });
-        }
-
-        // 别名标签
-        let alias = "";
-        if (glaze.alias && glaze.alias.length > 0) {
-            glaze.alias.forEach(item => {
-                alias += `<span class="tag">${item}</span>`;
-            });
-        }
-
-        // 图片
-        let image = "";
-        if (glaze.image) {
-            image = `<img class="image" src="${glaze.image}" alt="${glaze.name}">`;
-        }
-
-        // 塞格尔式
-        let segerHtml = "";
-        if (glaze.seger_formula && Object.keys(glaze.seger_formula).length > 0) {
-            // 分组显示
-            let roGroup = [];
-            let r2o3Group = [];
-            let ro2Group = [];
-            
-            for (let ox in glaze.seger_formula) {
-                let val = glaze.seger_formula[ox];
-                if (["K2O","Na2O","Li2O","CaO","MgO","ZnO","BaO","SrO","CoO","CuO","NiO"].includes(ox)) {
-                    roGroup.push(`${ox} ${val.toFixed(3)}`);
-                } else if (["Al2O3","B2O3","Cr2O3"].includes(ox)) {
-                    r2o3Group.push(`${ox} ${val.toFixed(3)}`);
-                } else {
-                    ro2Group.push(`${ox} ${val.toFixed(3)}`);
-                }
-            }
-            
-            segerHtml = `
-            <div class="section">
-                <h3>塞格尔式（Seger Formula）</h3>
-                <div class="seger-box">
-                    <div class="seger-row">
-                        <span class="seger-item"><strong>RO:</strong> ${roGroup.join(" · ") || "—"}</span>
-                    </div>
-                    <div class="seger-row">
-                        <span class="seger-item"><strong>R₂O₃:</strong> ${r2o3Group.join(" · ") || "—"}</span>
-                    </div>
-                    <div class="seger-row">
-                        <span class="seger-item"><strong>RO₂:</strong> ${ro2Group.join(" · ") || "—"}</span>
-                    </div>
-                </div>
-            </div>
-            `;
-        }
-
-        document.getElementById("content").innerHTML = `
-
-        <div class="card">
-
-            ${image}
-
-            <h1>${glaze.name}</h1>
-
-            <div>${alias}</div>
-
-            <div class="section info">
-                分类：${glaze.category || "暂无"}<br>
-                颜色：${glaze.color || "暂无"}<br>
-                表面：${glaze.surface || "暂无"}<br>
-                温度：${glaze.temperature || "暂无"}<br>
-                气氛：${glaze.atmosphere || "暂无"}
-            </div>
-
-            <div class="section">
-                <h3>适用场景</h3>
-                <div>${usage || "暂无"}</div>
-            </div>
-
-            <div class="section info">
-                <h3>烧成信息</h3>
-                难度：${glaze.difficulty || "暂无"}<br>
-                稳定性：${glaze.stability || "暂无"}
-            </div>
-
-            <div class="section">
-                <h3>适用胎土</h3>
-                <div class="info">${glaze.clay || "暂无"}</div>
-            </div>
-
-            ${ingredients ? `
-            <div class="section">
-                <h3>基础釉配比</h3>
-                ${ingredients}
-                ${glaze.base_ratio_total ? `<p>基础釉合计：${glaze.base_ratio_total}</p>` : ""}
-            </div>
-            ` : ""}
-
-            ${additives ? `
-            <div class="section">
-                <h3>添加剂</h3>
-                ${additives}
-            </div>
-            ` : ""}
-
-            ${segerHtml}
-
-            <div class="section info">
-                <h3>制作工艺</h3>
-                ${glaze.process || "暂无"}
-            </div>
-
-            <div class="section">
-                <h3>注意事项</h3>
-                <div class="info">${glaze.notes || "暂无"}</div>
-            </div>
-
-            <div class="section info">
-                <h3>配方来源</h3>
-                类型：${glaze.recipe_type || "暂无"}<br>
-                状态：${glaze.recipe_status || "暂无"}<br>
-                验证等级：${glaze.verification || "暂无"}
-            </div>
-
-            <div class="section">
-                <h3>数据来源</h3>
-                <div class="info">${glaze.source || "暂无"}</div>
-            </div>
-
-            <div class="source-note">
-                本页面釉方数据仅供学习参考。实际烧成效果受胎土、施釉厚度、烧成气氛、冷却速度等多种因素影响。
-            </div>
-
-        </div>
-
-        `;
+        glazes = data;
+        renderDetail();
     })
     .catch(err => {
-        document.getElementById("content").innerHTML = "<p>数据加载失败，请返回重试</p>";
+        document.getElementById("detailName").textContent = "数据加载失败";
         console.error(err);
     });
 
+function renderDetail() {
+    let glaze = glazes.find(item => item.id == id);
+    if (!glaze) {
+        document.getElementById("detailName").textContent = "未找到该釉方";
+        return;
+    }
+
+    // 标题
+    document.getElementById("detailName").textContent = glaze.name;
+
+    // 图片
+    const emoji = getEmoji(glaze.category);
+    const bg = getBg(glaze.category);
+    document.getElementById("detailImg").innerHTML = `<span class="emoji">${emoji}</span>`;
+    document.getElementById("detailImg").style.background = bg;
+
+    // 标签
+    let tagsHtml = "";
+    tagsHtml += `<span class="tag tag-cat">${glaze.category}</span>`;
+    tagsHtml += `<span class="tag tag-atm">${glaze.atmosphere || "未知"}</span>`;
+    if (glaze.difficulty) {
+        const diffColor = glaze.difficulty === "简单" ? "#4a7c3f" :
+                          glaze.difficulty === "困难" ? "#c62828" : "#8b6f47";
+        tagsHtml += `<span class="tag" style="background:#f0ebe3;color:${diffColor};">${glaze.difficulty}</span>`;
+    }
+    document.getElementById("detailTags").innerHTML = tagsHtml;
+
+    // 用途标签
+    if (glaze.usage && glaze.usage.length > 0) {
+        glaze.usage.forEach(u => {
+            tagsHtml += `<span class="tag-usage">${u}</span>`;
+        });
+        document.getElementById("detailTags").innerHTML = tagsHtml;
+    }
+
+    // 元信息
+    document.getElementById("detailMeta").innerHTML = `
+        ${glaze.temperature || ""} · ${glaze.surface || ""} · ${glaze.stability || ""}
+    `;
+
+    // 塞格尔式
+    if (glaze.seger_formula && Object.keys(glaze.seger_formula).length > 0) {
+        document.getElementById("segerCard").style.display = "block";
+
+        let roGroup = [], r2o3Group = [], ro2Group = [];
+        for (let ox in glaze.seger_formula) {
+            let val = glaze.seger_formula[ox];
+            if (["K2O","Na2O","Li2O","CaO","MgO","ZnO","BaO","SrO","CoO","CuO","NiO"].includes(ox)) {
+                roGroup.push(`${ox} ${val.toFixed(3)}`);
+            } else if (["Al2O3","B2O3","Cr2O3"].includes(ox)) {
+                r2o3Group.push(`${ox} ${val.toFixed(3)}`);
+            } else {
+                ro2Group.push(`${ox} ${val.toFixed(3)}`);
+            }
+        }
+
+        document.getElementById("segerBox").innerHTML = `
+            <div><strong>RO</strong>　　${roGroup.join(" · ") || "—"}</div>
+            <div><strong>R₂O₃</strong>　${r2o3Group.join(" · ") || "—"}</div>
+            <div><strong>RO₂</strong>　 ${ro2Group.join(" · ") || "—"}</div>
+        `;
+
+        // 关键比例
+        const sio2 = glaze.seger_formula.SiO2 || 0;
+        const al2o3 = glaze.seger_formula.Al2O3 || 0;
+        const ratio = al2o3 ? (sio2 / al2o3).toFixed(2) : "";
+        document.getElementById("segerMetrics").innerHTML = `
+            <div class="metric-item"><div class="metric-value">${ratio}</div><div class="metric-label">SiO₂/Al₂O₃</div></div>
+            <div class="metric-item"><div class="metric-value">${al2o3.toFixed(3)}</div><div class="metric-label">Al₂O₃/RO</div></div>
+            <div class="metric-item"><div class="metric-value">—</div><div class="metric-label">CTE</div></div>
+        `;
+    }
+
+    // 原料配比
+    let recipeHtml = "";
+    if (glaze.ingredients && glaze.ingredients.length > 0) {
+        glaze.ingredients.forEach(item => {
+            recipeHtml += `<div class="ingredient"><span>${item.material}</span><span>${item.ratio}</span></div>`;
+        });
+        if (glaze.base_ratio_total) {
+            recipeHtml += `<div style="margin-top:8px;font-size:12px;color:var(--text-muted);">基础釉合计：${glaze.base_ratio_total}</div>`;
+        }
+    } else {
+        recipeHtml = `
+            <div class="note-box">
+                <strong>⚠ 原料配比未公开</strong><br>
+                此釉方来自 Glazy 公开数据库，原作者仅提供了氧化物分析数据（塞格尔式），未公开具体原料配比。
+            </div>
+            <div style="display:flex;gap:10px;margin-top:12px;">
+                <a href="calculator.html" class="action-btn primary" style="text-decoration:none;display:inline-block;width:auto;padding:10px 16px;font-size:13px;">🧮 用塞格尔式反推配方</a>
+                <button class="action-btn secondary" style="width:auto;padding:10px 16px;font-size:13px;" onclick="copySeger()">📋 复制塞格尔式</button>
+            </div>
+        `;
+    }
+    document.getElementById("recipeContent").innerHTML = recipeHtml;
+
+    // 烧成信息
+    document.getElementById("firingInfo").innerHTML = `
+        <strong>温度：</strong>${glaze.temperature || "暂无"}<br>
+        <strong>气氛：</strong>${glaze.atmosphere || "暂无"}<br>
+        <strong>难度：</strong>${glaze.difficulty || "暂无"}<br>
+        <strong>稳定性：</strong>${glaze.stability || "暂无"}<br>
+        <strong>表面：</strong>${glaze.surface || "暂无"}
+    `;
+
+    // 工艺与注意事项
+    document.getElementById("processInfo").innerHTML = `
+        <strong>工艺：</strong>${glaze.process || "暂无"}<br><br>
+        <strong>注意事项：</strong>${glaze.notes || "暂无"}
+    `;
+
+    // 来源
+    document.getElementById("sourceInfo").innerHTML = `
+        <strong>类型：</strong>${glaze.recipe_type || "暂无"}<br>
+        <strong>状态：</strong>${glaze.recipe_status || "暂无"}<br>
+        <strong>验证等级：</strong>${glaze.verification || "暂无"}<br>
+        <strong>来源：</strong>${glaze.source || "暂无"}
+    `;
+
+    // 釉性预测（侧边栏）
+    if (glaze.seger_formula) {
+        document.getElementById("predCard").style.display = "block";
+        const sio2 = glaze.seger_formula.SiO2 || 0;
+        const al2o3 = glaze.seger_formula.Al2O3 || 0;
+        const ratio = al2o3 ? sio2 / al2o3 : 0;
+
+        let temp = glaze.temperature || "温度未知";
+        let gloss = ratio > 7 ? "透明亮光倾向" : ratio > 4 ? "正常光泽倾向" : "亚光或晶体倾向";
+        let transparency = al2o3 < 0.35 && ratio > 5 ? "透明度较高" : al2o3 < 0.55 ? "半透明倾向" : "乳浊或半哑倾向";
+
+        document.getElementById("predTags").innerHTML = `
+            <span class="pred-tag">${temp}</span>
+            <span class="pred-tag">${gloss}</span>
+            <span class="pred-tag secondary">${transparency}</span>
+        `;
+
+        // 限制公式
+        document.getElementById("limitCard").style.display = "block";
+        document.getElementById("limitContent").innerHTML = `
+            <div class="limit-item"><span>SiO₂ (3.5-6.0)</span><span class="${sio2 >= 3.5 && sio2 <= 6.0 ? 'limit-pass' : 'limit-warn'}">${sio2.toFixed(2)} ${sio2 >= 3.5 && sio2 <= 6.0 ? '✓' : '⚠'}</span></div>
+            <div class="limit-item"><span>Al₂O₃ (0.35-0.65)</span><span class="${al2o3 >= 0.35 && al2o3 <= 0.65 ? 'limit-pass' : 'limit-warn'}">${al2o3.toFixed(3)} ${al2o3 >= 0.35 && al2o3 <= 0.65 ? '✓' : '⚠'}</span></div>
+            <div class="limit-item"><span>硅铝比 (3-12)</span><span class="${ratio >= 3 && ratio <= 12 ? 'limit-pass' : 'limit-warn'}">${ratio.toFixed(2)} ${ratio >= 3 && ratio <= 12 ? '✓' : '⚠'}</span></div>
+        `;
+    }
+
+    // 相似釉方
+    renderSimilar(glaze);
+}
+
+function renderSimilar(current) {
+    if (!glazes.length) return;
+
+    // 找同分类的其他釉方
+    let similar = glazes.filter(g =>
+        g.id !== current.id &&
+        g.category === current.category
+    ).slice(0, 3);
+
+    if (similar.length === 0) return;
+
+    document.getElementById("similarCard").style.display = "block";
+    document.getElementById("similarContent").innerHTML = similar.map(g => {
+        const sio2 = g.seger_formula && g.seger_formula.SiO2 ? g.seger_formula.SiO2 : 0;
+        const al2o3 = g.seger_formula && g.seger_formula.Al2O3 ? g.seger_formula.Al2O3 : 0;
+        const ratio = al2o3 ? (sio2 / al2o3).toFixed(2) : "";
+        return `
+        <a href="detail.html?id=${g.id}" class="similar-item">
+            <div class="similar-name">${g.name}</div>
+            <div class="similar-meta">${g.temperature || ""} ${ratio ? "· SiO₂/Al₂O₃ = " + ratio : ""}</div>
+        </a>
+        `;
+    }).join("");
+}
+
+function copySeger() {
+    const glaze = glazes.find(item => item.id == id);
+    if (!glaze || !glaze.seger_formula) return;
+    let text = "Seger Formula:\n";
+    for (let ox in glaze.seger_formula) {
+        text += `${ox}: ${glaze.seger_formula[ox].toFixed(3)}\n`;
+    }
+    navigator.clipboard.writeText(text).then(() => {
+        alert("塞格尔式已复制到剪贴板");
+    });
+}
+
+function getEmoji(cat) {
+    const map = {
+        "青釉": "🍵", "白釉": "🏺", "黑釉": "🖤", "蓝釉": "🔵",
+        "绿釉": "🟢", "红釉": "🔴", "铜红釉": "🔴", "铁红釉": "🔴",
+        "铁釉": "🟤", "天目釉": "🖤", "志野釉": "🏺", "结晶釉": "✨",
+        "灰釉": "⚪", "黄釉": "🟡", "基础釉": "🏺", "透明釉": "💧",
+        "哑光釉": "🪨", "特种釉": "🎨", "化妆土": "🧱"
+    };
+    return map[cat] || "🏺";
+}
+
+function getBg(cat) {
+    const map = {
+        "青釉": "linear-gradient(135deg,#c8d6c4,#a8c4a0)",
+        "白釉": "linear-gradient(135deg,#f5f0e8,#e8ddd0)",
+        "黑釉": "linear-gradient(135deg,#2c2c2c,#4a4a4a)",
+        "蓝釉": "linear-gradient(135deg,#b8c8d8,#98a8c0)",
+        "绿釉": "linear-gradient(135deg,#b8d4b8,#98c098)",
+        "红釉": "linear-gradient(135deg,#d4a0a0,#c08080)",
+        "铜红釉": "linear-gradient(135deg,#d4a0a0,#c08080)",
+        "铁釉": "linear-gradient(135deg,#c8b8a8,#b0a090)",
+        "天目釉": "linear-gradient(135deg,#2c2c2c,#4a4a4a)",
+        "志野釉": "linear-gradient(135deg,#e8ddd0,#d8c8b8)",
+        "结晶釉": "linear-gradient(135deg,#d8d0e0,#c8c0d0)",
+        "灰釉": "linear-gradient(135deg,#d0d0d0,#c0c0c0)",
+        "黄釉": "linear-gradient(135deg,#e8e0b8,#d8d0a0)",
+        "基础釉": "linear-gradient(135deg,#e0d8d0,#d0c8c0)",
+        "透明釉": "linear-gradient(135deg,#d8e4f0,#c8d8e8)",
+        "哑光釉": "linear-gradient(135deg,#c8c0b8,#b8b0a8)",
+        "特种釉": "linear-gradient(135deg,#d8c8d8,#c8b8c8)",
+        "化妆土": "linear-gradient(135deg,#d8c8b8,#c8b8a8)"
+    };
+    return map[cat] || "linear-gradient(135deg,#e0d8d0,#d0c8c0)";
+}
 </script>
 
 </body>
