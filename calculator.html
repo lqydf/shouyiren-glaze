@@ -1,977 +1,350 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-
 <head>
-
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>守艺人 · 釉式分析</title>
-
-
 <style>
-
-body{
-
-font-family:Arial,sans-serif;
-
-max-width:900px;
-
-margin:auto;
-
-padding:20px;
-
-background:#f5f2eb;
-
+body {
+    font-family: Arial, "Noto Sans SC", sans-serif;
+    max-width: 900px;
+    margin: auto;
+    padding: 20px;
+    background: #f5f2eb;
+    color: #333;
 }
-
-
-h1,h2,h3{
-
-color:#5c4033;
-
+h1, h2, h3 { color: #5c4033; }
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    margin-top: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
-
-
-.card{
-
-background:white;
-
-padding:25px;
-
-border-radius:12px;
-
-margin-top:20px;
-
+.row {
+    display: flex;
+    gap: 10px;
+    margin: 8px 0;
+    align-items: center;
 }
-
-
-.row{
-
-display:flex;
-
-gap:10px;
-
-margin:8px 0;
-
+select, input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
 }
-
-
-select,input{
-
-padding:10px;
-
-border:1px solid #ccc;
-
-border-radius:6px;
-
+select { flex: 2; min-width: 120px; }
+input { flex: 1; min-width: 80px; }
+button {
+    background: #8b6f47;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.2s;
 }
-
-
-select{
-
-flex:2;
-
+button:hover { background: #7a6240; }
+button.small { padding: 6px 12px; font-size: 12px; border-radius: 15px; }
+.result {
+    background: #faf7f0;
+    padding: 20px;
+    border-radius: 10px;
+    line-height: 1.8;
 }
-
-
-input{
-
-flex:1;
-
+.item {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #e0d8cc;
+    padding: 6px 0;
 }
-
-
-button{
-
-background:#8b6f47;
-
-color:white;
-
-border:none;
-
-padding:10px 18px;
-
-border-radius:20px;
-
-cursor:pointer;
-
+.item:last-child { border-bottom: none; }
+.ok { color: #2e7d32; font-weight: bold; }
+.error { color: #c62828; font-weight: bold; }
+.warn { color: #ef6c00; }
+.tag {
+    display: inline-block;
+    background: #8b6f47;
+    color: white;
+    padding: 5px 12px;
+    border-radius: 15px;
+    margin: 3px;
+    font-size: 13px;
 }
-
-
-.result{
-
-background:#faf7f0;
-
-padding:20px;
-
-border-radius:10px;
-
-line-height:1.8;
-
+.note { font-size: 13px; color: #888; margin-left: 8px; }
+h4 {
+    color: #5c4033;
+    margin: 15px 0 8px 0;
+    padding-bottom: 4px;
+    border-bottom: 2px solid #d7ccc8;
 }
-
-
-.item{
-
-display:flex;
-
-justify-content:space-between;
-
-border-bottom:1px solid #ddd;
-
-padding:5px 0;
-
+.summary-box {
+    background: #fff8e1;
+    border-left: 4px solid #8b6f47;
+    padding: 12px 16px;
+    margin: 15px 0;
+    border-radius: 0 8px 8px 0;
 }
-
-
-.ok{
-
-color:green;
-
-}
-
-
-.error{
-
-color:red;
-
-}
-
-
-.tag{
-
-display:inline-block;
-
-background:#8b6f47;
-
-color:white;
-
-padding:5px 10px;
-
-border-radius:15px;
-
-margin:3px;
-
-}
-
 </style>
-
-
 </head>
 
-
 <body>
-
-
-<h1>
-守艺人 · 釉式分析
-</h1>
-
+<h1>守艺人 · 釉式分析</h1>
 
 <div class="card">
-
-
-<h3>
-釉方输入
-</h3>
-
-
-<div id="rows"></div>
-
-
-<button onclick="addRow()">
-
-添加原料
-
-</button>
-
-
-<button onclick="calculate()">
-
-开始分析
-
-</button>
-
-
+    <h3>釉方输入</h3>
+    <div id="rows"></div>
+    <button onclick="addRow()">添加原料</button>
+    <button onclick="calculate()">开始分析</button>
 </div>
-
-
 
 <div class="card">
-
-
-<h3>
-分析结果
-</h3>
-
-
-<div id="result">
-
-等待计算
-
+    <h3>分析结果</h3>
+    <div id="result">等待计算</div>
 </div>
-
-
-</div>
-
-
 
 <script>
-
-
-let materials=[];
-
-let oxides=[];
-
-
+let materials = [];
+let oxides = [];
 
 Promise.all([
-
-fetch("materials.json")
-.then(r=>r.json()),
-
-
-fetch("oxides.json")
-.then(r=>r.json())
-
+    fetch("materials.json").then(r => r.json()),
+    fetch("oxides.json").then(r => r.json())
 ])
-
-.then(data=>{
-
-
-materials=data[0];
-
-oxides=data[1];
-
-
-addRow();
-
-
+.then(data => {
+    materials = data[0];
+    oxides = data[1];
+    addRow();
+})
+.catch(err => {
+    document.getElementById("result").innerHTML = 
+        `<p class="error">数据加载失败，请检查 materials.json 和 oxides.json 是否存在</p>`;
+    console.error(err);
 });
 
-
-
-
-
-function addRow(){
-
-
-let row=document.createElement("div");
-
-
-row.className="row";
-
-
-
-let select=document.createElement("select");
-
-
-
-materials.forEach(m=>{
-
-
-let option=document.createElement("option");
-
-
-option.value=m.name;
-
-
-option.textContent=m.name;
-
-
-select.appendChild(option);
-
-
-});
-
-
-
-let input=document.createElement("input");
-
-
-input.type="number";
-
-
-input.placeholder="百分比";
-
-
-
-let remove=document.createElement("button");
-
-
-remove.textContent="删除";
-
-
-remove.onclick=function(){
-
-row.remove();
-
-};
-
-
-
-row.appendChild(select);
-
-row.appendChild(input);
-
-row.appendChild(remove);
-
-
-
-document
-
-.getElementById("rows")
-
-.appendChild(row);
-
-
-}
-function calculate(){
-
-
-let rows=document.querySelectorAll(".row");
-
-
-let recipe=[];
-
-let total=0;
-
-
-
-rows.forEach(row=>{
-
-
-let name=row.querySelector("select").value;
-
-
-let percent=parseFloat(
-row.querySelector("input").value
-);
-
-
-
-if(!isNaN(percent)){
-
-
-total+=percent;
-
-
-recipe.push({
-
-name:name,
-
-percent:percent
-
-});
-
-
+function addRow() {
+    let row = document.createElement("div");
+    row.className = "row";
+
+    let select = document.createElement("select");
+    materials.forEach(m => {
+        let option = document.createElement("option");
+        option.value = m.name;
+        option.textContent = m.name;
+        select.appendChild(option);
+    });
+
+    let input = document.createElement("input");
+    input.type = "number";
+    input.placeholder = "百分比";
+    input.step = "0.1";
+
+    let remove = document.createElement("button");
+    remove.textContent = "删除";
+    remove.className = "small";
+    remove.onclick = function() {
+        row.remove();
+    };
+
+    row.appendChild(select);
+    row.appendChild(input);
+    row.appendChild(remove);
+    document.getElementById("rows").appendChild(row);
 }
 
+function calculate() {
+    let rows = document.querySelectorAll(".row");
+    let recipe = [];
+    let total = 0;
 
-});
+    rows.forEach(row => {
+        let name = row.querySelector("select").value;
+        let percent = parseFloat(row.querySelector("input").value);
+        if (!isNaN(percent) && percent > 0) {
+            total += percent;
+            recipe.push({ name: name, percent: percent });
+        }
+    });
 
+    if (Math.abs(total - 100) > 0.5) {
+        document.getElementById("result").innerHTML = `
+            <p class="error">当前比例：${total.toFixed(2)}%<br>请调整到 100%</p>
+        `;
+        return;
+    }
 
+    // 氧化物重量计算
+    let oxideWeight = {};
+    let hasColorant = false;
+    let colorantMaterials = ["氧化铁红", "氧化钴", "氧化铜", "二氧化锰", "氧化铬", "氧化镍"];
 
-if(total!==100){
+    recipe.forEach(item => {
+        let material = materials.find(m => m.name === item.name);
+        if (!material) return;
 
+        if (colorantMaterials.includes(item.name)) {
+            hasColorant = true;
+        }
 
-document.getElementById("result").innerHTML=
+        for (let oxide in material.analysis) {
+            oxideWeight[oxide] = (oxideWeight[oxide] || 0) + material.analysis[oxide] * item.percent / 100;
+        }
+    });
 
-`
+    // 摩尔计算
+    let mole = {};
+    for (let oxide in oxideWeight) {
+        let info = oxides.find(o => o.oxide === oxide);
+        if (info) {
+            mole[oxide] = oxideWeight[oxide] / info.molecular_weight;
+        }
+    }
 
-<p class="error">
+    // Seger RO 归一化（R2O + RO 总和为 1）
+    let roTotal = 0;
+    oxides
+        .filter(o => o.group === "RO" || o.group === "R2O")
+        .forEach(o => {
+            roTotal += mole[o.oxide] || 0;
+        });
 
-当前比例：
+    let seger = {};
+    for (let oxide in mole) {
+        seger[oxide] = roTotal ? mole[oxide] / roTotal : 0;
+    }
 
-${total.toFixed(2)}%
+    let sio2 = seger["SiO2"] || 0;
+    let al2o3 = seger["Al2O3"] || 0;
+    let ratio = al2o3 ? sio2 / al2o3 : 0;
 
-<br>
+    // 构建结果 HTML
+    let html = "";
 
-请调整到100%
+    html += `<p class="ok">✔ 配方比例正确：${total.toFixed(2)}%</p>`;
+    html += `<h3>Seger Formula</h3>`;
 
-</p>
+    // RO 行：R2O + RO 合并展示
+    html += `<h4>RO</h4>`;
+    ["R2O", "RO"].forEach(g => {
+        oxides.filter(o => o.group === g).forEach(o => {
+            if (seger[o.oxide]) {
+                html += `<div class="item"><span>${o.oxide}</span><span>${seger[o.oxide].toFixed(3)}</span></div>`;
+            }
+        });
+    });
 
-`;
+    // R2O3 行
+    html += `<h4>R₂O₃</h4>`;
+    oxides.filter(o => o.group === "R2O3").forEach(o => {
+        if (seger[o.oxide]) {
+            html += `<div class="item"><span>${o.oxide}</span><span>${seger[o.oxide].toFixed(3)}</span></div>`;
+        }
+    });
 
-return;
+    // RO2 行
+    html += `<h4>RO₂</h4>`;
+    oxides.filter(o => o.group === "RO2").forEach(o => {
+        if (seger[o.oxide]) {
+            let note = "";
+            if (o.oxide === "Fe2O3" && !hasColorant) {
+                note = `<span class="note">原料杂质带入</span>`;
+            }
+            html += `<div class="item"><span>${o.oxide} ${note}</span><span>${seger[o.oxide].toFixed(3)}</span></div>`;
+        }
+    });
 
+    // 着色氧化物（仅列出主动添加的着色剂）
+    html += `<h4>着色氧化物</h4>`;
+    let colorOxides = ["Fe2O3", "CoO", "CuO", "MnO2", "Cr2O3", "NiO"];
+    let colorHtml = "";
+    colorOxides.forEach(o => {
+        if (seger[o]) {
+            if (o === "Fe2O3" && !hasColorant) return;
+            colorHtml += `<div class="item"><span>${o}</span><span>${seger[o].toFixed(3)}</span></div>`;
+        }
+    });
+    html += colorHtml || `<div class="item"><span>无主动添加着色剂</span><span>-</span></div>`;
+
+    // 关键比例
+    html += `<h3>关键比例</h3>`;
+    html += `<div class="item"><span>SiO₂ / Al₂O₃</span><span>${ratio.toFixed(2)}</span></div>`;
+    html += `<div class="item"><span>Al₂O₃ / RO</span><span>${al2o3.toFixed(3)}</span></div>`;
+
+    // 性能判断
+    let temperature = "";
+    let gloss = "";
+    let transparency = "";
+    let flow = "";
+    let risk = "";
+    let riskClass = "ok";
+
+    if (roTotal > 1.2) {
+        temperature = "1200-1250℃ 倾向";
+    } else if (roTotal > 0.9) {
+        temperature = "1250-1280℃ 倾向";
+    } else {
+        temperature = "1280℃ 以上倾向";
+    }
+
+    if (ratio > 7) {
+        gloss = "透明亮光倾向";
+    } else if (ratio > 4) {
+        gloss = "正常光泽倾向";
+    } else {
+        gloss = "亚光或晶体倾向";
+    }
+
+    if (al2o3 < 0.35 && ratio > 5) {
+        transparency = "透明度较高";
+    } else if (al2o3 < 0.55) {
+        transparency = "半透明倾向";
+    } else {
+        transparency = "乳浊或半哑倾向";
+    }
+
+    if (roTotal > 1.2 && al2o3 < 0.4) {
+        flow = "流动性较强，注意流釉";
+    } else if (al2o3 > 0.6) {
+        flow = "较稳定，流动低";
+    } else {
+        flow = "中等流动性";
+    }
+
+    if (roTotal > 1.3) {
+        risk = "熔融较强，存在流釉风险";
+        riskClass = "warn";
+    } else if (al2o3 < 0.25) {
+        risk = "稳定性较低";
+        riskClass = "warn";
+    } else {
+        risk = "基础稳定";
+    }
+
+    // 无碱金属提示
+    let k2o = seger["K2O"] || 0;
+    let na2o = seger["Na2O"] || 0;
+    let li2o = seger["Li2O"] || 0;
+    if (k2o + na2o + li2o < 0.05) {
+        risk += "；无碱金属，烧成温度偏高，釉面偏硬脆";
+        riskClass = "warn";
+    }
+
+    html += `<h3>釉性预测</h3>`;
+    html += `<div class="tag">${temperature}</div>`;
+    html += `<div class="tag">${gloss}</div>`;
+    html += `<div class="tag">${transparency}</div>`;
+    html += `<div class="tag">${flow}</div>`;
+
+    html += `<h3>风险提示</h3>`;
+    html += `<p class="${riskClass}">${risk}</p>`;
+
+    html += `<div class="summary-box">
+        <strong>说明</strong>：以上基于理论氧化物组成计算。实际效果仍受胎土、施釉厚度、烧成气氛、冷却速度影响。
+    </div>`;
+
+    document.getElementById("result").innerHTML = html;
 }
-
-
-
-
-
-// --------------------
-// 氧化物重量计算
-// --------------------
-
-let oxideWeight={};
-
-
-
-recipe.forEach(item=>{
-
-
-let material=
-
-materials.find(
-
-m=>m.name===item.name
-
-);
-
-
-
-if(!material)return;
-
-
-
-for(let oxide in material.analysis){
-
-
-
-oxideWeight[oxide]=
-
-(oxideWeight[oxide]||0)
-
-+
-
-material.analysis[oxide]
-
-*
-
-item.percent
-
-/
-
-100;
-
-
-
-}
-
-
-});
-
-
-
-
-
-
-// --------------------
-// 摩尔计算
-// --------------------
-
-let mole={};
-
-
-
-for(let oxide in oxideWeight){
-
-
-let info=
-
-oxides.find(
-
-o=>o.oxide===oxide
-
-);
-
-
-
-if(info){
-
-
-mole[oxide]=
-
-oxideWeight[oxide]
-
-/
-
-info.molecular_weight;
-
-
-}
-
-
-}
-
-
-
-
-
-
-// --------------------
-// Seger RO归一化
-// --------------------
-
-let ro=0;
-
-
-
-oxides
-
-.filter(o=>o.group==="RO")
-
-.forEach(o=>{
-
-
-ro+=mole[o.oxide]||0;
-
-
-});
-
-
-
-let seger={};
-
-
-
-for(let oxide in mole){
-
-
-seger[oxide]=
-
-ro?
-
-mole[oxide]/ro:
-
-0;
-
-
-}
-
-
-
-
-
-let sio2=
-
-seger["SiO2"]||0;
-
-
-let al2o3=
-
-seger["Al2O3"]||0;
-
-
-
-let ratio=
-
-al2o3?
-
-sio2/al2o3:
-
-0;
-
-
-
-
-
-
-// --------------------
-// 着色氧化物
-// --------------------
-
-let colorOxides=[
-
-"Fe2O3",
-
-"CoO",
-
-"CuO",
-
-"MnO2",
-
-"Cr2O3",
-
-"NiO"
-
-];
-
-
-let colorHtml="";
-
-
-
-colorOxides.forEach(o=>{
-
-
-if(seger[o]){
-
-
-colorHtml+=`
-
-<div class="item">
-
-<span>${o}</span>
-
-<span>
-
-${seger[o].toFixed(3)}
-
-</span>
-
-</div>
-
-`;
-
-}
-
-
-});
-
-
-
-
-
-
-// --------------------
-// 性能判断
-// --------------------
-
-let temperature="";
-
-let gloss="";
-
-let transparency="";
-
-let flow="";
-
-let risk="";
-
-
-
-if(ro>1.2){
-
-temperature="1200-1250℃倾向";
-
-}
-
-else if(ro>0.9){
-
-temperature="1250-1280℃倾向";
-
-}
-
-else{
-
-temperature="1280℃以上倾向";
-
-}
-
-
-
-if(ratio>7){
-
-gloss="透明亮光倾向";
-
-}
-
-else if(ratio>4){
-
-gloss="正常光泽倾向";
-
-}
-
-else{
-
-gloss="亚光或晶体倾向";
-
-}
-
-
-
-
-if(al2o3<0.35 && ratio>5){
-
-transparency="透明度较高";
-
-}
-
-else if(al2o3<0.55){
-
-transparency="半透明倾向";
-
-}
-
-else{
-
-transparency="乳浊或半哑倾向";
-
-}
-
-
-
-
-
-if(ro>1.2 && al2o3<0.4){
-
-flow="流动性较强，注意流釉";
-
-}
-
-else if(al2o3>0.6){
-
-flow="较稳定，流动低";
-
-}
-
-else{
-
-flow="中等流动性";
-
-}
-
-
-
-
-if(ro>1.3){
-
-risk="熔融较强，存在流釉风险";
-
-}
-
-else if(al2o3<0.25){
-
-risk="稳定性较低";
-
-}
-
-else{
-
-risk="基础稳定";
-
-}
-
-
-
-
-
-
-let html="";
-
-
-
-html+=`
-
-<p class="ok">
-
-✔ 配方比例正确：100%
-
-</p>
-
-
-<h3>
-
-Seger Formula
-
-</h3>
-
-`;
-
-
-
-
-
-["RO","R2O3","RO2"].forEach(group=>{
-
-
-html+=`
-
-<h4>
-
-${group}
-
-</h4>
-
-`;
-
-
-
-oxides
-
-.filter(o=>o.group===group)
-
-.forEach(o=>{
-
-
-if(seger[o.oxide]){
-
-
-html+=`
-
-<div class="item">
-
-<span>
-
-${o.oxide}
-
-</span>
-
-<span>
-
-${seger[o.oxide].toFixed(3)}
-
-</span>
-
-</div>
-
-`;
-
-}
-
-
-});
-
-
-});
-
-
-
-
-
-
-html+=`
-
-<h3>
-
-着色氧化物
-
-</h3>
-
-
-${
-
-colorHtml?
-
-colorHtml:
-
-"无明显着色氧化物"
-
-}
-
-
-
-
-
-<h3>
-
-关键比例
-
-</h3>
-
-
-SiO₂ / Al₂O₃：
-
-${ratio.toFixed(2)}
-
-<br>
-
-
-Al₂O₃ / RO：
-
-${al2o3.toFixed(3)}
-
-
-
-
-
-<h3>
-
-釉性预测
-
-</h3>
-
-
-<div class="tag">
-
-${temperature}
-
-</div>
-
-
-<div class="tag">
-
-${gloss}
-
-</div>
-
-
-<div class="tag">
-
-${transparency}
-
-</div>
-
-
-<div class="tag">
-
-${flow}
-
-</div>
-
-
-
-<h3>
-
-风险提示
-
-</h3>
-
-
-${risk}
-
-
-<p>
-
-说明：
-
-以上基于理论氧化物组成计算。
-
-实际效果仍受：
-
-<br>
-
-胎土
-
-<br>
-
-施釉厚度
-
-<br>
-
-烧成气氛
-
-<br>
-
-冷却速度
-
-影响。
-
-</p>
-
-`;
-
-
-
-
-document
-
-.getElementById("result")
-
-.innerHTML=html;
-
-
-}
-
-
-
 </script>
-
-
 </body>
-
 </html>
