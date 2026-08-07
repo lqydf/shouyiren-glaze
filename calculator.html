@@ -7,7 +7,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>守艺人 · 釉式试算</title>
+<title>守艺人 · Seger釉式计算</title>
 
 <style>
 
@@ -19,65 +19,93 @@ padding:20px;
 background:#f5f2eb;
 }
 
+
 h1,h2,h3{
 color:#5c4033;
 }
 
+
 .card{
+
 background:white;
 padding:25px;
 border-radius:12px;
 margin-top:20px;
+
 }
 
+
 .row{
+
 display:flex;
 gap:10px;
 margin:8px 0;
+
 }
 
+
 select,input{
+
 padding:10px;
-border:1px solid #ddd;
+border:1px solid #ccc;
 border-radius:6px;
+
 }
+
 
 select{
 flex:2;
 }
 
+
 input{
 flex:1;
 }
 
+
 button{
+
 background:#8b6f47;
 color:white;
 border:none;
 padding:10px 18px;
 border-radius:20px;
 cursor:pointer;
+
 }
+
 
 .result{
+
 background:#faf7f0;
-padding:15px;
+padding:20px;
 border-radius:10px;
 line-height:1.8;
+
 }
 
+
 .item{
+
 display:flex;
 justify-content:space-between;
+
+border-bottom:1px solid #ddd;
+
+padding:5px;
+
 }
+
 
 .ok{
 color:green;
 }
 
+
 .error{
 color:red;
 }
+
 
 </style>
 
@@ -88,27 +116,38 @@ color:red;
 
 
 <h1>
-守艺人 · 釉式试算
+守艺人 · Seger釉式计算
 </h1>
+
 
 
 <div class="card">
 
+
 <h3>
-输入配方
+输入釉方
 </h3>
+
 
 <div id="rows"></div>
 
+
 <button onclick="addRow()">
-添加原料
+
++ 添加原料
+
 </button>
+
 
 <button onclick="calculate()">
-开始计算
+
+计算Seger式
+
 </button>
 
+
 </div>
+
 
 
 
@@ -118,11 +157,16 @@ color:red;
 计算结果
 </h3>
 
+
 <div id="result">
-等待计算
-</div>
+
+等待输入
 
 </div>
+
+
+</div>
+
 
 
 
@@ -131,18 +175,33 @@ color:red;
 
 let materials=[];
 
+let oxides=[];
+
+
+
+Promise.all([
 
 fetch("materials.json")
+.then(r=>r.json()),
 
+fetch("oxides.json")
 .then(r=>r.json())
+
+])
 
 .then(data=>{
 
-materials=data;
+
+materials=data[0];
+
+oxides=data[1];
+
 
 addRow();
 
+
 });
+
 
 
 
@@ -150,92 +209,113 @@ addRow();
 function addRow(){
 
 
-let div=document.createElement("div");
+let row=document.createElement("div");
 
-div.className="row";
+row.className="row";
+
 
 
 let select=document.createElement("select");
 
 
+
 materials.forEach(m=>{
 
-let o=document.createElement("option");
 
-o.value=m.name;
+let option=document.createElement("option");
 
-o.textContent=m.name;
 
-select.appendChild(o);
+option.value=m.name;
+
+option.textContent=m.name;
+
+
+select.appendChild(option);
+
 
 });
 
 
 
+
 let input=document.createElement("input");
+
 
 input.type="number";
 
-input.placeholder="比例 %";
+input.placeholder="百分比";
+
+
 
 
 
 let del=document.createElement("button");
 
+
 del.textContent="删除";
 
-del.onclick=()=>div.remove();
+
+del.onclick=function(){
+
+row.remove();
+
+};
 
 
 
-div.appendChild(select);
+row.appendChild(select);
 
-div.appendChild(input);
+row.appendChild(input);
 
-div.appendChild(del);
+row.appendChild(del);
 
 
-document.getElementById("rows").appendChild(div);
+document
+
+.getElementById("rows")
+
+.appendChild(row);
 
 
 }
-
-
-
-
 function calculate(){
 
 
 let rows=document.querySelectorAll(".row");
 
 
-let list=[];
-
 let total=0;
 
 
-rows.forEach(r=>{
+let formula=[];
 
 
-let name=r.querySelector("select").value;
 
-let ratio=parseFloat(
+rows.forEach(row=>{
 
-r.querySelector("input").value
+
+let name=row.querySelector("select").value;
+
+
+let percent=parseFloat(
+
+row.querySelector("input").value
 
 );
 
 
-if(!isNaN(ratio)){
 
-total+=ratio;
+if(!isNaN(percent)){
 
 
-list.push({
+total+=percent;
 
-name,
 
-ratio
+formula.push({
+
+name:name,
+
+percent:percent
 
 });
 
@@ -247,22 +327,27 @@ ratio
 
 
 
-let html="";
 
 
+if(total!==100){
 
-if(total!=100){
 
 document.getElementById("result").innerHTML=
 
 `
+
 <p class="error">
 
-当前比例 ${total}%
+当前比例：
+
+${total.toFixed(2)}%
+
+<br>
 
 请调整到100%
 
 </p>
+
 `;
 
 return;
@@ -272,56 +357,60 @@ return;
 
 
 
-html+=`
 
-<p class="ok">
-
-✔ 配方比例 100%
-
-</p>
-
-`;
+let oxideWeight={};
 
 
 
-let oxide={};
 
 
+// 计算各氧化物重量
 
-list.forEach(item=>{
+formula.forEach(item=>{
 
 
-let mat=
+let material=
 
 materials.find(
 
-m=>m.name==item.name
+m=>m.name===item.name
 
 );
 
 
 
-if(!mat)return;
+if(!material)return;
 
 
-for(let x in mat.oxides){
 
-oxide[x]=
+for(let oxide in material.oxides){
 
-(oxide[x]||0)
 
-+
 
-mat.oxides[x]
+let weight=
+
+material.oxides[oxide]
 
 *
 
-item.ratio
+item.percent
 
 /
 
 100;
 
+
+
+oxideWeight[oxide]=
+
+(oxideWeight[oxide]||0)
+
++
+
+weight;
+
+
+
 }
 
 
@@ -331,114 +420,254 @@ item.ratio
 
 
 
-let RO=[
 
-"K2O",
-"Na2O",
-"CaO",
-"MgO",
-"ZnO",
-"BaO"
+// 氧化物换算摩尔
 
-];
+
+let moles={};
 
 
 
-let flux=0;
+for(let oxide in oxideWeight){
 
 
-RO.forEach(x=>{
 
-flux+=oxide[x]||0;
+let data=
+
+oxides.find(
+
+o=>o.oxide===oxide
+
+);
+
+
+
+if(!data)continue;
+
+
+
+moles[oxide]=
+
+oxideWeight[oxide]
+
+/
+
+data.molecular_weight;
+
+
+
+}
+
+
+
+
+
+
+// RO总量
+
+
+let roTotal=0;
+
+
+
+oxides
+
+.filter(o=>o.group==="RO")
+
+.forEach(o=>{
+
+
+roTotal+=moles[o.oxide]||0;
+
 
 });
 
 
 
+
+
+// Seger归一化
+
+
+let seger={};
+
+
+
+for(let oxide in moles){
+
+
+seger[oxide]=
+
+moles[oxide]/roTotal;
+
+
+}
+
+
+
+
+
+
+let html="";
+
+
+
 html+=`
 
+<p class="ok">
+
+✔ 配方比例正确：100%
+
+</p>
+
+
 <h3>
+
 Seger Formula
+
 </h3>
 
+`;
+
+
+
+
+
+html+=`
+
 <h4>
+
 RO
+
 </h4>
 
 `;
 
 
 
-RO.forEach(x=>{
+
+oxides
+
+.filter(o=>o.group==="RO")
+
+.forEach(o=>{
 
 
-if(oxide[x]){
+if(seger[o.oxide]){
+
 
 html+=`
 
 <div class="item">
 
-${x}
+<span>
+${o.oxide}
+</span>
 
-${(oxide[x]/flux).toFixed(3)}
+
+<span>
+${seger[o.oxide].toFixed(3)}
+</span>
 
 </div>
 
 `;
 
 }
+
 
 });
 
 
 
+
+
+
 html+=`
 
 <h4>
+
 R2O3
+
 </h4>
 
 `;
 
 
 
-if(oxide.Al2O3){
+oxides
+
+.filter(o=>o.group==="R2O3")
+
+.forEach(o=>{
+
+
+if(seger[o.oxide]){
+
 
 html+=`
 
 <div class="item">
 
-Al2O3
+<span>
+${o.oxide}
+</span>
 
-${(oxide.Al2O3/flux).toFixed(3)}
+
+<span>
+${seger[o.oxide].toFixed(3)}
+</span>
+
 
 </div>
 
 `;
 
 }
+
+
+});
+
+
+
+
 
 
 
 html+=`
 
 <h4>
+
 RO2
+
 </h4>
 
 `;
 
 
 
-if(oxide.SiO2){
+oxides
+
+.filter(o=>o.group==="RO2")
+
+.forEach(o=>{
+
+
+if(seger[o.oxide]){
+
 
 html+=`
 
 <div class="item">
 
-SiO2
+<span>
+${o.oxide}
+</span>
 
-${(oxide.SiO2/flux).toFixed(3)}
+
+<span>
+${seger[o.oxide].toFixed(3)}
+</span>
 
 </div>
 
@@ -447,61 +676,26 @@ ${(oxide.SiO2/flux).toFixed(3)}
 }
 
 
+});
 
 
 
-let siAl=
-
-oxide.SiO2/
-
-oxide.Al2O3;
 
 
 
-let temperature="";
-
-let gloss="";
-
-let flow="";
 
 
-
-if(flux>45){
-
-temperature="1180-1250℃";
-
-flow="流动性较强";
-
-}
-
-else{
-
-temperature="1250℃以上";
-
-flow="稳定型高温釉";
-
-}
+// 比值分析
 
 
+let sio2=
 
-if(siAl>6){
+seger["SiO2"]||0;
 
-gloss="透明亮光倾向";
 
-}
+let al2o3=
 
-else if(siAl>3){
-
-gloss="半哑光倾向";
-
-}
-
-else{
-
-gloss="亚光倾向";
-
-}
-
+seger["Al2O3"]||0;
 
 
 
@@ -509,44 +703,113 @@ gloss="亚光倾向";
 html+=`
 
 <h3>
-釉性预测
+
+摩尔比分析
+
 </h3>
-
-
-预计烧成：
-
-${temperature}
-
-<br>
-
-
-釉面：
-
-${gloss}
-
-<br>
-
-
-流动性：
-
-${flow}
-
-<br>
 
 
 SiO₂ / Al₂O₃：
 
-${siAl.toFixed(2)}
+${
+
+al2o3?
+
+(sio2/al2o3).toFixed(2)
+
+:
+
+"无法计算"
+
+}
+
+
 
 <br>
 
 
+Al₂O₃ / RO：
+
+${
+
+(seger["Al2O3"]||0).toFixed(2)
+
+}
+
+
+`;
+
+
+
+
+
+
+
+html+=`
+
+<h3>
+
+基础评价
+
+</h3>
+
+`;
+
+
+
+if(sio2/al2o3>6){
+
+
+html+=`
+
+偏高硅：
+
+透明、高硬度釉倾向
+
+`;
+
+}
+
+else if(sio2/al2o3>3){
+
+
+html+=`
+
+中等硅铝比：
+
+常规透明釉范围
+
+`;
+
+}
+
+else{
+
+
+html+=`
+
+低硅铝比：
+
+亚光或结晶倾向增加
+
+`;
+
+}
+
+
+
+
+html+=`
+
 <p>
 
-说明：
+注：
 
-该结果为理论试算，
-实际效果受胎土、厚度、气氛、升降温曲线影响。
+该结果基于原料理论分析。
+
+实际烧成仍需结合：
+
+胎土、厚度、气氛、升温曲线。
 
 </p>
 
@@ -554,7 +817,12 @@ ${siAl.toFixed(2)}
 
 
 
-document.getElementById("result").innerHTML=html;
+document
+
+.getElementById("result")
+
+.innerHTML=html;
+
 
 
 }
