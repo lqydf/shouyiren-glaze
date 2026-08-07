@@ -38,23 +38,17 @@ nav {
     z-index: 100;
 }
 .nav-inner {
-    max-width: 900px;
-    margin: 0 auto;
+    max-width: 900px; margin: 0 auto;
     padding: 0 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    display: flex; align-items: center; justify-content: space-between;
 }
 .logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    display: flex; align-items: center; gap: 10px;
     text-decoration: none;
 }
 .logo-icon {
     width: 36px; height: 36px;
-    background: var(--primary);
-    border-radius: 50%;
+    background: var(--primary); border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
     color: #fff; font-size: 18px; font-weight: bold;
 }
@@ -67,8 +61,7 @@ nav {
 }
 .nav-links a {
     font-size: 14px; color: var(--text-light);
-    text-decoration: none;
-    padding-bottom: 2px;
+    text-decoration: none; padding-bottom: 2px;
     transition: color 0.2s;
 }
 .nav-links a:hover, .nav-links a.active {
@@ -199,11 +192,12 @@ nav {
 }
 .card-img {
     height: 160px;
-    display: flex; align-items: center; justify-content: center;
     position: relative;
+    overflow: hidden;
 }
-.card-img .emoji {
-    font-size: 60px; opacity: 0.35;
+.card-img .shine {
+    position: absolute; inset: 0;
+    pointer-events: none;
 }
 .card-body { padding: 16px; }
 .card-tags {
@@ -237,7 +231,6 @@ footer {
 footer p { font-size: 13px; color: var(--text-muted); margin: 0 0 6px; }
 footer small { font-size: 11px; color: #c4b8a8; }
 
-/* 响应式 */
 @media (max-width: 600px) {
     .hero h1 { font-size: 32px; }
     .features { grid-template-columns: 1fr; }
@@ -332,7 +325,6 @@ fetch("glazes_glazy_preview.json")
         console.error(err);
     });
 
-// 快捷分类点击
 document.getElementById("quickCats").addEventListener("click", e => {
     if (e.target.classList.contains("cat-btn")) {
         document.querySelectorAll(".cat-btn").forEach(b => b.classList.remove("active"));
@@ -342,7 +334,6 @@ document.getElementById("quickCats").addEventListener("click", e => {
     }
 });
 
-// Hero搜索
 document.getElementById("heroSearch").addEventListener("input", e => {
     const kw = e.target.value.toLowerCase();
     if (kw.length > 0) {
@@ -353,12 +344,9 @@ document.getElementById("heroSearch").addEventListener("input", e => {
 function renderRecommend() {
     const grid = document.getElementById("recommendGrid");
     let filtered = glazes;
-
     if (currentCat !== "全部") {
         filtered = filtered.filter(g => g.category === currentCat);
     }
-
-    // 随机取6条展示
     const shuffled = filtered.sort(() => 0.5 - Math.random());
     const picks = shuffled.slice(0, 6);
 
@@ -371,13 +359,12 @@ function renderRecommend() {
         const diffClass = g.difficulty === "简单" ? "tag-diff-easy" :
                           g.difficulty === "困难" ? "tag-diff-hard" : "tag-diff-med";
         const diffText = g.difficulty || "未知";
-        const emoji = getEmoji(g.category);
-        const bg = getBg(g.category);
+        const style = getGlazeStyle(g.category);
 
-        return `
+        return \`
         <a href="detail.html?id=${g.id}" class="glaze-card">
-            <div class="card-img" style="background:${bg}">
-                <span class="emoji">${emoji}</span>
+            <div class="card-img" style="background:${style.bg}">
+                <div class="shine" style="background:${style.shine}"></div>
             </div>
             <div class="card-body">
                 <div class="card-tags">
@@ -389,43 +376,93 @@ function renderRecommend() {
                 <div class="card-meta">${g.temperature || ""} · ${g.surface || ""}</div>
             </div>
         </a>
-        `;
+        \`;
     }).join("");
 }
 
-function getEmoji(cat) {
-    const map = {
-        "青釉": "🍵", "白釉": "🏺", "黑釉": "🖤", "蓝釉": "🔵",
-        "绿釉": "🟢", "红釉": "🔴", "铜红釉": "🔴", "铁红釉": "🔴",
-        "铁釉": "🟤", "天目釉": "🖤", "志野釉": "🏺", "结晶釉": "✨",
-        "灰釉": "⚪", "黄釉": "🟡", "基础釉": "🏺", "透明釉": "💧",
-        "哑光釉": "🪨", "特种釉": "🎨", "化妆土": "🧱"
+function getGlazeStyle(category) {
+    const styles = {
+        "青釉": {
+            bg: "linear-gradient(145deg, #a8c8a0 0%, #7db8a0 40%, #5a9a80 100%)",
+            shine: "radial-gradient(ellipse at 30% 20%, rgba(255,255,255,0.25) 0%, transparent 60%)"
+        },
+        "白釉": {
+            bg: "linear-gradient(145deg, #f8f4ee 0%, #ede6d8 50%, #ddd4c4 100%)",
+            shine: "radial-gradient(ellipse at 30% 20%, rgba(255,255,255,0.4) 0%, transparent 50%)"
+        },
+        "黑釉": {
+            bg: "linear-gradient(145deg, #3a3a3a 0%, #1a1a1a 50%, #0d0d0d 100%)",
+            shine: "radial-gradient(ellipse at 70% 30%, rgba(255,255,255,0.08) 0%, transparent 50%)"
+        },
+        "蓝釉": {
+            bg: "linear-gradient(145deg, #a8c0d8 0%, #7898c0 50%, #5878a8 100%)",
+            shine: "radial-gradient(ellipse at 35% 25%, rgba(255,255,255,0.25) 0%, transparent 50%)"
+        },
+        "绿釉": {
+            bg: "linear-gradient(145deg, #a0d0a0 0%, #70b870 50%, #509850 100%)",
+            shine: "radial-gradient(ellipse at 35% 25%, rgba(255,255,255,0.25) 0%, transparent 50%)"
+        },
+        "红釉": {
+            bg: "linear-gradient(145deg, #c47878 0%, #a04040 50%, #802020 100%)",
+            shine: "radial-gradient(ellipse at 40% 25%, rgba(255,200,180,0.2) 0%, transparent 55%)"
+        },
+        "铜红釉": {
+            bg: "linear-gradient(145deg, #c47878 0%, #a04040 50%, #802020 100%)",
+            shine: "radial-gradient(ellipse at 40% 25%, rgba(255,200,180,0.2) 0%, transparent 55%)"
+        },
+        "铁红釉": {
+            bg: "linear-gradient(145deg, #c47878 0%, #a04040 50%, #802020 100%)",
+            shine: "radial-gradient(ellipse at 40% 25%, rgba(255,200,180,0.2) 0%, transparent 55%)"
+        },
+        "铁釉": {
+            bg: "linear-gradient(145deg, #b89878 0%, #987858 50%, #785838 100%)",
+            shine: "radial-gradient(ellipse at 40% 25%, rgba(255,220,180,0.15) 0%, transparent 55%)"
+        },
+        "天目釉": {
+            bg: "linear-gradient(145deg, #2a2a2a 0%, #1a1a1a 50%, #0f0f0f 100%)",
+            shine: "radial-gradient(ellipse at 50% 40%, rgba(180,160,120,0.15) 0%, transparent 45%)"
+        },
+        "志野釉": {
+            bg: "linear-gradient(145deg, #f0e8d8 0%, #e0d4c0 50%, #d0c4b0 100%)",
+            shine: "radial-gradient(ellipse at 35% 25%, rgba(255,255,255,0.35) 0%, transparent 50%)"
+        },
+        "结晶釉": {
+            bg: "linear-gradient(145deg, #c8d0e0 0%, #a8b8d0 50%, #8898c0 100%)",
+            shine: "radial-gradient(ellipse at 30% 30%, rgba(255,255,255,0.3) 0%, transparent 50%)"
+        },
+        "灰釉": {
+            bg: "linear-gradient(145deg, #c8c8c8 0%, #a8a8a8 50%, #888888 100%)",
+            shine: "radial-gradient(ellipse at 35% 25%, rgba(255,255,255,0.2) 0%, transparent 50%)"
+        },
+        "黄釉": {
+            bg: "linear-gradient(145deg, #e8e0b8 0%, #d8d0a0 50%, #c8c088 100%)",
+            shine: "radial-gradient(ellipse at 35% 25%, rgba(255,255,255,0.25) 0%, transparent 50%)"
+        },
+        "基础釉": {
+            bg: "linear-gradient(145deg, #e0d8d0 0%, #d0c8c0 50%, #c0b8b0 100%)",
+            shine: "radial-gradient(ellipse at 30% 20%, rgba(255,255,255,0.2) 0%, transparent 50%)"
+        },
+        "透明釉": {
+            bg: "linear-gradient(145deg, #d8e4f0 0%, #c8d8e8 50%, #b8cce0 100%)",
+            shine: "radial-gradient(ellipse at 30% 20%, rgba(255,255,255,0.35) 0%, transparent 50%)"
+        },
+        "哑光釉": {
+            bg: "linear-gradient(145deg, #c8c0b8 0%, #b8b0a8 50%, #a8a098 100%)",
+            shine: "radial-gradient(ellipse at 30% 20%, rgba(255,255,255,0.15) 0%, transparent 50%)"
+        },
+        "特种釉": {
+            bg: "linear-gradient(145deg, #d8c8d8 0%, #c8b8c8 50%, #b8a8b8 100%)",
+            shine: "radial-gradient(ellipse at 30% 20%, rgba(255,255,255,0.2) 0%, transparent 50%)"
+        },
+        "化妆土": {
+            bg: "linear-gradient(145deg, #d8c8b8 0%, #c8b8a8 50%, #b8a898 100%)",
+            shine: "radial-gradient(ellipse at 30% 20%, rgba(255,255,255,0.2) 0%, transparent 50%)"
+        }
     };
-    return map[cat] || "🏺";
-}
-
-function getBg(cat) {
-    const map = {
-        "青釉": "linear-gradient(135deg,#c8d6c4,#a8c4a0)",
-        "白釉": "linear-gradient(135deg,#f5f0e8,#e8ddd0)",
-        "黑釉": "linear-gradient(135deg,#2c2c2c,#4a4a4a)",
-        "蓝釉": "linear-gradient(135deg,#b8c8d8,#98a8c0)",
-        "绿釉": "linear-gradient(135deg,#b8d4b8,#98c098)",
-        "红釉": "linear-gradient(135deg,#d4a0a0,#c08080)",
-        "铜红釉": "linear-gradient(135deg,#d4a0a0,#c08080)",
-        "铁釉": "linear-gradient(135deg,#c8b8a8,#b0a090)",
-        "天目釉": "linear-gradient(135deg,#2c2c2c,#4a4a4a)",
-        "志野釉": "linear-gradient(135deg,#e8ddd0,#d8c8b8)",
-        "结晶釉": "linear-gradient(135deg,#d8d0e0,#c8c0d0)",
-        "灰釉": "linear-gradient(135deg,#d0d0d0,#c0c0c0)",
-        "黄釉": "linear-gradient(135deg,#e8e0b8,#d8d0a0)",
-        "基础釉": "linear-gradient(135deg,#e0d8d0,#d0c8c0)",
-        "透明釉": "linear-gradient(135deg,#d8e4f0,#c8d8e8)",
-        "哑光釉": "linear-gradient(135deg,#c8c0b8,#b8b0a8)",
-        "特种釉": "linear-gradient(135deg,#d8c8d8,#c8b8c8)",
-        "化妆土": "linear-gradient(135deg,#d8c8b8,#c8b8a8)"
+    return styles[category] || {
+        bg: "linear-gradient(145deg, #e0d8d0 0%, #d0c8c0 100%)",
+        shine: "radial-gradient(ellipse at 30% 20%, rgba(255,255,255,0.2) 0%, transparent 50%)"
     };
-    return map[cat] || "linear-gradient(135deg,#e0d8d0,#d0c8c0)";
 }
 </script>
 
