@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>釉方大全 · 守艺人</title>
+<style>
+:root {
+    --bg: #faf8f5;
+    --card: #ffffff;
+    --text: #5c4033;
+    --text-light: #8b7e6e;
+    --text-muted: #a89a8a;
+    --primary: #8b6f47;
+    --primary-hover: #7a6240;
+    --border: #e8e0d8;
+    --border-light: #f0ebe3;
+    --success: #2e7d32;
+    --warn: #e65100;
+    --shadow: 0 1px 4px rgba(92,64,51,0.05);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+    font-family: "Noto Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+}
+
+nav {
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+.nav-inner {
+    max-width: 900px; margin: 0 auto;
+    padding: 0 20px;
+    display: flex; align-items: center; justify-content: space-between;
+}
+.logo {
+    display: flex; align-items: center; gap: 10px;
+    text-decoration: none;
+}
+.logo-icon {
+    width: 36px; height: 36px;
+    background: var(--primary); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 18px; font-weight: bold;
+}
+.logo-text {
+    font-size: 20px; font-weight: 700;
+    color: var(--text); letter-spacing: 2px;
+}
+.nav-links {
+    display: flex; gap: 28px;
+}
+.nav-links a {
+    font-size: 14px; color: var(--text-light);
+    text-decoration: none; padding-bottom: 2px;
+    transition: color 0.2s;
+}
+.nav-links a:hover, .nav-links a.active {
+    color: var(--primary);
+    border-bottom: 2px solid var(--primary);
+}
+
+/* 顶部筛选区 */
+.filter-bar {
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    padding: 20px;
+}
+.filter-inner {
+    max-width: 900px; margin: 0 auto;
+}
+.search-box {
+    max-width: 520px; margin: 0 auto 16px;
+    position: relative;
+}
+.search-box input {
+    width: 100%; padding: 12px 20px 12px 44px;
+    border: 1px solid #d4c8b8; border-radius: 30px;
+    font-size: 14px; background: var(--bg);
+    outline: none; color: var(--text);
+}
+.search-box input::placeholder { color: #c4b8a8; }
+.search-box .icon {
+    position: absolute; left: 16px; top: 50%;
+    transform: translateY(-50%); color: #b5a898;
+    font-size: 16px;
+}
+
+/* 分类标签 */
+.cat-tags {
+    display: flex; gap: 8px;
+    overflow-x: auto; padding-bottom: 4px;
+    justify-content: center; flex-wrap: wrap;
+    margin-bottom: 12px;
+}
+.cat-tag {
+    padding: 6px 14px;
+    background: var(--border-light);
+    border-radius: 16px; font-size: 12px;
+    color: var(--text); cursor: pointer;
+    white-space: nowrap; border: none;
+    transition: all 0.2s;
+}
+.cat-tag:hover, .cat-tag.active {
+    background: var(--primary); color: #fff;
+}
+
+/* 高级筛选 */
+.adv-filters {
+    display: flex; gap: 10px;
+    justify-content: center; flex-wrap: wrap;
+}
+.adv-filters select {
+    padding: 6px 12px;
+    border: 1px solid #d4c8b8; border-radius: 8px;
+    font-size: 12px; background: var(--card);
+    color: var(--text); outline: none;
+}
+
+/* 结果统计 */
+.result-stats {
+    max-width: 900px; margin: 0 auto;
+    padding: 16px 20px;
+    font-size: 13px; color: var(--text-muted);
+}
+
+/* 列表 */
+.list-container {
+    max-width: 900px; margin: 0 auto;
+    padding: 0 20px 20px;
+}
+.glaze-list {
+    display: flex; flex-direction: column; gap: 12px;
+}
+.list-item {
+    background: var(--card);
+    border-radius: 12px; padding: 16px;
+    display: flex; gap: 16px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    align-items: center;
+    text-decoration: none; color: inherit;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.list-item:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(92,64,51,0.08);
+}
+.item-img {
+    width: 72px; height: 72px;
+    border-radius: 10px;
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+}
+.item-img .emoji { font-size: 28px; opacity: 0.4; }
+.item-body { flex: 1; min-width: 0; }
+.item-header {
+    display: flex; align-items: center; gap: 8px;
+    margin-bottom: 6px; flex-wrap: wrap;
+}
+.item-name {
+    font-size: 15px; font-weight: 600;
+    color: var(--text);
+}
+.tag {
+    font-size: 10px; padding: 1px 7px;
+    border-radius: 8px; font-weight: 500;
+}
+.tag-cat { background: #e8f0e4; color: #4a7c3f; }
+.tag-atm { background: var(--border-light); color: var(--primary); }
+.tag-diff-easy { background: #e8f5e9; color: var(--success); }
+.tag-diff-med { background: #fff3e0; color: var(--warn); }
+.tag-diff-hard { background: #ffebee; color: #c62828; }
+.item-meta {
+    font-size: 12px; color: var(--text-light);
+    line-height: 1.7;
+}
+.item-formula {
+    font-size: 11px; color: var(--text-muted);
+    margin-top: 4px;
+    font-family: "Courier New", monospace;
+}
+.item-arrow {
+    color: var(--primary);
+    font-size: 20px; flex-shrink: 0;
+}
+
+/* 分页 */
+.pagination {
+    display: flex; justify-content: center;
+    gap: 6px; margin-top: 24px; padding-bottom: 20px;
+}
+.page-btn {
+    padding: 6px 12px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px; font-size: 13px;
+    color: var(--text); cursor: pointer;
+    min-width: 36px; text-align: center;
+    transition: all 0.2s;
+}
+.page-btn:hover, .page-btn.active {
+    background: var(--primary); color: #fff;
+    border-color: var(--primary);
+}
+.page-btn:disabled {
+    opacity: 0.4; cursor: not-allowed;
+}
+
+/* 底部 */
+footer {
+    padding: 24px; text-align: center;
+    border-top: 1px solid var(--border);
+}
+footer p { font-size: 12px; color: #c4b8a8; }
+
+@media (max-width: 600px) {
+    .nav-links { gap: 16px; }
+    .nav-links a { font-size: 13px; }
+    .item-img { width: 56px; height: 56px; }
+    .item-img .emoji { font-size: 22px; }
+}
+</style>
+<base target="_blank">
+</head>
+<body>
+
+<nav>
+    <div class="nav-inner">
+        <a href="index.html" class="logo">
+            <div class="logo-icon">守</div>
+            <span class="logo-text">守艺人</span>
+        </a>
+        <div class="nav-links">
+            <a href="index.html">首页</a>
+            <a href="list.html" class="active">釉方大全</a>
+            <a href="calculator.html">釉式计算</a>
+            <a href="about.html">关于</a>
+        </div>
+    </div>
+</nav>
+
+<div class="filter-bar">
+    <div class="filter-inner">
+        <div class="search-box">
+            <span class="icon">🔍</span>
+            <input type="text" id="searchInput" placeholder="搜索釉名、分类、颜色、温度...">
+        </div>
+        <div class="cat-tags" id="catTags">
+            <button class="cat-tag active" data-cat="全部">全部</button>
+        </div>
+        <div class="adv-filters">
+            <select id="filterTemp">
+                <option value="">温度范围</option>
+                <option value="1000-1100">1000-1100℃</option>
+                <option value="1100-1200">1100-1200℃</option>
+                <option value="1200-1280">1200-1280℃</option>
+                <option value="1280+">1280℃以上</option>
+            </select>
+            <select id="filterAtm">
+                <option value="">烧成气氛</option>
+                <option value="氧化">氧化焰</option>
+                <option value="还原">还原焰</option>
+                <option value="均可">均可</option>
+            </select>
+            <select id="filterDiff">
+                <option value="">难度等级</option>
+                <option value="简单">简单</option>
+                <option value="中等">中等</option>
+                <option value="困难">困难</option>
+            </select>
+            <select id="sortBy">
+                <option value="">排序方式</option>
+                <option value="temp">按温度</option>
+                <option value="name">按名称</option>
+                <option value="diff">按难度</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<div class="result-stats" id="resultStats">加载中...</div>
+
+<div class="list-container">
+    <div class="glaze-list" id="glazeList">
+        <div style="text-align:center;padding:40px;color:var(--text-muted);">加载中...</div>
+    </div>
+    <div class="pagination" id="pagination"></div>
+</div>
+
+<footer>
+    <p>守艺人 · 数据源自 Glazy 公开数据库 (CC BY-NC-SA 4.0)</p>
+</footer>
+
+<script>
+let glazes = [];
+let filtered = [];
+let currentPage = 1;
+const perPage = 20;
+let currentCat = "全部";
+
+fetch("glazes_glazy_preview.json")
+    .then(res => res.json())
+    .then(data => {
+        glazes = data;
+        // 生成分类标签
+        const cats = [...new Set(glazes.map(g => g.category))].sort();
+        const catContainer = document.getElementById("catTags");
+        cats.forEach(cat => {
+            const btn = document.createElement("button");
+            btn.className = "cat-tag";
+            btn.dataset.cat = cat;
+            btn.textContent = cat;
+            catContainer.appendChild(btn);
+        });
+        applyFilters();
+    })
+    .catch(err => {
+        document.getElementById("glazeList").innerHTML =
+            '<div style="text-align:center;padding:40px;color:var(--text-muted);">数据加载失败</div>';
+        console.error(err);
+    });
+
+// 分类点击
+document.getElementById("catTags").addEventListener("click", e => {
+    if (e.target.classList.contains("cat-tag")) {
+        document.querySelectorAll(".cat-tag").forEach(b => b.classList.remove("active"));
+        e.target.classList.add("active");
+        currentCat = e.target.dataset.cat;
+        currentPage = 1;
+        applyFilters();
+    }
+});
+
+// 搜索
+document.getElementById("searchInput").addEventListener("input", () => {
+    currentPage = 1;
+    applyFilters();
+});
+
+// 高级筛选
+document.getElementById("filterTemp").addEventListener("change", () => { currentPage = 1; applyFilters(); });
+document.getElementById("filterAtm").addEventListener("change", () => { currentPage = 1; applyFilters(); });
+document.getElementById("filterDiff").addEventListener("change", () => { currentPage = 1; applyFilters(); });
+document.getElementById("sortBy").addEventListener("change", () => { applyFilters(); });
+
+function applyFilters() {
+    const kw = document.getElementById("searchInput").value.toLowerCase();
+    const tempFilter = document.getElementById("filterTemp").value;
+    const atmFilter = document.getElementById("filterAtm").value;
+    const diffFilter = document.getElementById("filterDiff").value;
+    const sortBy = document.getElementById("sortBy").value;
+
+    filtered = glazes.filter(g => {
+        // 分类
+        if (currentCat !== "全部" && g.category !== currentCat) return false;
+        // 搜索
+        if (kw) {
+            const text = (g.name + (g.category || "") + (g.color || "") + (g.surface || "")).toLowerCase();
+            if (!text.includes(kw)) return false;
+        }
+        // 温度
+        if (tempFilter && g.temperature) {
+            const t = g.temperature.replace(/[℃]/g, "");
+            const nums = t.split(/[-~]/).map(s => parseInt(s.trim()));
+            const minT = nums[0] || 0;
+            if (tempFilter === "1000-1100" && minT >= 1100) return false;
+            if (tempFilter === "1100-1200" && (minT < 1100 || minT >= 1200)) return false;
+            if (tempFilter === "1200-1280" && (minT < 1200 || minT >= 1280)) return false;
+            if (tempFilter === "1280+" && minT < 1280) return false;
+        }
+        // 气氛
+        if (atmFilter && g.atmosphere) {
+            if (!g.atmosphere.includes(atmFilter)) return false;
+        }
+        // 难度
+        if (diffFilter && g.difficulty !== diffFilter) return false;
+        return true;
+    });
+
+    // 排序
+    if (sortBy === "name") {
+        filtered.sort((a, b) => a.name.localeCompare(b.name, "zh"));
+    } else if (sortBy === "temp") {
+        filtered.sort((a, b) => {
+            const ta = parseInt((a.temperature || "").replace(/[^0-9]/g, "")) || 0;
+            const tb = parseInt((b.temperature || "").replace(/[^0-9]/g, "")) || 0;
+            return ta - tb;
+        });
+    } else if (sortBy === "diff") {
+        const order = { "简单": 1, "中等": 2, "困难": 3 };
+        filtered.sort((a, b) => (order[a.difficulty] || 2) - (order[b.difficulty] || 2));
+    }
+
+    renderList();
+    renderPagination();
+    document.getElementById("resultStats").textContent = `共找到 ${filtered.length} 条釉方`;
+}
+
+function renderList() {
+    const list = document.getElementById("glazeList");
+    const start = (currentPage - 1) * perPage;
+    const pageData = filtered.slice(start, start + perPage);
+
+    if (pageData.length === 0) {
+        list.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text-muted);">未找到匹配的釉方</div>';
+        return;
+    }
+
+    list.innerHTML = pageData.map(g => {
+        const diffClass = g.difficulty === "简单" ? "tag-diff-easy" :
+                          g.difficulty === "困难" ? "tag-diff-hard" : "tag-diff-med";
+        const emoji = getEmoji(g.category);
+        const bg = getBg(g.category);
+        const sio2 = g.seger_formula && g.seger_formula.SiO2 ? g.seger_formula.SiO2 : "";
+        const al2o3 = g.seger_formula && g.seger_formula.Al2O3 ? g.seger_formula.Al2O3 : "";
+        const ratio = sio2 && al2o3 ? (sio2 / al2o3).toFixed(2) : "";
+
+        return `
+        <a href="detail.html?id=${g.id}" class="list-item">
+            <div class="item-img" style="background:${bg}">
+                <span class="emoji">${emoji}</span>
+            </div>
+            <div class="item-body">
+                <div class="item-header">
+                    <span class="item-name">${g.name}</span>
+                    <span class="tag tag-cat">${g.category}</span>
+                    <span class="tag tag-atm">${g.atmosphere || "未知"}</span>
+                    <span class="tag ${diffClass}">${g.difficulty || "未知"}</span>
+                </div>
+                <div class="item-meta">${g.temperature || ""} · ${g.surface || ""} · ${g.stability || ""}</div>
+                ${ratio ? `<div class="item-formula">SiO₂/Al₂O₃ = ${ratio} · 来源：${g.source || ""}</div>` : ""}
+            </div>
+            <div class="item-arrow">→</div>
+        </a>
+        `;
+    }).join("");
+}
+
+function renderPagination() {
+    const totalPages = Math.ceil(filtered.length / perPage);
+    const pagination = document.getElementById("pagination");
+    if (totalPages <= 1) {
+        pagination.innerHTML = "";
+        return;
+    }
+
+    let html = "";
+    // 上一页
+    html += `<button class="page-btn" ${currentPage === 1 ? "disabled" : ""} onclick="goPage(${currentPage - 1})">←</button>`;
+
+    // 页码
+    const maxVisible = 5;
+    let startPage = Math.max(1, currentPage - Math.floor(maxVisible / 2));
+    let endPage = Math.min(totalPages, startPage + maxVisible - 1);
+    if (endPage - startPage < maxVisible - 1) startPage = Math.max(1, endPage - maxVisible + 1);
+
+    if (startPage > 1) html += `<button class="page-btn" onclick="goPage(1)">1</button>`;
+    if (startPage > 2) html += `<span class="page-btn" style="cursor:default;border:none;background:transparent;">...</span>`;
+
+    for (let i = startPage; i <= endPage; i++) {
+        html += `<button class="page-btn ${i === currentPage ? "active" : ""}" onclick="goPage(${i})">${i}</button>`;
+    }
+
+    if (endPage < totalPages - 1) html += `<span class="page-btn" style="cursor:default;border:none;background:transparent;">...</span>`;
+    if (endPage < totalPages) html += `<button class="page-btn" onclick="goPage(${totalPages})">${totalPages}</button>`;
+
+    // 下一页
+    html += `<button class="page-btn" ${currentPage === totalPages ? "disabled" : ""} onclick="goPage(${currentPage + 1})">→</button>`;
+
+    pagination.innerHTML = html;
+}
+
+function goPage(p) {
+    currentPage = p;
+    renderList();
+    renderPagination();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function getEmoji(cat) {
+    const map = {
+        "青釉": "🍵", "白釉": "🏺", "黑釉": "🖤", "蓝釉": "🔵",
+        "绿釉": "🟢", "红釉": "🔴", "铜红釉": "🔴", "铁红釉": "🔴",
+        "铁釉": "🟤", "天目釉": "🖤", "志野釉": "🏺", "结晶釉": "✨",
+        "灰釉": "⚪", "黄釉": "🟡", "基础釉": "🏺", "透明釉": "💧",
+        "哑光釉": "🪨", "特种釉": "🎨", "化妆土": "🧱"
+    };
+    return map[cat] || "🏺";
+}
+
+function getBg(cat) {
+    const map = {
+        "青釉": "linear-gradient(135deg,#c8d6c4,#a8c4a0)",
+        "白釉": "linear-gradient(135deg,#f5f0e8,#e8ddd0)",
+        "黑釉": "linear-gradient(135deg,#2c2c2c,#4a4a4a)",
+        "蓝釉": "linear-gradient(135deg,#b8c8d8,#98a8c0)",
+        "绿釉": "linear-gradient(135deg,#b8d4b8,#98c098)",
+        "红釉": "linear-gradient(135deg,#d4a0a0,#c08080)",
+        "铜红釉": "linear-gradient(135deg,#d4a0a0,#c08080)",
+        "铁釉": "linear-gradient(135deg,#c8b8a8,#b0a090)",
+        "天目釉": "linear-gradient(135deg,#2c2c2c,#4a4a4a)",
+        "志野釉": "linear-gradient(135deg,#e8ddd0,#d8c8b8)",
+        "结晶釉": "linear-gradient(135deg,#d8d0e0,#c8c0d0)",
+        "灰釉": "linear-gradient(135deg,#d0d0d0,#c0c0c0)",
+        "黄釉": "linear-gradient(135deg,#e8e0b8,#d8d0a0)",
+        "基础釉": "linear-gradient(135deg,#e0d8d0,#d0c8c0)",
+        "透明釉": "linear-gradient(135deg,#d8e4f0,#c8d8e8)",
+        "哑光釉": "linear-gradient(135deg,#c8c0b8,#b8b0a8)",
+        "特种釉": "linear-gradient(135deg,#d8c8d8,#c8b8c8)",
+        "化妆土": "linear-gradient(135deg,#d8c8b8,#c8b8a8)"
+    };
+    return map[cat] || "linear-gradient(135deg,#e0d8d0,#d0c8c0)";
+}
+
+// URL参数处理（从首页搜索跳转）
+const urlParams = new URLSearchParams(window.location.search);
+const urlSearch = urlParams.get("search");
+if (urlSearch) {
+    document.getElementById("searchInput").value = urlSearch;
+}
+</script>
+
+</body>
+</html>
