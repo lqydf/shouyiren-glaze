@@ -269,9 +269,19 @@ oxides=data[1];
 addRow();
 
 
+})
+
+.catch(error=>{
+
+document.getElementById("result").innerHTML=
+
+`
+<p class="error">
+数据库读取失败，请检查 materials.json 或 oxides.json
+</p>
+`;
+
 });
-
-
 
 
 
@@ -353,7 +363,6 @@ document
 
 
 }
-
 function calculate(){
 
 
@@ -404,7 +413,7 @@ percent:percent
 
 
 
-if(total!==100){
+if(Math.abs(total-100)>0.01){
 
 
 document.getElementById("result").innerHTML=
@@ -433,7 +442,11 @@ return;
 
 
 
-// 氧化物重量
+// ======================
+// 原料 → 氧化物重量
+// 新版读取 analysis
+// ======================
+
 
 let oxideWeight={};
 
@@ -456,7 +469,7 @@ if(!material)return;
 
 
 
-for(let oxide in material.oxides){
+for(let oxide in material.analysis){
 
 
 
@@ -466,7 +479,7 @@ oxideWeight[oxide]=
 
 +
 
-material.oxides[oxide]
+material.analysis[oxide]
 
 *
 
@@ -486,7 +499,11 @@ item.percent
 
 
 
-// 摩尔计算
+
+// ======================
+// 氧化物摩尔计算
+// ======================
+
 
 let mole={};
 
@@ -507,6 +524,7 @@ o=>o.oxide===oxide
 
 if(info){
 
+
 mole[oxide]=
 
 oxideWeight[oxide]
@@ -515,20 +533,22 @@ oxideWeight[oxide]
 
 info.molecular_weight;
 
-}
-
 
 }
 
 
+}
 
 
 
-// RO归一化
+
+
+// ======================
+// Seger RO归一化
+// ======================
 
 
 let ro=0;
-
 
 
 oxides
@@ -545,6 +565,28 @@ ro+=mole[o.oxide]||0;
 
 
 
+let r2o=0;
+
+
+oxides
+
+.filter(o=>o.group==="R2O")
+
+.forEach(o=>{
+
+
+r2o+=mole[o.oxide]||0;
+
+
+});
+
+
+
+
+
+let base=ro+r2o;
+
+
 
 let seger={};
 
@@ -555,7 +597,7 @@ for(let oxide in mole){
 
 seger[oxide]=
 
-mole[oxide]/ro;
+mole[oxide]/base;
 
 
 }
@@ -574,7 +616,6 @@ let al2o3=
 seger["Al2O3"]||0;
 
 
-
 let ratio=
 
 al2o3?
@@ -586,22 +627,19 @@ sio2/al2o3
 
 
 
-// --------------------
+
+// ======================
 // 釉性判断
-// --------------------
+// ======================
 
 
 let temperature="";
 
-
 let gloss="";
-
 
 let transparency="";
 
-
 let flow="";
-
 
 let risk="";
 
@@ -609,31 +647,31 @@ let risk="";
 
 
 
-// 温度
+// 温度判断
 
 
-if(ro>1.2){
+if(base>1.2){
 
-temperature="1200-1250℃倾向";
+temperature="低温熔融倾向（约1200℃以下）";
 
 }
 
-else if(ro>0.9){
+else if(base>0.8){
 
-temperature="1250-1280℃倾向";
+temperature="中高温釉倾向（约1200-1280℃）";
 
 }
 
 else{
 
-temperature="1280℃以上倾向";
+temperature="高温硬质釉倾向（1280℃以上）";
 
 }
 
 
 
 
-// 光泽
+// 光泽判断
 
 
 if(ratio>7){
@@ -650,15 +688,14 @@ gloss="正常光泽倾向";
 
 else{
 
-gloss="亚光或晶体倾向";
+gloss="亚光或结晶倾向";
 
 }
 
 
 
 
-
-// 透明度
+// 透明度判断
 
 
 if(al2o3<0.35 && ratio>5){
@@ -682,19 +719,18 @@ transparency="乳浊或半哑倾向";
 
 
 
+// 流动性判断
 
-// 流动
 
+if(base>1.2 && al2o3<0.4){
 
-if(ro>1.2 && al2o3<0.4){
-
-flow="流动性较强，注意流釉";
+flow="熔融强，流动风险较高";
 
 }
 
 else if(al2o3>0.6){
 
-flow="较稳定，流动低";
+flow="稳定，流动性较低";
 
 }
 
@@ -707,18 +743,18 @@ flow="中等流动性";
 
 
 
-// 风险
+// 风险判断
 
 
-if(ro>1.3){
+if(base>1.3){
 
-risk="熔融较强，存在流釉风险";
+risk="熔剂比例偏高，注意流釉";
 
 }
 
 else if(al2o3<0.25){
 
-risk="稳定性较低";
+risk="氧化铝不足，釉稳定性较低";
 
 }
 
@@ -729,12 +765,7 @@ risk="基础稳定";
 }
 
 
-
-
-
 let html="";
-
-
 
 
 
@@ -760,7 +791,7 @@ Seger Formula
 
 
 
-["RO","R2O3","RO2"].forEach(group=>{
+["RO","R2O","R2O3","RO2"].forEach(group=>{
 
 
 html+=`
@@ -819,7 +850,6 @@ ${seger[o.oxide].toFixed(3)}
 
 
 
-
 html+=`
 
 <h3>
@@ -839,8 +869,6 @@ ${ratio.toFixed(2)}
 Al₂O₃ / RO：
 
 ${al2o3.toFixed(3)}
-
-
 
 
 
@@ -892,17 +920,52 @@ ${risk}
 
 
 
+<h3>
+
+原料氧化物总量
+
+</h3>
+
+`;
+
+
+
+
+
+for(let oxide in oxideWeight){
+
+
+html+=`
+
+<div class="item">
+
+<span>${oxide}</span>
+
+<span>${oxideWeight[oxide].toFixed(3)}</span>
+
+</div>
+
+`;
+
+}
+
+
+
+
+
+html+=`
+
 <p>
 
 说明：
 
-以上为基于理论氧化物组成的经验分析。
+本计算基于标准化原料氧化物分析值。
 
-实际效果需要结合：
+实际烧成效果会受到：
 
 <br>
 
-胎土
+胎体组成
 
 <br>
 
@@ -914,11 +977,21 @@ ${risk}
 
 <br>
 
+保温时间
+
+<br>
+
 冷却速度
+
+<br>
+
+等因素影响。
 
 </p>
 
 `;
+
+
 
 
 
@@ -937,5 +1010,6 @@ document
 
 
 </body>
+
 
 </html>
