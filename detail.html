@@ -394,16 +394,26 @@ footer p { font-size: 12px; color: #c4b8a8; }
 let glazes = [];
 let id = new URLSearchParams(window.location.search).get("id");
 
-fetch("glazes_glazy_preview.json")
-    .then(res => res.json())
-    .then(data => {
-        glazes = data;
-        renderDetail();
-    })
-    .catch(err => {
-        document.getElementById("detailName").textContent = "数据加载失败";
-        console.error(err);
-    });
+function fetchWithTimeout(url, timeout = 5000) {
+    return Promise.race([
+        fetch(url),
+        new Promise((_, reject) => setTimeout(() => reject(new Error("timeout")), timeout))
+    ]);
+}
+
+async function loadGlazes() {
+    try {
+        const res = await fetchWithTimeout("glazes_glazy_preview.json", 8000);
+        if (res.ok) { glazes = await res.json(); renderDetail(); return; }
+    } catch (e) { console.log("主数据加载失败:", e.message); }
+    try {
+        const res = await fetchWithTimeout("glazes.json", 5000);
+        if (res.ok) { glazes = await res.json(); renderDetail(); return; }
+    } catch (e) { console.log("备用数据加载失败:", e.message); }
+    document.getElementById("detailName").textContent = "数据加载失败，请检查文件路径或通过本地服务器访问";
+}
+
+loadGlazes();
 
 function renderDetail() {
     let glaze = glazes.find(item => item.id == id);
