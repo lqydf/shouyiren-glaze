@@ -9,6 +9,7 @@
 
 <title>守艺人 · Seger釉式计算</title>
 
+
 <style>
 
 body{
@@ -89,10 +90,8 @@ line-height:1.8;
 
 display:flex;
 justify-content:space-between;
-
 border-bottom:1px solid #ddd;
-
-padding:5px;
+padding:6px 0;
 
 }
 
@@ -108,6 +107,7 @@ color:red;
 
 
 </style>
+
 
 </head>
 
@@ -125,24 +125,22 @@ color:red;
 
 
 <h3>
-输入釉方
+输入釉方比例
 </h3>
 
 
 <div id="rows"></div>
 
 
+
 <button onclick="addRow()">
-
-+ 添加原料
-
+添加原料
 </button>
 
 
+
 <button onclick="calculate()">
-
-计算Seger式
-
+计算 Seger 式
 </button>
 
 
@@ -153,6 +151,7 @@ color:red;
 
 <div class="card">
 
+
 <h3>
 计算结果
 </h3>
@@ -160,7 +159,7 @@ color:red;
 
 <div id="result">
 
-等待输入
+等待计算
 
 </div>
 
@@ -181,13 +180,17 @@ let oxides=[];
 
 Promise.all([
 
+
 fetch("materials.json")
 .then(r=>r.json()),
+
 
 fetch("oxides.json")
 .then(r=>r.json())
 
+
 ])
+
 
 .then(data=>{
 
@@ -263,11 +266,13 @@ row.remove();
 
 
 
+
 row.appendChild(select);
 
 row.appendChild(input);
 
 row.appendChild(del);
+
 
 
 document
@@ -278,16 +283,20 @@ document
 
 
 }
+
+
+
+
+
 function calculate(){
 
 
 let rows=document.querySelectorAll(".row");
 
 
+let recipe=[];
+
 let total=0;
-
-
-let formula=[];
 
 
 
@@ -311,7 +320,7 @@ if(!isNaN(percent)){
 total+=percent;
 
 
-formula.push({
+recipe.push({
 
 name:name,
 
@@ -324,8 +333,6 @@ percent:percent
 
 
 });
-
-
 
 
 
@@ -354,19 +361,14 @@ return;
 
 }
 
-
-
-
+// ==========================
+// 氧化物重量计算
+// ==========================
 
 let oxideWeight={};
 
 
-
-
-
-// 计算各氧化物重量
-
-formula.forEach(item=>{
+recipe.forEach(item=>{
 
 
 let material=
@@ -386,8 +388,7 @@ if(!material)return;
 for(let oxide in material.oxides){
 
 
-
-let weight=
+let value=
 
 material.oxides[oxide]
 
@@ -407,8 +408,7 @@ oxideWeight[oxide]=
 
 +
 
-weight;
-
+value;
 
 
 }
@@ -419,17 +419,16 @@ weight;
 
 
 
+// ==========================
+// 氧化物摩尔计算
+// ==========================
 
 
-// 氧化物换算摩尔
-
-
-let moles={};
+let mole={};
 
 
 
 for(let oxide in oxideWeight){
-
 
 
 let data=
@@ -446,7 +445,7 @@ if(!data)continue;
 
 
 
-moles[oxide]=
+mole[oxide]=
 
 oxideWeight[oxide]
 
@@ -455,15 +454,16 @@ oxideWeight[oxide]
 data.molecular_weight;
 
 
-
 }
 
 
 
 
 
-
-// RO总量
+// ==========================
+// Seger归一化
+// RO=1
+// ==========================
 
 
 let roTotal=0;
@@ -477,28 +477,23 @@ oxides
 .forEach(o=>{
 
 
-roTotal+=moles[o.oxide]||0;
+roTotal += mole[o.oxide] || 0;
 
 
 });
 
 
 
-
-
-// Seger归一化
-
-
 let seger={};
 
 
 
-for(let oxide in moles){
+for(let oxide in mole){
 
 
 seger[oxide]=
 
-moles[oxide]/roTotal;
+mole[oxide]/roTotal;
 
 
 }
@@ -507,9 +502,12 @@ moles[oxide]/roTotal;
 
 
 
+// ==========================
+// 输出
+// ==========================
+
 
 let html="";
-
 
 
 html+=`
@@ -522,9 +520,47 @@ html+=`
 
 
 <h3>
+氧化物摩尔分析
+</h3>
 
+`;
+
+
+
+for(let oxide in mole){
+
+
+html+=`
+
+<div class="item">
+
+<span>
+
+${oxide}
+
+</span>
+
+
+<span>
+
+${mole[oxide].toFixed(4)}
+
+</span>
+
+
+</div>
+
+`;
+
+}
+
+
+
+
+html+=`
+
+<h3>
 Seger Formula
-
 </h3>
 
 `;
@@ -532,17 +568,16 @@ Seger Formula
 
 
 
+// RO
+
 
 html+=`
 
 <h4>
-
 RO
-
 </h4>
 
 `;
-
 
 
 
@@ -581,14 +616,13 @@ ${seger[o.oxide].toFixed(3)}
 
 
 
+// R2O3
 
 
 html+=`
 
 <h4>
-
 R2O3
-
 </h4>
 
 `;
@@ -618,7 +652,6 @@ ${o.oxide}
 ${seger[o.oxide].toFixed(3)}
 </span>
 
-
 </div>
 
 `;
@@ -631,15 +664,13 @@ ${seger[o.oxide].toFixed(3)}
 
 
 
-
+// RO2
 
 
 html+=`
 
 <h4>
-
 RO2
-
 </h4>
 
 `;
@@ -683,29 +714,26 @@ ${seger[o.oxide].toFixed(3)}
 
 
 
-
-
-// 比值分析
+// ==========================
+// 摩尔比
+// ==========================
 
 
 let sio2=
 
-seger["SiO2"]||0;
+seger["SiO2"] || 0;
 
 
 let al2o3=
 
-seger["Al2O3"]||0;
-
+seger["Al2O3"] || 0;
 
 
 
 html+=`
 
 <h3>
-
-摩尔比分析
-
+关键比例
 </h3>
 
 
@@ -713,16 +741,15 @@ SiO₂ / Al₂O₃：
 
 ${
 
-al2o3?
+al2o3 ?
 
-(sio2/al2o3).toFixed(2)
+(sio2/al2o3).toFixed(3)
 
 :
 
 "无法计算"
 
 }
-
 
 
 <br>
@@ -732,14 +759,13 @@ Al₂O₃ / RO：
 
 ${
 
-(seger["Al2O3"]||0).toFixed(2)
+(al2o3).toFixed(3)
 
 }
 
 
+
 `;
-
-
 
 
 
@@ -748,72 +774,43 @@ ${
 html+=`
 
 <h3>
-
-基础评价
-
+说明
 </h3>
 
-`;
-
-
-
-if(sio2/al2o3>6){
-
-
-html+=`
-
-偏高硅：
-
-透明、高硬度釉倾向
-
-`;
-
-}
-
-else if(sio2/al2o3>3){
-
-
-html+=`
-
-中等硅铝比：
-
-常规透明釉范围
-
-`;
-
-}
-
-else{
-
-
-html+=`
-
-低硅铝比：
-
-亚光或结晶倾向增加
-
-`;
-
-}
-
-
-
-
-html+=`
 
 <p>
 
-注：
+以上为理论 Seger 摩尔计算。
 
-该结果基于原料理论分析。
+实际烧成效果仍受：
 
-实际烧成仍需结合：
+<br>
 
-胎土、厚度、气氛、升温曲线。
+1. 原料实际化学分析
+
+<br>
+
+2. 胎土组成
+
+<br>
+
+3. 釉层厚度
+
+<br>
+
+4. 烧成气氛
+
+<br>
+
+5. 冷却速度
+
+影响。
 
 </p>
 
 `;
+
+
 
 
 
@@ -826,6 +823,7 @@ document
 
 
 }
+
 
 
 </script>
