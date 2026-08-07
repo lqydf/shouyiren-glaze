@@ -406,11 +406,13 @@ function renderRecommend() {
                           g.difficulty === "困难" ? "tag-diff-hard" : "tag-diff-med";
         const diffText = g.difficulty || "未知";
         const style = getGlazeStyle(g.category);
+        const hasImg = g.image && g.image.trim() !== "";
 
-        return `
+        return \`
         <a href="detail.html?id=${g.id}" class="glaze-card">
-            <div class="card-img" style="background:${style.bg}">
-                <div class="shine" style="background:${style.shine}"></div>
+            <div class="card-img" style="background:${style.bg};position:relative;">
+                ${hasImg ? `<img src="${g.image}" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;z-index:1;border-radius:inherit;" onerror="this.style.display='none'">` : ""}
+                <div class="shine" style="background:${style.shine};position:absolute;inset:0;z-index:2;pointer-events:none;"></div>
             </div>
             <div class="card-body">
                 <div class="card-tags">
@@ -422,7 +424,7 @@ function renderRecommend() {
                 <div class="card-meta">${g.temperature || ""} · ${g.surface || ""}</div>
             </div>
         </a>
-        `;
+        \`;
     }).join("");
 }
 
