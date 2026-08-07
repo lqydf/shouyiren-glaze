@@ -313,17 +313,63 @@ footer small { font-size: 11px; color: #c4b8a8; }
 let glazes = [];
 let currentCat = "全部";
 
-fetch("glazes_glazy_preview.json")
-    .then(res => res.json())
-    .then(data => {
-        glazes = data;
-        renderRecommend();
-    })
-    .catch(err => {
-        document.getElementById("recommendGrid").innerHTML =
-            '<div style="text-align:center;padding:40px;color:var(--text-muted);">数据加载失败</div>';
-        console.error(err);
-    });
+// 内置备用数据（当 fetch 全部失败时使用）
+const fallbackGlazes = [
+    {id:101,name:"龙泉梅子青釉",category:"青釉",color:"青绿色",surface:"厚釉温润，玉质感",temperature:"1180-1250℃",atmosphere:"还原焰",difficulty:"中等",stability:"较稳定"},
+    {id:1,name:"龙泉青釉",category:"青釉",color:"青绿色",surface:"温润玉质感",temperature:"1180-1250℃",atmosphere:"还原焰",difficulty:"中等",stability:"较稳定"},
+    {id:2,name:"油滴釉",category:"天目釉",color:"黑底银斑",surface:"金属析晶效果",temperature:"1250-1300℃",atmosphere:"还原焰",difficulty:"困难",stability:"较低"},
+    {id:3,name:"木灰釉",category:"灰釉",color:"青灰色",surface:"自然流动效果",temperature:"1200-1300℃",atmosphere:"氧化或还原",difficulty:"简单",stability:"稳定"},
+    {id:102,name:"钧窑天蓝釉",category:"蓝釉",color:"天蓝色",surface:"乳浊厚重",temperature:"1280-1300℃",atmosphere:"还原焰",difficulty:"困难",stability:"较低"},
+    {id:103,name:"定窑白釉",category:"白釉",color:"象牙白",surface:"温润细腻",temperature:"1250-1280℃",atmosphere:"还原焰",difficulty:"中等",stability:"较稳定"}
+];
+
+// 带超时的 fetch
+function fetchWithTimeout(url, timeout = 5000) {
+    return Promise.race([
+        fetch(url),
+        new Promise((_, reject) => setTimeout(() => reject(new Error("timeout")), timeout))
+    ]);
+}
+
+// 多级加载：主数据 -> glazes.json -> 内置数据
+async function loadGlazes() {
+    // 第1级：尝试加载主数据文件
+    try {
+        const res = await fetchWithTimeout("glazes_glazy_preview.json", 8000);
+        if (res.ok) {
+            glazes = await res.json();
+            renderRecommend();
+            return;
+        }
+    } catch (e) {
+        console.log("主数据加载失败:", e.message);
+    }
+
+    // 第2级：尝试加载 glazes.json
+    try {
+        const res = await fetchWithTimeout("glazes.json", 5000);
+        if (res.ok) {
+            glazes = await res.json();
+            renderRecommend();
+            return;
+        }
+    } catch (e) {
+        console.log("备用数据加载失败:", e.message);
+    }
+
+    // 第3级：使用内置数据
+    glazes = fallbackGlazes;
+    renderRecommend();
+
+    // 显示提示
+    const grid = document.getElementById("recommendGrid");
+    const notice = document.createElement("div");
+    notice.style.cssText = "text-align:center;padding:8px 12px;margin-bottom:12px;font-size:12px;color:var(--warn);background:#fff3e0;border-radius:8px;";
+    notice.innerHTML = "⚠ 正在使用本地示例数据，部分釉方可能未显示。建议通过本地服务器访问以获取完整数据。";
+    grid.parentNode.insertBefore(notice, grid);
+}
+
+loadGlazes();
 
 document.getElementById("quickCats").addEventListener("click", e => {
     if (e.target.classList.contains("cat-btn")) {
@@ -361,7 +407,7 @@ function renderRecommend() {
         const diffText = g.difficulty || "未知";
         const style = getGlazeStyle(g.category);
 
-        return \`
+        return `
         <a href="detail.html?id=${g.id}" class="glaze-card">
             <div class="card-img" style="background:${style.bg}">
                 <div class="shine" style="background:${style.shine}"></div>
@@ -376,7 +422,7 @@ function renderRecommend() {
                 <div class="card-meta">${g.temperature || ""} · ${g.surface || ""}</div>
             </div>
         </a>
-        \`;
+        `;
     }).join("");
 }
 
