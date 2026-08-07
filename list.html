@@ -304,26 +304,40 @@ let currentPage = 1;
 const perPage = 20;
 let currentCat = "全部";
 
-fetch("glazes_glazy_preview.json")
-    .then(res => res.json())
-    .then(data => {
-        glazes = data;
-        const cats = [...new Set(glazes.map(g => g.category))].sort();
-        const catContainer = document.getElementById("catTags");
-        cats.forEach(cat => {
-            const btn = document.createElement("button");
-            btn.className = "cat-tag";
-            btn.dataset.cat = cat;
-            btn.textContent = cat;
-            catContainer.appendChild(btn);
-        });
-        applyFilters();
-    })
-    .catch(err => {
-        document.getElementById("glazeList").innerHTML =
-            '<div style="text-align:center;padding:40px;color:var(--text-muted);">数据加载失败</div>';
-        console.error(err);
+function fetchWithTimeout(url, timeout = 5000) {
+    return Promise.race([
+        fetch(url),
+        new Promise((_, reject) => setTimeout(() => reject(new Error("timeout")), timeout))
+    ]);
+}
+
+async function loadGlazes() {
+    try {
+        const res = await fetchWithTimeout("glazes_glazy_preview.json", 8000);
+        if (res.ok) { glazes = await res.json(); initList(); return; }
+    } catch (e) { console.log("主数据加载失败:", e.message); }
+    try {
+        const res = await fetchWithTimeout("glazes.json", 5000);
+        if (res.ok) { glazes = await res.json(); initList(); return; }
+    } catch (e) { console.log("备用数据加载失败:", e.message); }
+    document.getElementById("glazeList").innerHTML =
+        '<div style="text-align:center;padding:40px;color:var(--text-muted);">数据加载失败，请检查文件路径或通过本地服务器访问</div>';
+}
+
+function initList() {
+    const cats = [...new Set(glazes.map(g => g.category))].sort();
+    const catContainer = document.getElementById("catTags");
+    cats.forEach(cat => {
+        const btn = document.createElement("button");
+        btn.className = "cat-tag";
+        btn.dataset.cat = cat;
+        btn.textContent = cat;
+        catContainer.appendChild(btn);
     });
+    applyFilters();
+}
+
+loadGlazes();
 
 document.getElementById("catTags").addEventListener("click", e => {
     if (e.target.classList.contains("cat-tag")) {
