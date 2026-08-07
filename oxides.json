@@ -1,0 +1,50 @@
+[
+  {
+    "oxide": "K2O",
+    "name": "氧化钾",
+    "molecular_weight": 94.20,
+    "group": "RO"
+  },
+  {
+    "oxide": "Na2O",
+    "name": "氧化钠",
+    "molecular_weight": 61.98,
+    "group": "RO"
+  },
+  {
+    "oxide": "CaO",
+    "name": "氧化钙",
+    "molecular_weight": 56.08,
+    "group": "RO"
+  },
+  {
+    "oxide": "MgO",
+    "name": "氧化镁",
+    "molecular_weight": 40.30,
+    "group": "RO"
+  },
+  {
+    "oxide": "ZnO",
+    "name": "氧化锌",
+    "molecular_weight": 81.38,
+    "group": "RO"
+  },
+  {
+    "oxide": "BaO",
+    "name": "氧化钡",
+    "molecular_weight": 153.33,
+    "group": "RO"
+  },
+  {
+    "oxide": "Al2O3",
+    "name": "氧化铝",
+    "molecular_weight": 101.96,
+    "group": "R2O3"
+  },
+  {
+    "oxide": "SiO2",
+    "name": "二氧化硅",
+    "molecular_weight": 60.08,
+    "group": "RO2"
+  }
+]
