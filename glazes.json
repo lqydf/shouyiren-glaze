@@ -199,5 +199,2079 @@
     "recipe_status": "实验参考",
     "verification": "C",
     "source": "传统灰釉资料整理"
+  },
+  {
+    "id": 1001,
+    "name": "李奇4321经典釉",
+    "category": "经典釉方",
+    "alias": [],
+    "image": "",
+    "color": "经典色调",
+    "surface": "稳定透明",
+    "temperature": "1200-1300℃",
+    "atmosphere": "氧化/还原",
+    "usage": [
+      "通用"
+    ],
+    "difficulty": "简单",
+    "stability": "较稳定",
+    "recipe_type": "透明釉/基础釉",
+    "base_ratio_total": "100.0%",
+    "ingredients": [
+      {
+        "material": "钾长石",
+        "ratio": "40.0%"
+      },
+      {
+        "material": "石英粉",
+        "ratio": "30.0%"
+      },
+      {
+        "material": "碳酸钙",
+        "ratio": "20.0%"
+      },
+      {
+        "material": "高岭土",
+        "ratio": "10.0%"
+      }
+    ],
+    "additives": [],
+    "process": "最经典的釉方之一，配比简单且稳定",
+    "clay": "",
+    "notes": "可视为百分比配方，也可放大为批量配方",
+    "recipe_status": "社区参考",
+    "verification": "C",
+    "source": "Glazy.org / 国际陶艺经典"
+  },
+  {
+    "id": 1002,
+    "name": "6号锥氧化基础釉",
+    "category": "基础釉",
+    "alias": [],
+    "image": "",
+    "color": "无色透明",
+    "surface": "亮光透明",
+    "temperature": "1220-1240℃",
+    "atmosphere": "氧化",
+    "usage": [
+      "通用",
+      "基础"
+    ],
+    "difficulty": "简单",
+    "stability": "较稳定",
+    "recipe_type": "透明釉",
+    "base_ratio_total": "100.0%",
+    "ingredients": [
+      {
+        "material": "高岭土",
+        "ratio": "25.0%"
+      },
+      {
+        "material": "球土",
+        "ratio": "25.0%"
+      },
+      {
+        "material": "石英粉",
+        "ratio": "25.0%"
+      },
+      {
+        "material": "长石",
+        "ratio": "25.0%"
+      }
+    ],
+    "additives": [],
+    "process": "中温氧化基础釉",
+    "clay": "",
+    "notes": "Cone 6 氧化气氛基础配方",
+    "recipe_status": "社区参考",
+    "verification": "C",
+    "source": "KilnFire / West Art Pottery"
+  },
+  {
+    "id": 1003,
+    "name": "10号锥氧化基础釉",
+    "category": "基础釉",
+    "alias": [],
+    "image": "",
+    "color": "无色透明",
+    "surface": "亮光透明",
+    "temperature": "1280-1300℃",
+    "atmosphere": "氧化",
+    "usage": [
+      "通用",
+      "基础"
+    ],
+    "difficulty": "中等",
+    "stability": "较稳定",
+    "recipe_type": "透明釉",
+    "base_ratio_total": "100.0%",
+    "ingredients": [
+      {
+        "material": "高岭土",
+        "ratio": "20.0%"
+      },
+      {
+        "material": "球土",
+        "ratio": "15.0%"
+      },
+      {
+        "material": "石英粉",
+        "ratio": "10.0%"
+      },
+      {
+        "material": "长石",
+        "ratio": "40.0%"
+      },
+      {
+        "material": "碳酸钙",
+        "ratio": "10.0%"
+      },
+      {
+        "material": "氧化锌",
+        "ratio": "5.0%"
+      }
+    ],
+    "additives": [],
+    "process": "高温氧化基础釉",
+    "clay": "",
+    "notes": "Cone 10 氧化气氛基础配方",
+    "recipe_status": "社区参考",
+    "verification": "C",
+    "source": "KilnFire / West Art Pottery"
+  },
+  {
+    "id": 1004,
+    "name": "基础亮红釉",
+    "category": "色釉",
+    "alias": [],
+    "image": "",
+    "color": "多色",
+    "surface": "色彩丰富",
+    "temperature": "998-1060℃",
+    "atmosphere": "氧化",
+    "usage": [
+      "陈设器",
+      "茶器"
+    ],
+    "difficulty": "简单",
+    "stability": "较稳定",
+    "recipe_type": "红釉",
+    "base_ratio_total": "100.0%",
+    "ingredients": [
+      {
+        "material": "高岭土",
+        "ratio": "40.0%"
+      },
+      {
+        "material": "长石",
+        "ratio": "30.0%"
+      },
+      {
+        "material": "石英粉",
+        "ratio": "20.0%"
+      },
+      {
+        "material": "氧化铁红",
+        "ratio": "10.0%"
+      }
+    ],
+    "additives": [],
+    "process": "低温亮红基础釉",
+    "clay": "",
+    "notes": "低温釉，烧成温度约1820°F",
+    "recipe_status": "社区参考",
+    "verification": "C",
+    "source": "Glutton LV / Low Fire Recipes"
+  },
+  {
+    "id": 1005,
+    "name": "最稳定钡无光/缎光釉",
+    "category": "无光釉/缎光釉",
+    "alias": [],
+    "image": "",
+    "color": "哑光",
+    "surface": "缎光/哑光",
+    "temperature": "1280-1300℃",
+    "atmosphere": "氧化/还原",
+    "usage": [
+      "陈设器",
+      "日用器"
+    ],
+    "difficulty": "简单",
+    "stability": "较稳定",
+    "recipe_type": "钡无光釉",
+    "base_ratio_total": "100.0%",
+    "ingredients": [
+      {
+        "material": "钾长石",
+        "ratio": "48.1%"
+      },
+      {
+        "material": "碳酸钡",
+        "ratio": "37.3%"
+      },
+      {
+        "material": "石英",
+        "ratio": "7.5%"
+      },
+      {
+        "material": "高岭土",
+        "ratio": "7.1%"
+      }
+    ],
+    "additives": [],
+    "process": "最稳定的钡无光釉，氧化还原均适用",
+    "clay": "",
+    "notes": "加钙会降温；加各氧化金属少至多均好用；加金红石可调整各氧化金属；不流至流均美",
+    "recipe_status": "社区参考",
+    "verification": "C",
+    "source": "台湾陶艺家 / Ceramist.com.tw"
+  },
+  {
+    "id": 1006,
+    "name": "最稳定钡无光/缎光釉(1230℃版)",
+    "category": "无光釉/缎光釉",
+    "alias": [],
+    "image": "",
+    "color": "哑光",
+    "surface": "缎光/哑光",
+    "temperature": "1230℃",
+    "atmosphere": "氧化/还原",
+    "usage": [
+      "陈设器",
+      "日用器"
+    ],
+    "difficulty": "中等",
+    "stability": "较稳定",
+    "recipe_type": "钡无光釉",
+    "base_ratio_total": "100.0%",
+    "ingredients": [
+      {
+        "material": "钾长石",
+        "ratio": "45.0%"
+      },
+      {
+        "material": "高岭土",
+        "ratio": "9.0%"
+      },
+      {
+        "material": "碳酸钡",
+        "ratio": "23.0%"
+      },
+      {
+        "material": "石英",
+        "ratio": "8.0%"
+      },
+      {
+        "material": "碳酸钙",
+        "ratio": "15.0%"
+      }
+    ],
+    "additives": [],
+    "process": "由上釉(B47)改成的1230℃版钡无光釉",
+    "clay": "",
+    "notes": "1230℃烧成版本",
+    "recipe_status": "社区参考",
+    "verification": "C",
+    "source": "台湾陶艺家 / Ceramist.com.tw"
+  },
+  {
+    "id": 1007,
+    "name": "铜红釉(配方一)",
+    "category": "色釉",
+    "alias": [],
+    "image": "",
+    "color": "多色",
+    "surface": "色彩丰富",
+    "temperature": "1280℃",
+    "atmosphere": "还原",
+    "usage": [
+      "陈设器",
+      "茶器"
+    ],
+    "difficulty": "中等",
+    "stability": "较稳定",
+    "recipe_type": "铜红釉",
+    "base_ratio_total": "104.0%",
+    "ingredients": [
+      {
+        "material": "钾长石",
+        "ratio": "37.0%"
+      },
+      {
+        "material": "石灰石",
+        "ratio": "16.0%"
+      },
+      {
+        "material": "碳酸钡",
+        "ratio": "12.0%"
+      },
+      {
+        "material": "白土",
+        "ratio": "3.0%"
+      },
+      {
+        "material": "石英",
+        "ratio": "32.0%"
+      },
+      {
+        "material": "碳酸铜",
+        "ratio": "1.0%"
+      },
+      {
+        "material": "氧化锡",
+        "ratio": "3.0%"
+      }
+    ],
+    "additives": [],
+    "process": "传统铜红釉配方",
+    "clay": "",
+    "notes": "加骨灰(磷酸钙)2%变钧窑效果",
+    "recipe_status": "社区参考",
+    "verification": "C",
+    "source": "台湾陶艺家 / Ceramist.com.tw"
+  },
+  {
+    "id": 1008,
+    "name": "铜红釉(配方二)",
+    "category": "色釉",
+    "alias": [],
+    "image": "",
+    "color": "多色",
+    "surface": "色彩丰富",
+    "temperature": "1280℃",
+    "atmosphere": "还原",
+    "usage": [
+      "陈设器",
+      "茶器"
+    ],
+    "difficulty": "中等",
+    "stability": "较稳定",
+    "recipe_type": "铜红釉",
+    "base_ratio_total": "91.1%",
+    "ingredients": [
+      {
+        "material": "钾长石",
+        "ratio": "36.7%"
+      },
+      {
+        "material": "石英",
+        "ratio": "20.6%"
+      },
+      {
+        "material": "碳酸钙",
+        "ratio": "18.1%"
+      },
+      {
+        "material": "高岭土",
+        "ratio": "2.6%"
+      },
+      {
+        "material": "碳酸钡",
+        "ratio": "8.6%"
+      },
+      {
+        "material": "碳酸铜",
+        "ratio": "1.5%"
+      },
+      {
+        "material": "氧化锡",
+        "ratio": "3.0%"
+      }
+    ],
+    "additives": [],
+    "process": "传统铜红釉另一种配方",
+    "clay": "",
+    "notes": "加骨灰2%则成钧窑效果",
+    "recipe_status": "社区参考",
+    "verification": "C",
+    "source": "台湾陶艺家 / Ceramist.com.tw"
+  },
+  {
+    "id": 1009,
+    "name": "绿青瓷",
+    "category": "色釉",
+    "alias": [],
+    "image": "",
+    "color": "多色",
+    "surface": "色彩丰富",
+    "temperature": "1280-1300℃",
+    "atmosphere": "还原",
+    "usage": [
+      "陈设器",
+      "茶器"
+    ],
+    "difficulty": "中等",
+    "stability": "较稳定",
+    "recipe_type": "青瓷釉",
+    "base_ratio_total": "99.5%",
+    "ingredients": [
+      {
+        "material": "钾长石",
+        "ratio": "60.0%"
+      },
+      {
+        "material": "石英",
+        "ratio": "6.0%"
+      },
+      {
+        "material": "石灰石",
+        "ratio": "6.0%"
+      },
+      {
+        "material": "高岭土",
+        "ratio": "12.0%"
+      },
+      {
+        "material": "煅烧滑石",
+        "ratio": "14.0%"
+      },
+      {
+        "material": "氧化铁",
+        "ratio": "1.5%"
+      }
+    ],
+    "additives": [],
+    "process": "绿青瓷釉",
+    "clay": "",
+    "notes": "铁含量1-1.5%可调",
+    "recipe_status": "社区参考",
+    "verification": "C",
+    "source": "台湾陶艺家 / Ceramist.com.tw"
+  },
+  {
+    "id": 1010,
+    "name": "蓝青瓷",
+    "category": "色釉",
+    "alias": [],
+    "image": "",
+    "color": "多色",
+    "surface": "色彩丰富",
+    "temperature": "1280-1300℃",
+    "atmosphere": "还原",
+    "usage": [
+      "陈设器",
+      "茶器"
+    ],
+    "difficulty": "简单",
+    "stability": "较稳定",
+    "recipe_type": "青瓷釉",
+    "base_ratio_total": "87.0%",
+    "ingredients": [
+      {
+        "material": "钾长石",
+        "ratio": "62.0%"
+      },
+      {
+        "material": "石英",
+        "ratio": "25.0%"
+      }
+    ],
+    "additives": [],
+    "process": "蓝青瓷釉",
+    "clay": "",
+    "notes": "数据不完整，需补充其他原料",
+    "recipe_status": "社区参考",
+    "verification": "C",
+    "source": "台湾陶艺家 / Ceramist.com.tw"
+  },
+  {
+    "id": 1011,
+    "name": "致密柔光釉V3.0",
+    "category": "柔光釉",
+    "alias": [],
+    "image": "",
+    "color": "柔和",
+    "surface": "柔光质感",
+    "temperature": "1160-1210℃",
+    "atmosphere": "氧化",
+    "usage": [
+      "日用器"
+    ],
+    "difficulty": "简单",
+    "stability": "较稳定",
+    "recipe_type": "柔光釉",
+    "base_ratio_total": "5.8%",
+    "ingredients": [
+      {
+        "material": "河砂(SiO₂)",
+        "ratio": "3.0%"
+      },
+      {
+        "material": "硫酸钡",
+        "ratio": "0.3%"
+      },
+      {
+        "material": "熟石灰",
+        "ratio": "0.5%"
+      },
+      {
+        "material": "植物灰",
+        "ratio": "2.0%"
+      }
+    ],
+    "additives": [],
+    "process": "半透暖青白柔光釉，玉质温润、硬度高、防水耐磨、几乎无开裂",
+    "clay": "",
+    "notes": "比例配方(非百分比)，烧成区间1160～1210℃，保温30min",
+    "recipe_status": "社区参考",
+    "verification": "C",
+    "source": "CSDN / 基于材料物性自主迭代"
+  },
+  {
+    "id": 1012,
+    "name": "可控开片釉",
+    "category": "开片釉",
+    "alias": [],
+    "image": "",
+    "color": "裂纹效果",
+    "surface": "开片纹理",
+    "temperature": "1160-1210℃",
+    "atmosphere": "氧化",
+    "usage": [
+      "茶器",
+      "陈设器"
+    ],
+    "difficulty": "简单",
+    "stability": "较稳定",
+    "recipe_type": "开片釉",
+    "base_ratio_total": "8.0%",
+    "ingredients": [
+      {
+        "material": "河砂(SiO₂)",
+        "ratio": "2.0%"
+      },
+      {
+        "material": "熟石灰",
+        "ratio": "3.0%"
+      },
+      {
+        "material": "植物灰",
+        "ratio": "3.0%"
+      }
+    ],
+    "additives": [],
+    "process": "刻意拉大胎釉膨胀差，实现可控自然开片（仿古哥窑纹路）",
+    "clay": "",
+    "notes": "比例配方(非百分比)，骤冷工艺催生应力差，釉面规律开裂",
+    "recipe_status": "社区参考",
+    "verification": "C",
+    "source": "CSDN / 基于材料物性自主迭代"
+  },
+  {
+    "id": 1013,
+    "name": "高白度釉下多彩低温陶瓷釉料",
+    "category": "低温釉",
+    "alias": [],
+    "image": "",
+    "color": "多彩",
+    "surface": "低温烧成",
+    "temperature": "1050℃",
+    "atmosphere": "氧化",
+    "usage": [
+      "装饰器"
+    ],
+    "difficulty": "困难",
+    "stability": "较稳定",
+    "recipe_type": "白釉",
+    "base_ratio_total": "100.0%",
+    "ingredients": [
+      {
+        "material": "长石",
+        "ratio": "39.0%"
+      },
+      {
+        "material": "锂辉石",
+        "ratio": "6.0%"
+      },
+      {
+        "material": "石灰石",
+        "ratio": "10.0%"
+      },
+      {
+        "material": "碳酸锶",
+        "ratio": "10.0%"
+      },
+      {
+        "material": "石英",
+        "ratio": "21.0%"
+      },
+      {
+        "material": "高岭土",
+        "ratio": "5.0%"
+      },
+      {
+        "material": "滑石",
+        "ratio": "6.0%"
+      },
+      {
+        "material": "碳酸钡",
+        "ratio": "3.0%"
+      }
+    ],
+    "additives": [],
+    "process": "高白度釉下多彩低温陶瓷釉料，烧成温度降低320℃",
+    "clay": "",
+    "notes": "优选配方，烧成温度1050℃±5℃",
+    "recipe_status": "社区参考",
+    "verification": "C",
+    "source": "中国专利 CN103601534A"
+  },
+  {
+    "id": 1014,
+    "name": "大红釉料",
+    "category": "色釉",
+    "alias": [],
+    "image": "",
+    "color": "多色",
+    "surface": "色彩丰富",
+    "temperature": "1260-1280℃",
+    "atmosphere": "氧化",
+    "usage": [
+      "陈设器",
+      "茶器"
+    ],
+    "difficulty": "困难",
+    "stability": "较稳定",
+    "recipe_type": "红釉",
+    "base_ratio_total": "99.64%",
+    "ingredients": [
+      {
+        "material": "二氧化硅",
+        "ratio": "69.35%"
+      },
+      {
+        "material": "氧化铝",
+        "ratio": "11.61%"
+      },
+      {
+        "material": "氧化钙",
+        "ratio": "9.62%"
+      },
+      {
+        "material": "氧化镁",
+        "ratio": "0.81%"
+      },
+      {
+        "material": "氧化钾",
+        "ratio": "4.26%"
+      },
+      {
+        "material": "氧化钠",
+        "ratio": "0.92%"
+      },
+      {
+        "material": "氧化锌",
+        "ratio": "1.12%"
+      },
+      {
+        "material": "氧化钡",
+        "ratio": "0.8%"
+      },
+      {
+        "material": "氧化硼",
+        "ratio": "0.86%"
+      },
+      {
+        "material": "氧化铁",
+        "ratio": "0.16%"
+      },
+      {
+        "material": "二氧化钛",
+        "ratio": "0.13%"
+      }
+    ],
+    "additives": [],
+    "process": "高温大红陶瓷釉料",
+    "clay": "",
+    "notes": "化学组成百分比（氧化物形式），素坯1280-1310℃烧成后施釉再烧",
+    "recipe_status": "社区参考",
+    "verification": "C",
+    "source": "中国专利 CN102020461A"
+  },
+  {
+    "id": 1015,
+    "name": "透明釉料",
+    "category": "透明釉",
+    "alias": [],
+    "image": "",
+    "color": "无色透明",
+    "surface": "亮光透明",
+    "temperature": "1260-1280℃",
+    "atmosphere": "氧化",
+    "usage": [
+      "通用"
+    ],
+    "difficulty": "困难",
+    "stability": "较稳定",
+    "recipe_type": "透明釉",
+    "base_ratio_total": "99.57%",
+    "ingredients": [
+      {
+        "material": "二氧化硅",
+        "ratio": "57.83%"
+      },
+      {
+        "material": "氧化铝",
+        "ratio": "12.52%"
+      },
+      {
+        "material": "氧化钙",
+        "ratio": "10.69%"
+      },
+      {
+        "material": "氧化镁",
+        "ratio": "1.03%"
+      },
+      {
+        "material": "氧化钾",
+        "ratio": "2.32%"
+      },
+      {
+        "material": "氧化钠",
+        "ratio": "5.42%"
+      },
+      {
+        "material": "氧化锌",
+        "ratio": "5.21%"
+      },
+      {
+        "material": "氧化硼",
+        "ratio": "4.12%"
+      },
+      {
+        "material": "氧化铁",
+        "ratio": "0.31%"
+      },
+      {
+        "material": "二氧化钛",
+        "ratio": "0.12%"
+      }
+    ],
+    "additives": [],
+    "process": "高温透明釉料",
+    "clay": "",
+    "notes": "化学组成百分比（氧化物形式）",
+    "recipe_status": "社区参考",
+    "verification": "C",
+    "source": "中国专利 CN102020461A"
+  },
+  {
+    "id": 1016,
+    "name": "耐磨陶瓷釉料",
+    "category": "功能釉",
+    "alias": [],
+    "image": "",
+    "color": "功能性",
+    "surface": "特殊功能",
+    "temperature": "1100-1300℃",
+    "atmosphere": "氧化",
+    "usage": [
+      "功能器"
+    ],
+    "difficulty": "困难",
+    "stability": "较稳定",
+    "recipe_type": "耐磨釉",
+    "base_ratio_total": "62.5%",
+    "ingredients": [
+      {
+        "material": "二氧化钛",
+        "ratio": "14.0%"
+      },
+      {
+        "material": "硅灰石",
+        "ratio": "19.0%"
+      },
+      {
+        "material": "晶石",
+        "ratio": "10.0%"
+      },
+      {
+        "material": "氧化钕",
+        "ratio": "2.5%"
+      },
+      {
+        "material": "锡",
+        "ratio": "2.0%"
+      },
+      {
+        "material": "氧化铁",
+        "ratio": "3.0%"
+      },
+      {
+        "material": "磷酸锆",
+        "ratio": "2.5%"
+      },
+      {
+        "material": "WB",
+        "ratio": "1.5%"
+      },
+      {
+        "material": "硅酸锆",
+        "ratio": "4.5%"
+      },
+      {
+        "material": "氧化镧",
+        "ratio": "3.5%"
+      }
+    ],
+    "additives": [],
+    "process": "增强抗折强度、耐磨性、抗龟裂性能",
+    "clay": "",
+    "notes": "重量份配比，实施例1数据",
+    "recipe_status": "社区参考",
+    "verification": "C",
+    "source": "中国专利 201711089282"
+  },
+  {
+    "id": 1017,
+    "name": "新型陶瓷雪釉",
+    "category": "艺术釉",
+    "alias": [],
+    "image": "",
+    "color": "艺术效果",
+    "surface": "特殊效果",
+    "temperature": "1200-1300℃",
+    "atmosphere": "氧化",
+    "usage": [
+      "艺术品"
+    ],
+    "difficulty": "中等",
+    "stability": "较稳定",
+    "recipe_type": "雪釉",
+    "base_ratio_total": "100.5%",
+    "ingredients": [
+      {
+        "material": "氧化铝",
+        "ratio": "17.5%"
+      },
+      {
+        "material": "二氧化硅",
+        "ratio": "65.0%"
+      },
+      {
+        "material": "氧化铁",
+        "ratio": "6.5%"
+      },
+      {
+        "material": "氧化钾",
+        "ratio": "7.5%"
+      },
+      {
+        "material": "氧化钠",
+        "ratio": "4.0%"
+      }
+    ],
+    "additives": [],
+    "process": "模拟自然雪景、雪山景观的陶瓷雪釉",
+    "clay": "",
+    "notes": "中间值配方，Al2O3 15-20%、SiO2 60-70%、Fe2O3 5-8%、K2O 5-10%、Na2O 3-5%",
+    "recipe_status": "社区参考",
+    "verification": "C",
+    "source": "中国专利 202411678832"
+  },
+  {
+    "id": 1018,
+    "name": "轻质保温陶瓷装饰板用3D釉料",
+    "category": "建筑釉",
+    "alias": [],
+    "image": "",
+    "color": "建筑色调",
+    "surface": "建筑适用",
+    "temperature": "1100-1200℃",
+    "atmosphere": "氧化",
+    "usage": [
+      "建筑陶瓷"
+    ],
+    "difficulty": "中等",
+    "stability": "较稳定",
+    "recipe_type": "3D釉",
+    "base_ratio_total": "95.5%",
+    "ingredients": [
+      {
+        "material": "珍珠岩粉",
+        "ratio": "50.0%"
+      },
+      {
+        "material": "钾长石",
+        "ratio": "22.5%"
+      },
+      {
+        "material": "凝灰岩粉",
+        "ratio": "10.0%"
+      },
+      {
+        "material": "煅烧氧化铝",
+        "ratio": "6.5%"
+      },
+      {
+        "material": "硅酸锆",
+        "ratio": "6.5%"
+      }
+    ],
+    "additives": [],
+    "process": "呈哑光状态，粗糙度较高，具有较好的立体效果",
+    "clay": "",
+    "notes": "质量份配比，珍珠岩微粉40-60份，钾长石粉15-30份，凝灰岩粉5-15份",
+    "recipe_status": "社区参考",
+    "verification": "C",
+    "source": "中国专利 / 3D釉料配方"
+  },
+  {
+    "id": 1019,
+    "name": "适用于高黄河泥含量瓷坯的陶瓷釉料",
+    "category": "特殊坯体釉",
+    "alias": [],
+    "image": "",
+    "color": "适配性强",
+    "surface": "适配特殊坯体",
+    "temperature": "1200-1300℃",
+    "atmosphere": "氧化/还原",
+    "usage": [
+      "特殊坯体"
+    ],
+    "difficulty": "中等",
+    "stability": "较稳定",
+    "recipe_type": "结晶釉",
+    "base_ratio_total": "100.0%",
+    "ingredients": [
+      {
+        "material": "高岭土",
+        "ratio": "8.0%"
+      },
+      {
+        "material": "煅烧氧化锌",
+        "ratio": "27.0%"
+      },
+      {
+        "material": "石英",
+        "ratio": "22.0%"
+      },
+      {
+        "material": "透闪石",
+        "ratio": "3.0%"
+      },
+      {
+        "material": "硼玻璃粉",
+        "ratio": "40.0%"
+      }
+    ],
+    "additives": [],
+    "process": "适用于高黄河淤泥含量瓷坯的釉料，可达食用级标准",
+    "clay": "",
+    "notes": "重量百分比，黄河泥坯体配方：黄河淤泥49.1%、西矿陶土42.8%、煅烧透闪石8.1%",
+    "recipe_status": "社区参考",
+    "verification": "C",
+    "source": "中国专利 202211445499"
+  },
+  {
+    "id": 1020,
+    "name": "低膨胀陶瓷釉料",
+    "category": "功能釉",
+    "alias": [],
+    "image": "",
+    "color": "功能性",
+    "surface": "特殊功能",
+    "temperature": "1200-1300℃",
+    "atmosphere": "氧化",
+    "usage": [
+      "功能器"
+    ],
+    "difficulty": "困难",
+    "stability": "较稳定",
+    "recipe_type": "低膨胀釉",
+    "base_ratio_total": "100.0%",
+    "ingredients": [
+      {
+        "material": "叶长石",
+        "ratio": "15.0%"
+      },
+      {
+        "material": "锂辉石",
+        "ratio": "10.0%"
+      },
+      {
+        "material": "氧化锆",
+        "ratio": "8.0%"
+      },
+      {
+        "material": "低膨胀熔块",
+        "ratio": "20.0%"
+      },
+      {
+        "material": "苏州土",
+        "ratio": "10.0%"
+      },
+      {
+        "material": "硼砂",
+        "ratio": "5.0%"
+      },
+      {
+        "material": "滑石",
+        "ratio": "8.0%"
+      },
+      {
+        "material": "石英粉",
+        "ratio": "14.0%"
+      },
+      {
+        "material": "氧化铝",
+        "ratio": "10.0%"
+      }
+    ],
+    "additives": [],
+    "process": "低膨胀系数，耐高温，坯釉适应性好",
+    "clay": "",
+    "notes": "含铝粉和黑料添加剂（铝粉5%，黑料10-15%）",
+    "recipe_status": "社区参考",
+    "verification": "C",
+    "source": "中国专利 202211577628"
+  },
+  {
+    "id": 1021,
+    "name": "青花瓷釉料基底",
+    "category": "色釉",
+    "alias": [],
+    "image": "",
+    "color": "多色",
+    "surface": "色彩丰富",
+    "temperature": "1200-1300℃",
+    "atmosphere": "氧化",
+    "usage": [
+      "陈设器",
+      "茶器"
+    ],
+    "difficulty": "中等",
+    "stability": "较稳定",
+    "recipe_type": "青花釉",
+    "base_ratio_total": "100.0%",
+    "ingredients": [
+      {
+        "material": "二氧化硅",
+        "ratio": "66.0%"
+      },
+      {
+        "material": "氧化铝",
+        "ratio": "20.0%"
+      },
+      {
+        "material": "氧化钙",
+        "ratio": "8.0%"
+      },
+      {
+        "material": "氧化钠",
+        "ratio": "3.0%"
+      },
+      {
+        "material": "氧化钾",
+        "ratio": "3.0%"
+      }
+    ],
+    "additives": [],
+    "process": "青花瓷无铅透明釉基底",
+    "clay": "",
+    "notes": "基底釉化学组成，CoO色料分8%、12%、16%三档添加",
+    "recipe_status": "社区参考",
+    "verification": "C",
+    "source": "百度文库 / 青花瓷釉料配比实验报告"
+  },
+  {
+    "id": 1022,
+    "name": "3D釉料(化学组成版)",
+    "category": "建筑釉",
+    "alias": [],
+    "image": "",
+    "color": "建筑色调",
+    "surface": "建筑适用",
+    "temperature": "1100-1200℃",
+    "atmosphere": "氧化",
+    "usage": [
+      "建筑陶瓷"
+    ],
+    "difficulty": "困难",
+    "stability": "较稳定",
+    "recipe_type": "3D釉",
+    "base_ratio_total": "102.875%",
+    "ingredients": [
+      {
+        "material": "二氧化硅",
+        "ratio": "60.5%"
+      },
+      {
+        "material": "氧化铝",
+        "ratio": "22.0%"
+      },
+      {
+        "material": "氧化铁",
+        "ratio": "0.15%"
+      },
+      {
+        "material": "二氧化钛",
+        "ratio": "0.125%"
+      },
+      {
+        "material": "氧化钙",
+        "ratio": "4.75%"
+      },
+      {
+        "material": "氧化镁",
+        "ratio": "2.85%"
+      },
+      {
+        "material": "氧化钠",
+        "ratio": "3.0%"
+      },
+      {
+        "material": "氧化钾",
+        "ratio": "4.0%"
+      },
+      {
+        "material": "氧化锆",
+        "ratio": "2.5%"
+      },
+      {
+        "material": "氧化锂",
+        "ratio": "3.0%"
+      }
+    ],
+    "additives": [],
+    "process": "3D釉料化学组成",
+    "clay": "",
+    "notes": "中间值配方，含烧失量1.8-3.6%",
+    "recipe_status": "社区参考",
+    "verification": "C",
+    "source": "中国专利 / 3D釉料配方"
+  },
+  {
+    "id": 1023,
+    "name": "负离子陶瓷釉",
+    "category": "功能釉",
+    "alias": [],
+    "image": "",
+    "color": "功能性",
+    "surface": "特殊功能",
+    "temperature": "720-960℃",
+    "atmosphere": "氧化",
+    "usage": [
+      "功能器"
+    ],
+    "difficulty": "困难",
+    "stability": "较稳定",
+    "recipe_type": "负离子釉",
+    "base_ratio_total": "100.0%",
+    "ingredients": [
+      {
+        "material": "硼砂",
+        "ratio": "5.0%"
+      },
+      {
+        "material": "玻璃粉",
+        "ratio": "10.0%"
+      },
+      {
+        "material": "负离子粉",
+        "ratio": "34.0%"
+      },
+      {
+        "material": "电气石粉",
+        "ratio": "34.0%"
+      },
+      {
+        "material": "药石粉",
+        "ratio": "4.25%"
+      },
+      {
+        "material": "赭石粉",
+        "ratio": "4.25%"
+      },
+      {
+        "material": "石燕粉",
+        "ratio": "4.25%"
+      },
+      {
+        "material": "麦饭石粉",
+        "ratio": "4.25%"
+      }
+    ],
+    "additives": [],
+    "process": "保留负离子粉及电气石功效的陶瓷釉",
+    "clay": "",
+    "notes": "负离子粉与电气石粉共占掺杂混合物的80%，其余20%为其他矿物粉",
+    "recipe_status": "社区参考",
+    "verification": "C",
+    "source": "中国专利 202111187307"
+  },
+  {
+    "id": 1024,
+    "name": "健康养生陶瓷基础釉料",
+    "category": "功能釉",
+    "alias": [],
+    "image": "",
+    "color": "功能性",
+    "surface": "特殊功能",
+    "temperature": "1100-1250℃",
+    "atmosphere": "氧化",
+    "usage": [
+      "功能器"
+    ],
+    "difficulty": "困难",
+    "stability": "较稳定",
+    "recipe_type": "健康釉",
+    "base_ratio_total": "117.5%",
+    "ingredients": [
+      {
+        "material": "长石",
+        "ratio": "42.5%"
+      },
+      {
+        "material": "石英",
+        "ratio": "22.5%"
+      },
+      {
+        "material": "方解石",
+        "ratio": "17.5%"
+      },
+      {
+        "material": "滑石",
+        "ratio": "4.5%"
+      },
+      {
+        "material": "碳酸钡",
+        "ratio": "5.5%"
+      },
+      {
+        "material": "碳酸锶",
+        "ratio": "2.0%"
+      },
+      {
+        "material": "碳酸锂",
+        "ratio": "2.0%"
+      },
+      {
+        "material": "氧化锌",
+        "ratio": "4.5%"
+      },
+      {
+        "material": "金红石",
+        "ratio": "4.5%"
+      },
+      {
+        "material": "高岭土",
+        "ratio": "5.5%"
+      },
+      {
+        "material": "负离子剂",
+        "ratio": "6.5%"
+      }
+    ],
+    "additives": [],
+    "process": "具有健康养生和环保功能性的陶瓷基础釉料",
+    "clay": "",
+    "notes": "中间值配方，长石30-55%、石英15-30%、方解石10-25%等",
+    "recipe_status": "社区参考",
+    "verification": "C",
+    "source": "中国专利 / 健康陶瓷生产加工工艺"
+  },
+  {
+    "id": 1025,
+    "name": "日用陶瓷无光釉料",
+    "category": "无光釉",
+    "alias": [],
+    "image": "",
+    "color": "哑光",
+    "surface": "哑光质感",
+    "temperature": "1310℃",
+    "atmosphere": "氧化",
+    "usage": [
+      "日用器"
+    ],
+    "difficulty": "中等",
+    "stability": "较稳定",
+    "recipe_type": "无光釉",
+    "base_ratio_total": "100.0%",
+    "ingredients": [
+      {
+        "material": "长石",
+        "ratio": "37.5%"
+      },
+      {
+        "material": "石英",
+        "ratio": "23.0%"
+      },
+      {
+        "material": "煅烧滑石",
+        "ratio": "17.5%"
+      },
+      {
+        "material": "高岭土",
+        "ratio": "15.0%"
+      },
+      {
+        "material": "氧化锌",
+        "ratio": "7.0%"
+      }
+    ],
+    "additives": [],
+    "process": "日用陶瓷无光釉料",
+    "clay": "",
+    "notes": "实施例2数据，球磨细度325目筛余<0.1%，比重1.1g/ml",
+    "recipe_status": "社区参考",
+    "verification": "C",
+    "source": "中国专利 35440a02f8e0c9a"
+  },
+  {
+    "id": 1026,
+    "name": "日用陶瓷高白釉料",
+    "category": "白釉",
+    "alias": [],
+    "image": "",
+    "color": "白色",
+    "surface": "白亮细腻",
+    "temperature": "1270-1280℃",
+    "atmosphere": "氧化",
+    "usage": [
+      "日用器",
+      "陈设器"
+    ],
+    "difficulty": "中等",
+    "stability": "较稳定",
+    "recipe_type": "高白釉",
+    "base_ratio_total": "100.0%",
+    "ingredients": [
+      {
+        "material": "长石",
+        "ratio": "49.5%"
+      },
+      {
+        "material": "石英",
+        "ratio": "22.5%"
+      },
+      {
+        "material": "煅烧滑石",
+        "ratio": "11.5%"
+      },
+      {
+        "material": "高岭土",
+        "ratio": "10.0%"
+      },
+      {
+        "material": "碳酸钡",
+        "ratio": "6.5%"
+      }
+    ],
+    "additives": [],
+    "process": "日用陶瓷高白釉料",
+    "clay": "",
+    "notes": "实施例2数据，球磨细度280目筛余<0.1%，比重1.6g/ml",
+    "recipe_status": "社区参考",
+    "verification": "C",
+    "source": "中国专利 35440a02f8e0c9a"
+  },
+  {
+    "id": 1027,
+    "name": "建筑陶瓷釉料",
+    "category": "建筑釉",
+    "alias": [],
+    "image": "",
+    "color": "建筑色调",
+    "surface": "建筑适用",
+    "temperature": "1150-1220℃",
+    "atmosphere": "氧化",
+    "usage": [
+      "建筑陶瓷"
+    ],
+    "difficulty": "困难",
+    "stability": "较稳定",
+    "recipe_type": "全抛釉/面釉",
+    "base_ratio_total": "82.75%",
+    "ingredients": [
+      {
+        "material": "高岭土",
+        "ratio": "8.0%"
+      },
+      {
+        "material": "钾长石",
+        "ratio": "9.0%"
+      },
+      {
+        "material": "钠长石",
+        "ratio": "13.0%"
+      },
+      {
+        "material": "石英",
+        "ratio": "5.0%"
+      },
+      {
+        "material": "碳酸钡",
+        "ratio": "7.5%"
+      },
+      {
+        "material": "硅酸锆",
+        "ratio": "12.0%"
+      },
+      {
+        "material": "滑石",
+        "ratio": "5.0%"
+      },
+      {
+        "material": "白云石",
+        "ratio": "4.0%"
+      },
+      {
+        "material": "煅烧氧化锌",
+        "ratio": "2.75%"
+      },
+      {
+        "material": "熔块",
+        "ratio": "16.5%"
+      }
+    ],
+    "additives": [],
+    "process": "全瘠性料制备建筑陶瓷釉料",
+    "clay": "",
+    "notes": "中间值配方，含熔块10-23%",
+    "recipe_status": "社区参考",
+    "verification": "C",
+    "source": "中国专利 202311650913"
+  },
+  {
+    "id": 1028,
+    "name": "无铅银色金属釉料",
+    "category": "金属釉",
+    "alias": [],
+    "image": "",
+    "color": "金属光泽",
+    "surface": "金属质感",
+    "temperature": "1230-1260℃",
+    "atmosphere": "氧化",
+    "usage": [
+      "装饰器"
+    ],
+    "difficulty": "中等",
+    "stability": "较稳定",
+    "recipe_type": "银色金属釉",
+    "base_ratio_total": "113.0%",
+    "ingredients": [
+      {
+        "material": "钾长石",
+        "ratio": "40.0%"
+      },
+      {
+        "material": "滑石",
+        "ratio": "7.5%"
+      },
+      {
+        "material": "方解石",
+        "ratio": "7.5%"
+      },
+      {
+        "material": "磷酸钙",
+        "ratio": "25.0%"
+      },
+      {
+        "material": "氧化铁",
+        "ratio": "17.5%"
+      },
+      {
+        "material": "高岭土",
+        "ratio": "5.5%"
+      },
+      {
+        "material": "熔块粉",
+        "ratio": "10.0%"
+      }
+    ],
+    "additives": [],
+    "process": "无铅银色金属效果釉料",
+    "clay": "",
+    "notes": "熔块粉组成：磷酸钙10-20%、磷酸铝10-20%、硼酸钠20-50%、石英10-15%、氧化锂5-10%",
+    "recipe_status": "社区参考",
+    "verification": "C",
+    "source": "中国专利 202311582931"
+  },
+  {
+    "id": 1029,
+    "name": "防滑哑光陶瓷釉",
+    "category": "功能釉",
+    "alias": [],
+    "image": "",
+    "color": "功能性",
+    "surface": "特殊功能",
+    "temperature": "1170℃",
+    "atmosphere": "氧化",
+    "usage": [
+      "功能器"
+    ],
+    "difficulty": "困难",
+    "stability": "较稳定",
+    "recipe_type": "防滑哑光釉",
+    "base_ratio_total": "114.0%",
+    "ingredients": [
+      {
+        "material": "钾长石",
+        "ratio": "33.0%"
+      },
+      {
+        "material": "碳酸钙",
+        "ratio": "9.0%"
+      },
+      {
+        "material": "碳酸钡",
+        "ratio": "6.0%"
+      },
+      {
+        "material": "熔块",
+        "ratio": "27.0%"
+      },
+      {
+        "material": "高岭土",
+        "ratio": "6.0%"
+      },
+      {
+        "material": "硅粉",
+        "ratio": "11.0%"
+      },
+      {
+        "material": "白刚玉",
+        "ratio": "3.0%"
+      },
+      {
+        "material": "氧化锌",
+        "ratio": "5.0%"
+      },
+      {
+        "material": "煅烧滑石",
+        "ratio": "14.0%"
+      }
+    ],
+    "additives": [],
+    "process": "带防滑哑光效果的陶瓷釉",
+    "clay": "",
+    "notes": "对比例4数据，釉烧温度1170℃，烧制110min",
+    "recipe_status": "社区参考",
+    "verification": "C",
+    "source": "中国专利 202010641917"
+  },
+  {
+    "id": 1030,
+    "name": "标准石灰釉",
+    "category": "经典釉方",
+    "alias": [],
+    "image": "",
+    "color": "经典色调",
+    "surface": "稳定透明",
+    "temperature": "1200-1300℃",
+    "atmosphere": "氧化/还原",
+    "usage": [
+      "通用"
+    ],
+    "difficulty": "简单",
+    "stability": "较稳定",
+    "recipe_type": "石灰釉",
+    "base_ratio_total": "100.0%",
+    "ingredients": [
+      {
+        "material": "石英",
+        "ratio": "22.0%"
+      },
+      {
+        "material": "钾长石",
+        "ratio": "52.0%"
+      },
+      {
+        "material": "高岭土",
+        "ratio": "12.0%"
+      },
+      {
+        "material": "生石灰",
+        "ratio": "14.0%"
+      }
+    ],
+    "additives": [],
+    "process": "传统石灰釉经典配方",
+    "clay": "",
+    "notes": "传统石灰釉配方示例，用于釉式计算教学",
+    "recipe_status": "社区参考",
+    "verification": "C",
+    "source": "陶瓷工艺学教材 /  Yuanzhendongshai"
+  },
+  {
+    "id": 1031,
+    "name": "外墙砖釉料",
+    "category": "建筑釉",
+    "alias": [],
+    "image": "",
+    "color": "建筑色调",
+    "surface": "建筑适用",
+    "temperature": "1100-1200℃",
+    "atmosphere": "氧化",
+    "usage": [
+      "建筑陶瓷"
+    ],
+    "difficulty": "困难",
+    "stability": "较稳定",
+    "recipe_type": "面釉",
+    "base_ratio_total": "110.5%",
+    "ingredients": [
+      {
+        "material": "瓷石尾矿",
+        "ratio": "12.5%"
+      },
+      {
+        "material": "石英粉",
+        "ratio": "12.5%"
+      },
+      {
+        "material": "锆英砂",
+        "ratio": "15.0%"
+      },
+      {
+        "material": "氧化锌",
+        "ratio": "8.0%"
+      },
+      {
+        "material": "萤石",
+        "ratio": "6.5%"
+      },
+      {
+        "material": "锂云母尾矿",
+        "ratio": "4.5%"
+      },
+      {
+        "material": "长石",
+        "ratio": "32.5%"
+      },
+      {
+        "material": "硅灰石",
+        "ratio": "12.5%"
+      },
+      {
+        "material": "苏州高岭土",
+        "ratio": "6.5%"
+      }
+    ],
+    "additives": [],
+    "process": "利用劣质原料试制外墙砖的釉料配方",
+    "clay": "",
+    "notes": "中间值配方，利用瓷石尾砂、粉煤灰等劣质原料",
+    "recipe_status": "社区参考",
+    "verification": "C",
+    "source": "中国学术期刊 / 以瓷石尾砂等劣质原料试制外墙砖"
+  },
+  {
+    "id": 1032,
+    "name": "卫生陶瓷釉料",
+    "category": "建筑釉",
+    "alias": [],
+    "image": "",
+    "color": "建筑色调",
+    "surface": "建筑适用",
+    "temperature": "1200-1250℃",
+    "atmosphere": "氧化",
+    "usage": [
+      "建筑陶瓷"
+    ],
+    "difficulty": "简单",
+    "stability": "较稳定",
+    "recipe_type": "面釉",
+    "base_ratio_total": "100.0%",
+    "ingredients": [
+      {
+        "material": "塑性材料",
+        "ratio": "12.0%"
+      },
+      {
+        "material": "硬质材料",
+        "ratio": "88.0%"
+      }
+    ],
+    "additives": [],
+    "process": "卫生陶瓷玻化瓷釉料",
+    "clay": "",
+    "notes": "塑性原料12%，硬性原料88%，含添加剂、消光剂和色料",
+    "recipe_status": "社区参考",
+    "verification": "C",
+    "source": "Springer / Life Cycle Assessment of ceramic sanitaryware"
+  },
+  {
+    "id": 1033,
+    "name": "缎光面釉(Cone 5-6)",
+    "category": "无光釉/缎光釉",
+    "alias": [],
+    "image": "",
+    "color": "哑光",
+    "surface": "缎光/哑光",
+    "temperature": "1180-1220℃",
+    "atmosphere": "氧化",
+    "usage": [
+      "陈设器",
+      "日用器"
+    ],
+    "difficulty": "简单",
+    "stability": "较稳定",
+    "recipe_type": "缎光釉",
+    "base_ratio_total": "100.0%",
+    "ingredients": [
+      {
+        "material": "霞石正长岩",
+        "ratio": "80.0%"
+      },
+      {
+        "material": "硅灰石",
+        "ratio": "20.0%"
+      }
+    ],
+    "additives": [],
+    "process": "Cone 5-6氧化条件下的缎光面釉",
+    "clay": "",
+    "notes": "Cone 5-6氧化，瓷土坯体",
+    "recipe_status": "社区参考",
+    "verification": "C",
+    "source": "Claybucket / Raw Materials Handbook"
+  },
+  {
+    "id": 1034,
+    "name": "Jacky透明光泽釉",
+    "category": "透明釉",
+    "alias": [],
+    "image": "",
+    "color": "无色透明",
+    "surface": "亮光透明",
+    "temperature": "1180-1220℃",
+    "atmosphere": "氧化",
+    "usage": [
+      "通用"
+    ],
+    "difficulty": "中等",
+    "stability": "较稳定",
+    "recipe_type": "光泽透明釉",
+    "base_ratio_total": "102.0%",
+    "ingredients": [
+      {
+        "material": "霞石正长岩",
+        "ratio": "50.0%"
+      },
+      {
+        "material": "硼钙石",
+        "ratio": "10.0%"
+      },
+      {
+        "material": "硅灰石",
+        "ratio": "10.0%"
+      },
+      {
+        "material": "燧石",
+        "ratio": "20.0%"
+      },
+      {
+        "material": "氧化锌",
+        "ratio": "5.0%"
+      },
+      {
+        "material": "球土",
+        "ratio": "5.0%"
+      },
+      {
+        "material": "膨润土",
+        "ratio": "2.0%"
+      }
+    ],
+    "additives": [],
+    "process": "Cone 5-6氧化条件下的光泽透明釉",
+    "clay": "",
+    "notes": "Cone 5-6氧化，瓷土坯体",
+    "recipe_status": "社区参考",
+    "verification": "C",
+    "source": "Claybucket / Raw Materials Handbook"
+  },
+  {
+    "id": 1035,
+    "name": "Ron白无光釉#5",
+    "category": "无光釉",
+    "alias": [],
+    "image": "",
+    "color": "哑光",
+    "surface": "哑光质感",
+    "temperature": "1180-1220℃",
+    "atmosphere": "氧化",
+    "usage": [
+      "日用器"
+    ],
+    "difficulty": "简单",
+    "stability": "较稳定",
+    "recipe_type": "白无光釉",
+    "base_ratio_total": "100.0%",
+    "ingredients": [
+      {
+        "material": "F-4长石",
+        "ratio": "55.0%"
+      },
+      {
+        "material": "碳酸钙",
+        "ratio": "15.0%"
+      },
+      {
+        "material": "EPK高岭土",
+        "ratio": "16.0%"
+      },
+      {
+        "material": "氧化锌",
+        "ratio": "14.0%"
+      }
+    ],
+    "additives": [],
+    "process": "Cone 5-6氧化条件下的白无光釉",
+    "clay": "",
+    "notes": "Cone 5-6氧化，瓷土坯体",
+    "recipe_status": "社区参考",
+    "verification": "C",
+    "source": "Claybucket / Raw Materials Handbook"
+  },
+  {
+    "id": 1036,
+    "name": "GL-A光泽工业釉",
+    "category": "工业釉",
+    "alias": [],
+    "image": "",
+    "color": "工业色调",
+    "surface": "工业适用",
+    "temperature": "1205℃",
+    "atmosphere": "氧化",
+    "usage": [
+      "工业陶瓷"
+    ],
+    "difficulty": "困难",
+    "stability": "较稳定",
+    "recipe_type": "光泽釉",
+    "base_ratio_total": "120.5%",
+    "ingredients": [
+      {
+        "material": "锌基熔块",
+        "ratio": "35.0%"
+      },
+      {
+        "material": "钙基熔块",
+        "ratio": "15.0%"
+      },
+      {
+        "material": "粘土",
+        "ratio": "7.5%"
+      },
+      {
+        "material": "高岭土",
+        "ratio": "15.0%"
+      },
+      {
+        "material": "白云石",
+        "ratio": "7.5%"
+      },
+      {
+        "material": "长石",
+        "ratio": "15.0%"
+      },
+      {
+        "material": "石英",
+        "ratio": "15.0%"
+      },
+      {
+        "material": "碳酸钡",
+        "ratio": "7.5%"
+      },
+      {
+        "material": "氧化锌",
+        "ratio": "3.0%"
+      }
+    ],
+    "additives": [],
+    "process": "工业光泽釉配方",
+    "clay": "",
+    "notes": "工业配方，含STPP 0.1%和CMC 0.3%，球磨45分钟，施釉量44mg/cm²",
+    "recipe_status": "社区参考",
+    "verification": "C",
+    "source": "Qualicer / Colorobia"
+  },
+  {
+    "id": 1037,
+    "name": "GL-B哑光工业釉",
+    "category": "工业釉",
+    "alias": [],
+    "image": "",
+    "color": "工业色调",
+    "surface": "工业适用",
+    "temperature": "1205℃",
+    "atmosphere": "氧化",
+    "usage": [
+      "工业陶瓷"
+    ],
+    "difficulty": "困难",
+    "stability": "较稳定",
+    "recipe_type": "哑光釉",
+    "base_ratio_total": "85.5%",
+    "ingredients": [
+      {
+        "material": "钙基熔块",
+        "ratio": "15.0%"
+      },
+      {
+        "material": "钡基熔块",
+        "ratio": "15.0%"
+      },
+      {
+        "material": "粘土",
+        "ratio": "7.5%"
+      },
+      {
+        "material": "白云石",
+        "ratio": "7.5%"
+      },
+      {
+        "material": "长石",
+        "ratio": "15.0%"
+      },
+      {
+        "material": "霞石",
+        "ratio": "15.0%"
+      },
+      {
+        "material": "石英",
+        "ratio": "3.0%"
+      },
+      {
+        "material": "碳酸钡",
+        "ratio": "7.5%"
+      }
+    ],
+    "additives": [],
+    "process": "工业哑光釉配方",
+    "clay": "",
+    "notes": "工业配方，含STPP 0.1%和CMC 0.3%，球磨45分钟",
+    "recipe_status": "社区参考",
+    "verification": "C",
+    "source": "Qualicer / Colorobia"
+  },
+  {
+    "id": 1038,
+    "name": "荷兰锡釉瓷砖釉(配方1)",
+    "category": "历史釉方",
+    "alias": [],
+    "image": "",
+    "color": "复古色调",
+    "surface": "历史质感",
+    "temperature": "1000-1100℃",
+    "atmosphere": "氧化",
+    "usage": [
+      "复古器"
+    ],
+    "difficulty": "简单",
+    "stability": "较稳定",
+    "recipe_type": "锡釉",
+    "base_ratio_total": "450.0%",
+    "ingredients": [
+      {
+        "material": "砂",
+        "ratio": "240.0%"
+      },
+      {
+        "material": "苏打灰",
+        "ratio": "120.0%"
+      },
+      {
+        "material": "锡",
+        "ratio": "60.0%"
+      },
+      {
+        "material": "铅",
+        "ratio": "30.0%"
+      }
+    ],
+    "additives": [],
+    "process": "1600-1750年荷兰锡釉瓷砖历史配方",
+    "clay": "",
+    "notes": "历史配方(磅)，换算百分比：SiO2约55%，碱金属氧化物约17%",
+    "recipe_status": "社区参考",
+    "verification": "C",
+    "source": "UVA Thesis / Historical Recipe Reconstruction"
+  },
+  {
+    "id": 1039,
+    "name": "A/B釉料系统",
+    "category": "透明釉/乳白釉",
+    "alias": [],
+    "image": "",
+    "color": "乳白/透明",
+    "surface": "乳浊/透明",
+    "temperature": "1100-1200℃",
+    "atmosphere": "氧化",
+    "usage": [
+      "通用"
+    ],
+    "difficulty": "简单",
+    "stability": "较稳定",
+    "recipe_type": "复合釉",
+    "base_ratio_total": "95.17%",
+    "ingredients": [
+      {
+        "material": "A釉(乳白)",
+        "ratio": "43.52%"
+      },
+      {
+        "material": "B釉(透明)",
+        "ratio": "51.65%"
+      }
+    ],
+    "additives": [],
+    "process": "A(乳白)和B(透明)两种釉料",
+    "clay": "",
+    "notes": "固液比配方，A为乳白釉，B为透明釉",
+    "recipe_status": "社区参考",
+    "verification": "C",
+    "source": "IJSR / Industrial Glaze Study"
+  },
+  {
+    "id": 1040,
+    "name": "粉/ turquoise试验釉基底",
+    "category": "试验釉",
+    "alias": [],
+    "image": "",
+    "color": "试验色",
+    "surface": "试验效果",
+    "temperature": "1200-1250℃",
+    "atmosphere": "氧化/还原",
+    "usage": [
+      "试验"
+    ],
+    "difficulty": "中等",
+    "stability": "较稳定",
+    "recipe_type": "彩色釉基底",
+    "base_ratio_total": "100.0%",
+    "ingredients": [
+      {
+        "material": "熔块",
+        "ratio": "35.0%"
+      },
+      {
+        "material": "矿物",
+        "ratio": "35.0%"
+      },
+      {
+        "material": "高岭土",
+        "ratio": "15.0%"
+      },
+      {
+        "material": "石英",
+        "ratio": "10.0%"
+      },
+      {
+        "material": "色料",
+        "ratio": "5.0%"
+      }
+    ],
+    "additives": [],
+    "process": "用于 slip cast 产品的彩色釉基底",
+    "clay": "",
+    "notes": "使用Glazy.org UMF计算器辅助设计，排除商业陶瓷颜料，使用氧化物和碳酸盐着色",
+    "recipe_status": "社区参考",
+    "verification": "C",
+    "source": "Theseus / Venla Lappalainen Thesis"
   }
 ]
