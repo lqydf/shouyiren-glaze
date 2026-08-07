@@ -3,14 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>守艺人 · 釉方库</title>
+<title>守艺人 · 釉库</title>
 <style>
 body {
-    font-family: Arial, sans-serif;
+    font-family: Arial, "Noto Sans SC", sans-serif;
     max-width: 900px;
     margin: auto;
     padding: 20px;
     background: #f5f2eb;
+    color: #333;
 }
 
 h1 {
@@ -59,6 +60,7 @@ button:hover {
     padding: 20px;
     margin: 15px 0;
     border-radius: 12px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
 }
 
 .card-image {
@@ -71,10 +73,12 @@ button:hover {
 
 .card h2 {
     color: #5c4033;
+    margin: 0 0 10px 0;
 }
 
 .info {
     line-height: 1.8;
+    color: #555;
 }
 
 .detail {
@@ -89,6 +93,12 @@ button:hover {
 
 .detail:hover {
     background: #7a6240;
+}
+
+.source-note {
+    font-size: 12px;
+    color: #999;
+    margin-top: 8px;
 }
 </style>
 </head>
@@ -106,6 +116,15 @@ button:hover {
     <button onclick="filterCategory('黑釉')">黑釉</button>
     <button onclick="filterCategory('灰釉')">灰釉</button>
     <button onclick="filterCategory('白釉')">白釉</button>
+    <button onclick="filterCategory('基础釉')">基础釉</button>
+    <button onclick="filterCategory('透明釉')">透明釉</button>
+    <button onclick="filterCategory('蓝釉')">蓝釉</button>
+    <button onclick="filterCategory('铁釉')">铁釉</button>
+    <button onclick="filterCategory('绿釉')">绿釉</button>
+    <button onclick="filterCategory('志野釉')">志野釉</button>
+    <button onclick="filterCategory('铜红釉')">铜红釉</button>
+    <button onclick="filterCategory('天目釉')">天目釉</button>
+    <button onclick="filterCategory('结晶釉')">结晶釉</button>
 </div>
 
 <div id="list"></div>
@@ -114,7 +133,7 @@ button:hover {
 let glazes = [];
 let currentCategory = "全部";
 
-fetch("glazes.json")
+fetch("glazes_glazy_preview.json")
     .then(res => res.json())
     .then(data => {
         glazes = data;
@@ -122,7 +141,7 @@ fetch("glazes.json")
     })
     .catch(err => {
         document.getElementById("list").innerHTML = "<p>数据加载失败，请刷新页面重试</p>";
-        console.error("加载 glazes.json 失败:", err);
+        console.error("加载 glazes_glazy_preview.json 失败:", err);
     });
 
 function filterCategory(category) {
@@ -142,7 +161,8 @@ function render() {
             let text = (
                 item.name +
                 (item.category || "") +
-                (item.color || "")
+                (item.color || "") +
+                (item.surface || "")
             ).toLowerCase();
             let searchMatch = text.includes(keyword);
             return categoryMatch && searchMatch;
@@ -161,10 +181,13 @@ function render() {
                     分类：${item.category || "暂无"}<br>
                     颜色：${item.color || "暂无"}<br>
                     温度：${item.temperature || "暂无"}<br>
+                    气氛：${item.atmosphere || "暂无"}<br>
                     难度：${item.difficulty || "暂无"}<br>
-                    稳定性：${item.stability || "暂无"}
+                    稳定性：${item.stability || "暂无"}<br>
+                    表面：${item.surface || "暂无"}
                 </div>
                 <a class="detail" href="detail.html?id=${item.id}">查看详情</a>
+                <div class="source-note">${item.source || ""}</div>
             </div>
             `;
         });
