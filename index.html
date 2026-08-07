@@ -3,201 +3,431 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>守艺人 · 釉库</title>
+<title>守艺人 · 陶瓷釉方查询与釉式计算</title>
 <style>
+:root {
+    --bg: #faf8f5;
+    --card: #ffffff;
+    --text: #5c4033;
+    --text-light: #8b7e6e;
+    --text-muted: #a89a8a;
+    --primary: #8b6f47;
+    --primary-hover: #7a6240;
+    --border: #e8e0d8;
+    --border-light: #f0ebe3;
+    --success: #2e7d32;
+    --warn: #e65100;
+    --shadow: 0 1px 4px rgba(92,64,51,0.05);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
 body {
-    font-family: Arial, "Noto Sans SC", sans-serif;
+    font-family: "Noto Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+}
+.container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+
+/* 导航 */
+nav {
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+.nav-inner {
     max-width: 900px;
-    margin: auto;
-    padding: 20px;
-    background: #f5f2eb;
-    color: #333;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
-
-h1 {
-    color: #5c4033;
-}
-
-.calc-btn {
-    display: inline-block;
-    background: #5c4033;
-    color: white;
-    padding: 10px 18px;
-    border-radius: 20px;
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
     text-decoration: none;
-    margin: 10px 0 20px 0;
+}
+.logo-icon {
+    width: 36px; height: 36px;
+    background: var(--primary);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 18px; font-weight: bold;
+}
+.logo-text {
+    font-size: 20px; font-weight: 700;
+    color: var(--text); letter-spacing: 2px;
+}
+.nav-links {
+    display: flex; gap: 28px;
+}
+.nav-links a {
+    font-size: 14px; color: var(--text-light);
+    text-decoration: none;
+    padding-bottom: 2px;
+    transition: color 0.2s;
+}
+.nav-links a:hover, .nav-links a.active {
+    color: var(--primary);
+    border-bottom: 2px solid var(--primary);
 }
 
-.search {
-    width: 100%;
-    padding: 12px;
-    border-radius: 8px;
-    border: 1px solid #ddd;
-    font-size: 16px;
-    box-sizing: border-box;
+/* Hero */
+.hero {
+    padding: 60px 20px 40px;
+    text-align: center;
+    background: linear-gradient(180deg, var(--bg) 0%, #f0ebe3 100%);
+}
+.hero h1 {
+    font-size: 42px; font-weight: 700;
+    color: var(--text); margin: 0 0 12px;
+    letter-spacing: 4px;
+}
+.hero-sub {
+    font-size: 16px; color: var(--text-light);
+    margin: 0 0 8px; letter-spacing: 6px;
+}
+.hero-desc {
+    font-size: 13px; color: var(--text-muted);
+    margin: 0 0 40px;
+}
+.search-box {
+    max-width: 520px; margin: 0 auto;
+    position: relative;
+}
+.search-box input {
+    width: 100%; padding: 14px 20px 14px 48px;
+    border: 1px solid #d4c8b8; border-radius: 30px;
+    font-size: 15px; background: var(--card);
+    box-shadow: var(--shadow); outline: none;
+    color: var(--text);
+}
+.search-box input::placeholder { color: #c4b8a8; }
+.search-box .icon {
+    position: absolute; left: 18px; top: 50%;
+    transform: translateY(-50%); color: #b5a898;
+    font-size: 18px;
 }
 
-.filters {
-    margin: 20px 0;
+/* 快捷分类 */
+.quick-cats {
+    padding: 20px;
+    display: flex; gap: 10px;
+    overflow-x: auto; justify-content: center;
+    flex-wrap: wrap;
 }
-
-button {
-    background: #8b6f47;
-    color: white;
-    border: none;
-    padding: 8px 15px;
-    margin: 5px;
+.cat-btn {
+    padding: 8px 18px;
+    background: var(--card);
+    border: 1px solid var(--border);
     border-radius: 20px;
+    font-size: 13px; color: var(--text);
+    cursor: pointer; white-space: nowrap;
+    transition: all 0.2s;
+}
+.cat-btn:hover, .cat-btn.active {
+    background: var(--primary); color: #fff;
+    border-color: var(--primary);
+}
+
+/* 功能入口 */
+.features {
+    padding: 0 20px 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px; max-width: 600px; margin: 0 auto;
+}
+.feature-card {
+    background: var(--card);
+    border-radius: 16px; padding: 28px 20px;
+    text-align: center;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
     cursor: pointer;
-}
-
-button:hover {
-    background: #7a6240;
-}
-
-.card {
-    background: white;
-    padding: 20px;
-    margin: 15px 0;
-    border-radius: 12px;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
-}
-
-.card-image {
-    width: 100%;
-    max-height: 260px;
-    object-fit: cover;
-    border-radius: 10px;
-    margin-bottom: 15px;
-}
-
-.card h2 {
-    color: #5c4033;
-    margin: 0 0 10px 0;
-}
-
-.info {
-    line-height: 1.8;
-    color: #555;
-}
-
-.detail {
-    display: inline-block;
-    margin-top: 12px;
-    background: #8b6f47;
-    color: white;
-    padding: 8px 15px;
-    border-radius: 8px;
+    transition: transform 0.2s, box-shadow 0.2s;
     text-decoration: none;
+    color: inherit;
+}
+.feature-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(92,64,51,0.08);
+}
+.feature-icon { font-size: 36px; margin-bottom: 10px; }
+.feature-title {
+    font-size: 16px; font-weight: 600;
+    color: var(--text); margin-bottom: 4px;
+}
+.feature-desc { font-size: 12px; color: var(--text-muted); }
+
+/* 推荐釉方 */
+.section { padding: 32px 20px; }
+.section-header {
+    display: flex; align-items: center;
+    justify-content: space-between; margin-bottom: 20px;
+}
+.section-title {
+    font-size: 20px; font-weight: 700;
+    color: var(--text); margin: 0;
+}
+.section-more {
+    font-size: 13px; color: var(--primary);
+    cursor: pointer; text-decoration: none;
 }
 
-.detail:hover {
-    background: #7a6240;
+/* 釉方卡片网格 */
+.glaze-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+}
+.glaze-card {
+    background: var(--card);
+    border-radius: 14px; overflow: hidden;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    text-decoration: none; color: inherit;
+}
+.glaze-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(92,64,51,0.08);
+}
+.card-img {
+    height: 160px;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+}
+.card-img .emoji {
+    font-size: 60px; opacity: 0.35;
+}
+.card-body { padding: 16px; }
+.card-tags {
+    display: flex; gap: 6px; margin-bottom: 8px;
+    flex-wrap: wrap;
+}
+.tag {
+    font-size: 11px; padding: 2px 8px;
+    border-radius: 10px; font-weight: 500;
+}
+.tag-cat { background: #e8f0e4; color: #4a7c3f; }
+.tag-atm { background: var(--border-light); color: var(--primary); }
+.tag-diff-easy { background: #e8f5e9; color: var(--success); }
+.tag-diff-med { background: #fff3e0; color: var(--warn); }
+.tag-diff-hard { background: #ffebee; color: #c62828; }
+.card-name {
+    font-size: 15px; font-weight: 600;
+    color: var(--text); margin-bottom: 6px;
+}
+.card-meta {
+    font-size: 12px; color: var(--text-muted);
+    line-height: 1.6;
 }
 
-.source-note {
-    font-size: 12px;
-    color: #999;
-    margin-top: 8px;
+/* 底部 */
+footer {
+    padding: 32px 20px; text-align: center;
+    border-top: 1px solid var(--border);
+    margin-top: 20px;
+}
+footer p { font-size: 13px; color: var(--text-muted); margin: 0 0 6px; }
+footer small { font-size: 11px; color: #c4b8a8; }
+
+/* 响应式 */
+@media (max-width: 600px) {
+    .hero h1 { font-size: 32px; }
+    .features { grid-template-columns: 1fr; }
+    .nav-links { gap: 16px; }
+    .nav-links a { font-size: 13px; }
 }
 </style>
+<base target="_blank">
 </head>
-
 <body>
-<h1>守艺人 · 釉库</h1>
 
-<a href="calculator.html" class="calc-btn">釉式计算</a>
+<nav>
+    <div class="nav-inner">
+        <a href="index.html" class="logo">
+            <div class="logo-icon">守</div>
+            <span class="logo-text">守艺人</span>
+        </a>
+        <div class="nav-links">
+            <a href="index.html" class="active">首页</a>
+            <a href="list.html">釉方大全</a>
+            <a href="calculator.html">釉式计算</a>
+            <a href="about.html">关于</a>
+        </div>
+    </div>
+</nav>
 
-<input id="search" class="search" placeholder="搜索釉名、分类、颜色...">
-
-<div class="filters">
-    <button onclick="filterCategory('全部')">全部</button>
-    <button onclick="filterCategory('青釉')">青釉</button>
-    <button onclick="filterCategory('黑釉')">黑釉</button>
-    <button onclick="filterCategory('灰釉')">灰釉</button>
-    <button onclick="filterCategory('白釉')">白釉</button>
-    <button onclick="filterCategory('基础釉')">基础釉</button>
-    <button onclick="filterCategory('透明釉')">透明釉</button>
-    <button onclick="filterCategory('蓝釉')">蓝釉</button>
-    <button onclick="filterCategory('铁釉')">铁釉</button>
-    <button onclick="filterCategory('绿釉')">绿釉</button>
-    <button onclick="filterCategory('志野釉')">志野釉</button>
-    <button onclick="filterCategory('铜红釉')">铜红釉</button>
-    <button onclick="filterCategory('天目釉')">天目釉</button>
-    <button onclick="filterCategory('结晶釉')">结晶釉</button>
+<div class="hero">
+    <h1>守艺人</h1>
+    <p class="hero-sub">陶瓷釉方 · 专业计算 · 手艺传承</p>
+    <p class="hero-desc">为每一位陶瓷手艺人，守护配方里的温度与匠心</p>
+    <div class="search-box">
+        <span class="icon">🔍</span>
+        <input type="text" id="heroSearch" placeholder="搜索釉名、分类、颜色、温度...">
+    </div>
 </div>
 
-<div id="list"></div>
+<div class="quick-cats" id="quickCats">
+    <button class="cat-btn active" data-cat="全部">全部</button>
+    <button class="cat-btn" data-cat="青釉">青釉</button>
+    <button class="cat-btn" data-cat="白釉">白釉</button>
+    <button class="cat-btn" data-cat="黑釉">黑釉</button>
+    <button class="cat-btn" data-cat="铜红釉">铜红釉</button>
+    <button class="cat-btn" data-cat="志野釉">志野釉</button>
+    <button class="cat-btn" data-cat="天目釉">天目釉</button>
+    <button class="cat-btn" data-cat="结晶釉">结晶釉</button>
+    <button class="cat-btn" data-cat="铁釉">铁釉</button>
+    <button class="cat-btn" data-cat="蓝釉">蓝釉</button>
+    <button class="cat-btn" data-cat="绿釉">绿釉</button>
+</div>
+
+<div class="features">
+    <a href="list.html" class="feature-card">
+        <div class="feature-icon">📖</div>
+        <div class="feature-title">釉方大全</div>
+        <div class="feature-desc">5898+ 条釉方数据</div>
+    </a>
+    <a href="calculator.html" class="feature-card">
+        <div class="feature-icon">🧮</div>
+        <div class="feature-title">釉式计算</div>
+        <div class="feature-desc">塞格尔式 · CTE · 限制公式</div>
+    </a>
+</div>
+
+<div class="section">
+    <div class="section-header">
+        <h2 class="section-title">推荐釉方</h2>
+        <a href="list.html" class="section-more">查看全部 →</a>
+    </div>
+    <div class="glaze-grid" id="recommendGrid">
+        <div style="text-align:center;padding:40px;color:var(--text-muted);">加载中...</div>
+    </div>
+</div>
+
+<footer>
+    <p>守艺人 · 为陶瓷手艺人守护配方里的温度</p>
+    <small>数据源自 Glazy 公开数据库 (CC BY-NC-SA 4.0)</small>
+</footer>
 
 <script>
 let glazes = [];
-let currentCategory = "全部";
+let currentCat = "全部";
 
 fetch("glazes_glazy_preview.json")
     .then(res => res.json())
     .then(data => {
         glazes = data;
-        render();
+        renderRecommend();
     })
     .catch(err => {
-        document.getElementById("list").innerHTML = "<p>数据加载失败，请刷新页面重试</p>";
-        console.error("加载 glazes_glazy_preview.json 失败:", err);
+        document.getElementById("recommendGrid").innerHTML =
+            '<div style="text-align:center;padding:40px;color:var(--text-muted);">数据加载失败</div>';
+        console.error(err);
     });
 
-function filterCategory(category) {
-    currentCategory = category;
-    render();
-}
+// 快捷分类点击
+document.getElementById("quickCats").addEventListener("click", e => {
+    if (e.target.classList.contains("cat-btn")) {
+        document.querySelectorAll(".cat-btn").forEach(b => b.classList.remove("active"));
+        e.target.classList.add("active");
+        currentCat = e.target.dataset.cat;
+        renderRecommend();
+    }
+});
 
-document.getElementById("search").addEventListener("input", render);
+// Hero搜索
+document.getElementById("heroSearch").addEventListener("input", e => {
+    const kw = e.target.value.toLowerCase();
+    if (kw.length > 0) {
+        window.location.href = "list.html?search=" + encodeURIComponent(kw);
+    }
+});
 
-function render() {
-    let keyword = document.getElementById("search").value.toLowerCase();
-    let html = "";
+function renderRecommend() {
+    const grid = document.getElementById("recommendGrid");
+    let filtered = glazes;
 
-    glazes
-        .filter(item => {
-            let categoryMatch = currentCategory === "全部" || item.category === currentCategory;
-            let text = (
-                item.name +
-                (item.category || "") +
-                (item.color || "") +
-                (item.surface || "")
-            ).toLowerCase();
-            let searchMatch = text.includes(keyword);
-            return categoryMatch && searchMatch;
-        })
-        .forEach(item => {
-            let image = "";
-            if (item.image) {
-                image = `<img class="card-image" src="${item.image}" alt="${item.name}">`;
-            }
-
-            html += `
-            <div class="card">
-                ${image}
-                <h2>${item.name}</h2>
-                <div class="info">
-                    分类：${item.category || "暂无"}<br>
-                    颜色：${item.color || "暂无"}<br>
-                    温度：${item.temperature || "暂无"}<br>
-                    气氛：${item.atmosphere || "暂无"}<br>
-                    难度：${item.difficulty || "暂无"}<br>
-                    稳定性：${item.stability || "暂无"}<br>
-                    表面：${item.surface || "暂无"}
-                </div>
-                <a class="detail" href="detail.html?id=${item.id}">查看详情</a>
-                <div class="source-note">${item.source || ""}</div>
-            </div>
-            `;
-        });
-
-    if (html === "") {
-        html = "<p>未找到匹配的釉方，试试其他关键词~</p>";
+    if (currentCat !== "全部") {
+        filtered = filtered.filter(g => g.category === currentCat);
     }
 
-    document.getElementById("list").innerHTML = html;
+    // 随机取6条展示
+    const shuffled = filtered.sort(() => 0.5 - Math.random());
+    const picks = shuffled.slice(0, 6);
+
+    if (picks.length === 0) {
+        grid.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text-muted);">暂无数据</div>';
+        return;
+    }
+
+    grid.innerHTML = picks.map(g => {
+        const diffClass = g.difficulty === "简单" ? "tag-diff-easy" :
+                          g.difficulty === "困难" ? "tag-diff-hard" : "tag-diff-med";
+        const diffText = g.difficulty || "未知";
+        const emoji = getEmoji(g.category);
+        const bg = getBg(g.category);
+
+        return `
+        <a href="detail.html?id=${g.id}" class="glaze-card">
+            <div class="card-img" style="background:${bg}">
+                <span class="emoji">${emoji}</span>
+            </div>
+            <div class="card-body">
+                <div class="card-tags">
+                    <span class="tag tag-cat">${g.category}</span>
+                    <span class="tag tag-atm">${g.atmosphere || "未知"}</span>
+                    <span class="tag ${diffClass}">${diffText}</span>
+                </div>
+                <div class="card-name">${g.name}</div>
+                <div class="card-meta">${g.temperature || ""} · ${g.surface || ""}</div>
+            </div>
+        </a>
+        `;
+    }).join("");
+}
+
+function getEmoji(cat) {
+    const map = {
+        "青釉": "🍵", "白釉": "🏺", "黑釉": "🖤", "蓝釉": "🔵",
+        "绿釉": "🟢", "红釉": "🔴", "铜红釉": "🔴", "铁红釉": "🔴",
+        "铁釉": "🟤", "天目釉": "🖤", "志野釉": "🏺", "结晶釉": "✨",
+        "灰釉": "⚪", "黄釉": "🟡", "基础釉": "🏺", "透明釉": "💧",
+        "哑光釉": "🪨", "特种釉": "🎨", "化妆土": "🧱"
+    };
+    return map[cat] || "🏺";
+}
+
+function getBg(cat) {
+    const map = {
+        "青釉": "linear-gradient(135deg,#c8d6c4,#a8c4a0)",
+        "白釉": "linear-gradient(135deg,#f5f0e8,#e8ddd0)",
+        "黑釉": "linear-gradient(135deg,#2c2c2c,#4a4a4a)",
+        "蓝釉": "linear-gradient(135deg,#b8c8d8,#98a8c0)",
+        "绿釉": "linear-gradient(135deg,#b8d4b8,#98c098)",
+        "红釉": "linear-gradient(135deg,#d4a0a0,#c08080)",
+        "铜红釉": "linear-gradient(135deg,#d4a0a0,#c08080)",
+        "铁釉": "linear-gradient(135deg,#c8b8a8,#b0a090)",
+        "天目釉": "linear-gradient(135deg,#2c2c2c,#4a4a4a)",
+        "志野釉": "linear-gradient(135deg,#e8ddd0,#d8c8b8)",
+        "结晶釉": "linear-gradient(135deg,#d8d0e0,#c8c0d0)",
+        "灰釉": "linear-gradient(135deg,#d0d0d0,#c0c0c0)",
+        "黄釉": "linear-gradient(135deg,#e8e0b8,#d8d0a0)",
+        "基础釉": "linear-gradient(135deg,#e0d8d0,#d0c8c0)",
+        "透明釉": "linear-gradient(135deg,#d8e4f0,#c8d8e8)",
+        "哑光釉": "linear-gradient(135deg,#c8c0b8,#b8b0a8)",
+        "特种釉": "linear-gradient(135deg,#d8c8d8,#c8b8c8)",
+        "化妆土": "linear-gradient(135deg,#d8c8b8,#c8b8a8)"
+    };
+    return map[cat] || "linear-gradient(135deg,#e0d8d0,#d0c8c0)";
 }
 </script>
+
 </body>
 </html>
