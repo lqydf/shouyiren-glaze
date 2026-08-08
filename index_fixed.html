@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>守艺人 · 陶瓷釉方查询与釉式计算</title>
+
+<style>
+
+:root {
+    --bg:#faf8f5;
+    --card:#ffffff;
+    --text:#5c4033;
+    --text-light:#8b7e6e;
+    --text-muted:#a89a8a;
+    --primary:#8b6f47;
+    --border:#e8e0d8;
+    --border-light:#f0ebe3;
+    --success:#2e7d32;
+    --warn:#e65100;
+    --shadow:0 1px 4px rgba(92,64,51,.05);
+}
+
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+
+body{
+    font-family:
+    "Noto Sans SC",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Arial,
+    sans-serif;
+
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.6;
+}
+
+
+nav{
+    background:var(--card);
+    border-bottom:1px solid var(--border);
+    padding:14px 0;
+
+    position:sticky;
+    top:0;
+    z-index:100;
+}
+
+
+.nav-inner{
+
+    max-width:900px;
+    margin:auto;
+    padding:0 20px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+}
+
+
+.logo{
+
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    text-decoration:none;
+
+}
+
+
+.logo-icon{
+
+    width:36px;
+    height:36px;
+
+    background:var(--primary);
+
+    border-radius:50%;
+
+    color:#fff;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:18px;
+    font-weight:bold;
+
+}
+
+
+.logo-text{
+
+    font-size:20px;
+    font-weight:700;
+
+    color:var(--text);
+
+    letter-spacing:2px;
+
+}
+
+
+
+.nav-links{
+
+    display:flex;
+    gap:28px;
+
+}
+
+
+.nav-links a{
+
+    font-size:14px;
+
+    color:var(--text-light);
+
+    text-decoration:none;
+
+}
+
+
+.nav-links a.active{
+
+    color:var(--primary);
+
+}
+
+
+
+.hero{
+
+    padding:60px 20px 40px;
+
+    text-align:center;
+
+    background:
+    linear-gradient(
+    180deg,
+    var(--bg),
+    #f0ebe3
+    );
+
+}
+
+
+.hero h1{
+
+    font-size:42px;
+
+    margin-bottom:12px;
+
+    letter-spacing:4px;
+
+}
+
+
+.hero-sub{
+
+    font-size:16px;
+
+    color:var(--text-light);
+
+    letter-spacing:6px;
+
+}
+
+
+.hero-desc{
+
+    margin-top:10px;
+
+    font-size:13px;
+
+    color:var(--text-muted);
+
+}
+
+
+
+.search-box{
+
+    max-width:520px;
+
+    margin:40px auto 0;
+
+    position:relative;
+
+}
+
+
+
+.search-box input{
+
+    width:100%;
+
+    padding:14px 20px 14px 48px;
+
+    border-radius:30px;
+
+    border:1px solid #d4c8b8;
+
+    background:white;
+
+    font-size:15px;
+
+}
+
+
+
+.search-box .icon{
+
+    position:absolute;
+
+    left:18px;
+
+    top:50%;
+
+    transform:translateY(-50%);
+
+}
+
+
+
+.quick-cats{
+
+    padding:20px;
+
+    display:flex;
+
+    gap:10px;
+
+    flex-wrap:wrap;
+
+    justify-content:center;
+
+}
+
+
+
+.cat-btn{
+
+    padding:8px 18px;
+
+    border-radius:20px;
+
+    border:1px solid var(--border);
+
+    background:white;
+
+    cursor:pointer;
+
+}
+
+
+
+.cat-btn.active{
+
+    background:var(--primary);
+
+    color:white;
+
+}
+
+
+
+.features{
+
+    padding:0 20px 20px;
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:16px;
+
+    max-width:600px;
+
+    margin:auto;
+
+}
+
+
+.feature-card{
+
+    background:white;
+
+    border-radius:16px;
+
+    padding:28px 20px;
+
+    text-align:center;
+
+    text-decoration:none;
+
+    color:inherit;
+
+    border:1px solid var(--border);
+
+}
+
+
+
+.feature-icon{
+
+    font-size:36px;
+
+}
+
+
+.feature-title{
+
+    font-size:16px;
+
+    font-weight:bold;
+
+}
+
+
+
+.feature-desc{
+
+    font-size:12px;
+
+    color:var(--text-muted);
+
+}
+
+
+
+.section{
+
+    padding:32px 20px;
+
+}
+
+
+
+.section-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    margin-bottom:20px;
+
+}
+
+
+
+.section-title{
+
+    font-size:20px;
+
+}
+
+
+
+.glaze-grid{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fill,minmax(260px,1fr));
+
+    gap:16px;
+
+}
+
+
+.glaze-card{
+
+    background:white;
+
+    border-radius:14px;
+
+    overflow:hidden;
+
+    border:1px solid var(--border);
+
+    text-decoration:none;
+
+    color:inherit;
+
+}
+
+
+.card-img{
+
+    height:160px;
+
+}
+
+
+.card-body{
+
+    padding:16px;
+
+}
+
+
+.card-name{
+
+    font-weight:bold;
+
+    margin-bottom:6px;
+
+}
+
+
+.card-meta{
+
+    font-size:12px;
+
+    color:var(--text-muted);
+
+}
+
+
+footer{
+
+    padding:32px 20px;
+
+    text-align:center;
+
+    border-top:1px solid var(--border);
+
+}
+
+
+
+@media(max-width:600px){
+
+    .hero h1{
+
+        font-size:32px;
+
+    }
+
+
+    .features{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
+
+
+</style>
+
+</head>
+
+<body>
+
+
+<nav>
+
+<div class="nav-inner">
+
+<a href="index.html" class="logo">
+
+<div class="logo-icon">守</div>
+
+<div class="logo-text">守艺人</div>
+
+</a>
+
+
+<div class="nav-links">
+
+<a class="active" href="index.html">首页</a>
+
+<a href="list.html">釉方大全</a>
+
+<a href="calculator.html">釉式计算</a>
+
+<a href="about.html">关于</a>
+
+</div>
+
+</div>
+
+</nav>
+
+
+
+<div class="hero">
+
+<h1>守艺人</h1>
+
+<p class="hero-sub">
+陶瓷釉方 · 专业计算 · 手艺传承
+</p>
+
+<p class="hero-desc">
+为每一位陶瓷手艺人，守护配方里的温度与匠心
+</p>
+
+
+<div class="search-box">
+
+<span class="icon">🔍</span>
+
+<input
+id="heroSearch"
+placeholder="搜索釉名、分类、颜色、温度..."
+>
+
+</div>
+
+
+</div>
+
+<section class="section">
+    <div class="section-header">
+        <div class="section-title">推荐釉方</div>
+    </div>
+
+    <div id="recommendGrid" class="glaze-grid">
+        <div style="text-align:center;padding:40px;">
+            加载中...
+        </div>
+    </div>
+</section>
+
+<script>
+
+let glazes = [];
+let currentCat = "全部";
+
+
+const fallbackGlazes = [
+
+{
+id:101,
+name:"龙泉梅子青釉",
+category:"青釉",
+color:"青绿色",
+surface:"厚釉温润，玉质感",
+temperature:"1180-1250℃",
+atmosphere:"还原焰",
+difficulty:"中等"
+},
+
+{
+id:1,
+name:"龙泉青釉",
+category:"青釉",
+color:"青绿色",
+surface:"温润玉质感",
+temperature:"1180-1250℃",
+atmosphere:"还原焰",
+difficulty:"中等"
+},
+
+{
+id:2,
+name:"油滴釉",
+category:"天目釉",
+color:"黑底银斑",
+surface:"金属析晶效果",
+temperature:"1250-1300℃",
+atmosphere:"还原焰",
+difficulty:"困难"
+},
+
+{
+id:3,
+name:"木灰釉",
+category:"灰釉",
+color:"青灰色",
+surface:"自然流动效果",
+temperature:"1200-1300℃",
+atmosphere:"氧化或还原",
+difficulty:"简单"
+}
+
+];
+
+
+
+// 加载数据
+
+async function loadGlazes(){
+
+const grid=document.getElementById("recommendGrid");
+
+
+try{
+
+
+const res=await fetch("./glazes.json?v=" + Date.now());
+
+
+if(!res.ok){
+
+throw new Error("glazes.json不存在");
+
+}
+
+
+
+const data=await res.json();
+
+
+
+if(!Array.isArray(data)||data.length===0){
+
+throw new Error("数据为空");
+
+}
+
+
+
+glazes=data;
+
+
+
+console.log(
+"釉方加载成功:",
+glazes.length
+);
+
+
+
+renderRecommend();
+
+
+
+}
+
+catch(error){
+
+
+console.error(
+"加载失败:",
+error
+);
+
+
+
+glazes=fallbackGlazes;
+
+
+renderRecommend();
+
+
+
+grid.insertAdjacentHTML(
+
+"beforebegin",
+
+`
+
+<div style="
+text-align:center;
+padding:10px;
+font-size:12px;
+color:#e65100;
+">
+
+⚠ 当前使用备用数据
+
+</div>
+
+`
+
+);
+
+
+
+}
+
+
+
+}
+
+
+
+
+// 分类按钮
+
+
+document
+.getElementById("quickCats")
+.addEventListener(
+"click",
+function(e){
+
+
+if(
+e.target.classList.contains("cat-btn")
+){
+
+
+document
+.querySelectorAll(".cat-btn")
+.forEach(
+b=>b.classList.remove("active")
+);
+
+
+
+e.target.classList.add("active");
+
+
+
+currentCat=
+e.target.dataset.cat;
+
+
+
+renderRecommend();
+
+
+
+}
+
+
+
+});
+
+
+
+
+
+// 搜索
+
+
+document
+.getElementById("heroSearch")
+.addEventListener(
+"input",
+function(e){
+
+
+let kw=e.target.value.trim();
+
+
+
+if(kw.length>0){
+
+window.location.href=
+"list.html?search="
++
+encodeURIComponent(kw);
+
+}
+
+
+
+});
+
+
+
+
+
+
+
+function renderRecommend(){
+
+
+const grid=
+document.getElementById(
+"recommendGrid"
+);
+
+
+
+let filtered=[...glazes];
+
+
+
+if(currentCat!=="全部"){
+
+
+filtered=
+filtered.filter(
+g=>
+g.category===currentCat
+);
+
+
+}
+
+
+
+
+// 防止修改原数组
+
+filtered.sort(
+()=>0.5-Math.random()
+);
+
+
+
+let picks=
+filtered.slice(0,6);
+
+
+
+
+if(picks.length===0){
+
+
+grid.innerHTML=
+
+`
+
+<div style="
+text-align:center;
+padding:40px;
+">
+
+暂无数据
+
+</div>
+
+`;
+
+return;
+
+
+}
+
+
+
+
+
+grid.innerHTML=
+
+
+picks.map(g=>{
+
+
+return `
+
+
+<a href="detail.html?id=${g.id}"
+class="glaze-card">
+
+
+<div class="card-img"
+style="
+background:${getGlazeStyle(g.category)}
+">
+
+
+</div>
+
+
+
+<div class="card-body">
+
+
+<div class="card-name">
+
+${g.name||"未知釉方"}
+
+</div>
+
+
+
+<div class="card-meta">
+
+${g.temperature||""}
+
+·
+
+${g.surface||""}
+
+</div>
+
+
+</div>
+
+
+</a>
+
+
+`;
+
+
+
+}).join("");
+
+
+
+}
+
+
+
+
+
+
+
+function getGlazeStyle(category){
+
+
+const colors={
+
+
+"青釉":
+"linear-gradient(145deg,#a8c8a0,#5a9a80)",
+
+
+"白釉":
+"linear-gradient(145deg,#faf8f0,#ddd4c4)",
+
+
+"黑釉":
+"linear-gradient(145deg,#444,#111)",
+
+
+"蓝釉":
+"linear-gradient(145deg,#a8c0d8,#5878a8)",
+
+
+"天目釉":
+"linear-gradient(145deg,#333,#000)",
+
+
+"红釉":
+"linear-gradient(145deg,#c47878,#802020)"
+
+
+
+};
+
+
+
+return colors[category]
+||
+"linear-gradient(145deg,#ddd,#aaa)";
+
+
+}
+
+
+
+
+// 启动
+
+loadGlazes();
+
+
+</script>
