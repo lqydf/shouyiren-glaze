@@ -524,6 +524,19 @@ placeholder="搜索釉名、分类、颜色、温度..."
 
 
 </div>
+
+<section class="section">
+    <div class="section-header">
+        <div class="section-title">推荐釉方</div>
+    </div>
+
+    <div id="recommendGrid" class="glaze-grid">
+        <div style="text-align:center;padding:40px;">
+            加载中...
+        </div>
+    </div>
+</section>
+
 <script>
 
 let glazes = [];
@@ -590,7 +603,7 @@ const grid=document.getElementById("recommendGrid");
 try{
 
 
-const res=await fetch("./glazes.json?v=1");
+const res=await fetch("./glazes.json?v=" + Date.now());
 
 
 if(!res.ok){
